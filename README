@@ -1,0 +1,6 @@
+These are the MarkLogic XQuery and ancillary files that run the
+Norman.Walsh.name weblog.
+
+They're not really designed for public consumption. There are weird,
+hard-coded defaults and all sorts of bad practices herein. Use at your
+own risk. YMMV.
