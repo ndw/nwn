@@ -1,0 +1,33 @@
+/* -*- CSS -*-
+# The leading '#'s are just for consistency with other text formats
+#
+# rdf:
+# dc:title Reader comment CSS Styling
+# dc:date 2007-09-24
+# cvs:date $Date$
+# dc:creator http://norman.walsh.name/knows/who#norman-walsh
+# dc:rights Copyright &#169; 2003 Norman Walsh. All rights reserved.
+# dc:description CSS stylesheet for the page where readers enter comments.
+*/
+
+#readercomment {
+  font-family: Georgia, serif;
+  margin-left: 20px;
+  padding-right: 20px;
+  voice-family: "\"}\"";
+  voice-family: inherit;
+  margin-right: 230px;
+}
+
+#sidebar {
+  display: none;
+}
+
+.error {
+  background-color: #FFCCCC;
+}
+
+.error input,
+.error textarea {
+  background-color: #FFEEEE;
+}

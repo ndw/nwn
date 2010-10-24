@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  -*- rnc -*-
+  
+  rdf:
+  dc:title Essay Schema
+  dc:date 2005-02-07
+  cvs:date $Date$
+  dc:rights Copyright &#169; 2003, 2004, 2005 Norman Walsh. All rights reserved.
+  dc:description DocBook NG based grammar for norman.walsh.name essays
+-->
+<!--
+  namespace cvs = "http://nwalsh.com/rdf/cvs#"
+  namespace db = "http://nwalsh.com/xmlns/docbook-grammar-structure"
+-->
+<!-- namespace doc = "http://nwalsh.com/xmlns/documentation" -->
+<grammar xmlns:html="http://www.w3.org/1999/xhtml" xmlns:doap="http://usefulinc.com/ns/doap/#" xmlns:gal="http://norman.walsh.name/rdf/gallery#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:db="http://docbook.org/ns/docbook" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:it="http://nwalsh.com/rdf/itinerary#" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:s="http://www.ascc.net/xml/schematron" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <include href="docbook.rng">
+    <start>
+      <ref name="db.essay"/>
+    </start>
+    <define name="db.tag">
+      <element name="db:tag">
+        <ref name="db.tag.attlist"/>
+        <zeroOrMore>
+          <choice>
+            <ref name="db._text"/>
+            <ref name="db.markup.inlines"/>
+          </choice>
+        </zeroOrMore>
+      </element>
+    </define>
+  </include>
+  <define name="db.info.elements" combine="choice">
+    <choice>
+      <ref name="html.style"/>
+      <ref name="html.script"/>
+      <ref name="html.noscript"/>
+      <ref name="rdfElement"/>
+      <ref name="dcElement"/>
+      <ref name="dctermsElement"/>
+      <ref name="doapElement"/>
+      <ref name="geoElement"/>
+      <ref name="galleryBanner"/>
+      <ref name="galleryFooter"/>
+    </choice>
+  </define>
+  <define name="db.graphic.blocks" combine="choice">
+    <choice>
+      <ref name="galleryGraphic"/>
+      <ref name="galleryImage"/>
+      <ref name="galleryImages"/>
+      <ref name="galleryPhoto"/>
+      <ref name="galleryFloat"/>
+    </choice>
+  </define>
+  <define name="db.informal.blocks" combine="choice">
+    <choice>
+      <ref name="tripItinerary"/>
+      <ref name="db.foil"/>
+    </choice>
+  </define>
+  <define name="db.bibliography.inlines" combine="choice">
+    <choice>
+      <ref name="foafName"/>
+      <ref name="foafNick"/>
+    </choice>
+  </define>
+  <!-- ====================================================================== -->
+  <!--
+    An essay is just like an article, but it's called essay (because
+    it's not entirely like an article and so that it's easier to
+    distinguish from DocBook articles).
+  -->
+  <define name="db.essay.optional.components">
+    <choice>
+      <zeroOrMore>
+        <ref name="db.section"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="db.simplesect"/>
+      </zeroOrMore>
+    </choice>
+  </define>
+  <define name="db.essay.required.components">
+    <choice>
+      <oneOrMore>
+        <ref name="db.section"/>
+      </oneOrMore>
+      <oneOrMore>
+        <ref name="db.simplesect"/>
+      </oneOrMore>
+    </choice>
+  </define>
+  <div>
+    <db:refname>essay</db:refname>
+    <db:refpurpose/>
+    <define name="db.essay.attlist">
+      <ref name="db.article.attlist"/>
+    </define>
+    <define name="db.essay.info">
+      <ref name="db._info.title.req"/>
+    </define>
+    <define name="db.essay">
+      <element name="db:essay">
+        <s:rule context="/db:essay">
+          <s:assert test="@version">The root element must have a version attribute.</s:assert>
+        </s:rule>
+        <ref name="db.essay.attlist"/>
+        <ref name="db.essay.info"/>
+        <zeroOrMore>
+          <choice>
+            <ref name="db.navigation.components"/>
+            <ref name="db.appendix"/>
+            <ref name="db.acknowledgements"/>
+            <ref name="db.colophon"/>
+          </choice>
+        </zeroOrMore>
+        <choice>
+          <group>
+            <oneOrMore>
+              <ref name="db.all.blocks"/>
+            </oneOrMore>
+            <ref name="db.essay.optional.components"/>
+          </group>
+          <ref name="db.essay.required.components"/>
+        </choice>
+        <zeroOrMore>
+          <choice>
+            <ref name="db.navigation.components"/>
+            <ref name="db.appendix"/>
+            <ref name="db.acknowledgements"/>
+            <ref name="db.colophon"/>
+          </choice>
+        </zeroOrMore>
+      </element>
+    </define>
+  </div>
+  <!-- XHTML Style and Script elements -->
+  <define name="html.style">
+    <element name="html:style">
+      <attribute name="type"/>
+      <optional>
+        <attribute name="media"/>
+      </optional>
+      <optional>
+        <attribute name="title"/>
+      </optional>
+      <optional>
+        <attribute name="xml:space">
+          <value>preserve</value>
+        </attribute>
+      </optional>
+      <text/>
+    </element>
+  </define>
+  <define name="html.script">
+    <element name="html:script">
+      <optional>
+        <attribute name="charset"/>
+      </optional>
+      <attribute name="type"/>
+      <optional>
+        <attribute name="src"/>
+      </optional>
+      <optional>
+        <attribute name="xml:space">
+          <value>preserve</value>
+        </attribute>
+      </optional>
+      <text/>
+    </element>
+  </define>
+  <define name="html.noscript">
+    <element name="html:noscript">
+      <text/>
+    </element>
+  </define>
+  <!-- ====================================================================== -->
+  <define name="anyElement">
+    <element>
+      <anyName>
+        <except>
+          <nsName ns=""/>
+          <nsName ns="http://docbook.org/ns/docbook"/>
+          <nsName ns="http://www.w3.org/1999/xhtml"/>
+        </except>
+      </anyName>
+      <zeroOrMore>
+        <choice>
+          <attribute>
+            <anyName/>
+          </attribute>
+          <text/>
+          <ref name="anyElement"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <!-- In essays, RDF elements have either an rdf:resource or a (typed) literal value -->
+  <define name="rdfResource">
+    <attribute name="rdf:resource"/>
+  </define>
+  <define name="rdfLiteral">
+    <optional>
+      <attribute name="rdf:datatype"/>
+    </optional>
+    <text/>
+  </define>
+  <!-- I think I could match rdfStripe a little better with some further thought. -->
+  <define name="rdfStripe">
+    <ref name="anyElement"/>
+  </define>
+  <define name="rdfContentModel">
+    <choice>
+      <ref name="rdfResource"/>
+      <ref name="rdfLiteral"/>
+      <ref name="rdfStripe"/>
+    </choice>
+  </define>
+  <define name="rdfElement">
+    <element>
+      <nsName ns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+      <ref name="rdfContentModel"/>
+    </element>
+  </define>
+  <define name="dcElement">
+    <element>
+      <nsName ns="http://purl.org/dc/elements/1.1/"/>
+      <ref name="rdfContentModel"/>
+    </element>
+  </define>
+  <define name="dctermsElement">
+    <element>
+      <nsName ns="http://purl.org/dc/terms/"/>
+      <ref name="rdfContentModel"/>
+    </element>
+  </define>
+  <define name="geoElement">
+    <element>
+      <nsName ns="http://www.w3.org/2003/01/geo/wgs84_pos#"/>
+      <ref name="rdfContentModel"/>
+    </element>
+  </define>
+  <define name="doapElement">
+    <element>
+      <nsName ns="http://usefulinc.com/ns/doap/#"/>
+      <ref name="rdfContentModel"/>
+    </element>
+  </define>
+  <define name="galleryGraphic">
+    <element name="gal:graphic">
+      <ref name="rdfContentModel"/>
+    </element>
+  </define>
+  <define name="galleryImage">
+    <element name="gal:image">
+      <ref name="rdfContentModel"/>
+    </element>
+  </define>
+  <define name="galleryPhoto">
+    <element name="gal:photo">
+      <ref name="rdfContentModel"/>
+    </element>
+  </define>
+  <define name="galleryBanner">
+    <element name="gal:banner">
+      <ref name="rdfContentModel"/>
+    </element>
+  </define>
+  <define name="galleryFooter">
+    <element name="gal:footer">
+      <ref name="rdfContentModel"/>
+    </element>
+  </define>
+  <define name="galleryImages">
+    <element name="gal:images">
+      <element name="rdf:Seq">
+        <oneOrMore>
+          <element name="rdf:li">
+            <ref name="rdfContentModel"/>
+          </element>
+        </oneOrMore>
+      </element>
+    </element>
+  </define>
+  <define name="galleryFloat">
+    <element name="gal:float">
+      <ref name="rdfResource"/>
+      <optional>
+        <attribute name="align"/>
+      </optional>
+      <empty/>
+    </element>
+  </define>
+  <!-- ====================================================================== -->
+  <define name="tripItinerary">
+    <element name="it:trip">
+      <attribute name="startDate">
+        <choice>
+          <data type="date"/>
+          <data type="dateTime"/>
+        </choice>
+      </attribute>
+      <attribute name="endDate">
+        <choice>
+          <data type="date"/>
+          <data type="dateTime"/>
+        </choice>
+      </attribute>
+      <optional>
+        <attribute name="trip"/>
+      </optional>
+      <optional>
+        <attribute name="nomap"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="anyElement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <!-- ====================================================================== -->
+  <define name="db.markup.inlines" combine="choice">
+    <ref name="db.wikipedia"/>
+  </define>
+  <define name="db.wikipedia">
+    <element name="db:wikipedia">
+      <ref name="db.common.attributes"/>
+      <optional>
+        <attribute name="page"/>
+      </optional>
+      <text/>
+    </element>
+  </define>
+  <define name="foafName">
+    <element name="foaf:name">
+      <ref name="db.common.attributes"/>
+      <optional>
+        <attribute name="role"/>
+      </optional>
+      <text/>
+    </element>
+  </define>
+  <define name="foafNick">
+    <element name="foaf:nick">
+      <ref name="db.common.attributes"/>
+      <optional>
+        <attribute name="role"/>
+      </optional>
+      <text/>
+    </element>
+  </define>
+  <!-- ====================================================================== -->
+  <div>
+    <define name="db.foil.role.attribute">
+      <attribute name="role"/>
+    </define>
+    <define name="db.foil.attlist">
+      <interleave>
+        <optional>
+          <ref name="db.foil.role.attribute"/>
+        </optional>
+        <optional>
+          <attribute name="foilnum"/>
+        </optional>
+        <ref name="db.common.attributes"/>
+        <ref name="db.common.linking.attributes"/>
+      </interleave>
+    </define>
+    <define name="db.foil.info">
+      <ref name="db._info.title.only"/>
+    </define>
+    <define name="db.foil">
+      <element name="db:foil">
+        <ref name="db.foil.attlist"/>
+        <ref name="db.foil.info"/>
+        <oneOrMore>
+          <ref name="db.all.blocks"/>
+        </oneOrMore>
+      </element>
+    </define>
+  </div>
+</grammar>

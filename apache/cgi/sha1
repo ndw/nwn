@@ -1,0 +1,14 @@
+#!/usr/bin/perl -- # -*- Perl -*-
+
+use strict;
+use English;
+use Digest::SHA1 qw(sha1_hex);
+use CGI;
+use CGI::Carp qw(fatalsToBrowser);
+
+my $q = new CGI;
+my $s = $q->{'s'}[0];
+
+print "Content-type: text/plain\n\n";
+print sha1_hex($s);
+print "\n";

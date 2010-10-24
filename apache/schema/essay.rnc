@@ -1,0 +1,215 @@
+# -*- rnc -*-
+#
+# rdf:
+# dc:title Essay Schema
+# dc:date 2005-02-07
+# cvs:date $Date$
+# dc:rights Copyright &#169; 2003, 2004, 2005 Norman Walsh. All rights reserved.
+# dc:description DocBook NG based grammar for norman.walsh.name essays
+
+namespace gal = "http://norman.walsh.name/rdf/gallery#"
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+#namespace cvs = "http://nwalsh.com/rdf/cvs#"
+#namespace db = "http://nwalsh.com/xmlns/docbook-grammar-structure"
+namespace dc = "http://purl.org/dc/elements/1.1/"
+namespace dcterms = "http://purl.org/dc/terms/"
+namespace geo = "http://www.w3.org/2003/01/geo/wgs84_pos#"
+namespace doap = "http://usefulinc.com/ns/doap/#"
+#namespace doc = "http://nwalsh.com/xmlns/documentation"
+namespace inherit = inherit
+namespace local = ""
+namespace rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+namespace rdfs = "http://www.w3.org/2000/01/rdf-schema#"
+namespace rng = "http://relaxng.org/ns/structure/1.0"
+namespace s = "http://www.ascc.net/xml/schematron"
+namespace html = "http://www.w3.org/1999/xhtml"
+namespace db = "http://docbook.org/ns/docbook"
+namespace it = "http://nwalsh.com/rdf/itinerary#"
+namespace foaf = "http://xmlns.com/foaf/0.1/"
+
+include "docbook.rnc" {
+   start = db.essay
+   db.tag = element db:tag { db.tag.attlist, (db._text|db.markup.inlines)* }
+}
+
+db.info.elements |=
+   html.style
+ | html.script
+ | html.noscript
+ | rdfElement
+ | dcElement
+ | dctermsElement
+ | doapElement
+ | geoElement
+ | galleryBanner
+ | galleryFooter
+
+db.graphic.blocks |=
+   galleryGraphic
+ | galleryImage
+ | galleryImages
+ | galleryPhoto
+ | galleryFloat
+
+db.informal.blocks |= tripItinerary | db.foil
+
+db.bibliography.inlines |= foafName | foafNick
+
+# ======================================================================
+
+# An essay is just like an article, but it's called essay (because
+# it's not entirely like an article and so that it's easier to
+# distinguish from DocBook articles).
+
+db.essay.optional.components =
+  (db.section* | db.simplesect*)
+db.essay.required.components =
+  (db.section+ | db.simplesect+)
+
+[ db:refname [ "essay" ] db:refpurpose [ ] ]
+div {
+  db.essay.attlist = db.article.attlist
+  db.essay.info = db._info.title.req
+  db.essay =
+    [
+      s:rule [
+        context = "/db:essay"
+        s:assert [
+          test = "@version"
+          "The root element must have a version attribute."
+        ]
+      ]
+    ]
+    element db:essay {
+      db.essay.attlist,
+      db.essay.info,
+      (db.navigation.components
+       | db.appendix
+       | db.acknowledgements
+       | db.colophon)*,
+      ((db.all.blocks+, db.essay.optional.components)
+       | db.essay.required.components),
+      (db.navigation.components
+       | db.appendix
+       | db.acknowledgements
+       | db.colophon)*
+    }
+}
+
+# XHTML Style and Script elements
+
+html.style = element html:style {
+   attribute type { text },
+   attribute media { text }?,
+   attribute title { text }?,
+   attribute xml:space { "preserve" }?,
+   text
+}
+
+html.script = element html:script {
+   attribute charset { text }?,
+   attribute type { text },
+   attribute src { text }?,
+   attribute xml:space { "preserve" }?,
+   text
+}
+
+html.noscript = element html:noscript {
+   text
+}
+
+# ======================================================================
+
+anyElement = element * - (local:* | db:* | html:*) {
+   (attribute * { text }
+    | text
+    | anyElement)*
+}
+
+# In essays, RDF elements have either an rdf:resource or a (typed) literal value
+
+rdfResource = attribute rdf:resource { text }
+rdfLiteral  =
+   attribute rdf:datatype { text }?,
+   text
+
+# I think I could match rdfStripe a little better with some further thought.
+rdfStripe = anyElement
+
+rdfContentModel = rdfResource | rdfLiteral | rdfStripe
+
+rdfElement = element rdf:* { rdfContentModel }
+
+dcElement = element dc:* { rdfContentModel }
+
+dctermsElement = element dcterms:* { rdfContentModel }
+
+geoElement = element geo:* { rdfContentModel }
+
+doapElement = element doap:* { rdfContentModel }
+
+galleryGraphic = element gal:graphic { rdfContentModel }
+galleryImage = element gal:image { rdfContentModel }
+galleryPhoto = element gal:photo { rdfContentModel }
+galleryBanner = element gal:banner { rdfContentModel }
+galleryFooter = element gal:footer { rdfContentModel }
+
+galleryImages = element gal:images {
+   element rdf:Seq {
+      element rdf:li { rdfContentModel }+
+   }
+}
+
+galleryFloat = element gal:float {
+   rdfResource,
+   attribute align { text }?,
+   empty
+}
+
+# ======================================================================
+
+tripItinerary = element it:trip {
+   attribute startDate { xsd:date | xsd:dateTime },
+   attribute endDate { xsd:date | xsd:dateTime },
+   attribute trip { text }?,
+   attribute nomap { text }?,
+   anyElement*
+}
+
+# ======================================================================
+
+db.markup.inlines |= db.wikipedia
+
+db.wikipedia = element db:wikipedia {
+   db.common.attributes,
+   attribute page { text }?,
+   text
+}
+
+foafName = element foaf:name {
+   db.common.attributes,
+   attribute role { text }?,
+   text
+}
+
+foafNick = element foaf:nick {
+   db.common.attributes,
+   attribute role { text }?,
+   text
+}
+
+# ======================================================================
+
+div {
+   db.foil.role.attribute = attribute role { text }
+   db.foil.attlist =
+      db.foil.role.attribute?
+    & attribute foilnum { text }?
+    & db.common.attributes
+    & db.common.linking.attributes
+   db.foil.info = db._info.title.only
+   db.foil =
+      element db:foil {
+         db.foil.attlist, db.foil.info, db.all.blocks+
+      }
+}

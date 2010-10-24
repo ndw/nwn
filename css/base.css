@@ -1,0 +1,298 @@
+/* -*- CSS -*- */
+
+body {
+  font-family: Georgia, serif;
+  background: white;
+  color: black;
+  padding: 0px;
+  margin: 0px;
+}
+
+h1,h2,h3,h4,h5 {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#banner {
+}
+
+#banner h1 {
+  padding-left: 20px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+
+#dateline {
+  padding-left: 20px;
+}
+
+#hnav {
+  font-size: 18pt;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #076D6D;
+  border-bottom-width: 6px;
+  border-bottom-style: solid;
+}
+
+#hnav .title {
+  padding-left: 20px;
+}
+
+#qrcode {
+  height: 0px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  display: none;
+}
+
+#admin {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  font-size: 12pt;
+  color: black;
+  padding: 2px;
+}
+
+.admin {
+  background-color: #FFAAAA;
+}
+
+#banner .punct {
+  color: #AAAAAA;
+}
+
+#hnav a,
+#hnav a:visited,
+#hnav a:link {
+  color: black;
+  text-decoration: none;
+}
+
+a,
+a:visited,
+a:link {
+  color: #006969;
+  text-decoration: none;
+}
+
+a[href]:hover {
+  border-bottom: 1px dotted black;
+}
+
+#hnav a[href]:hover,
+div.photo a[href]:hover {
+  border-bottom-style: none;
+}
+
+div.artwork a[href]:hover {
+  border-bottom-style: none;
+}
+
+div.link a[href]:hover {
+   border-bottom-style: none;
+}
+
+div.abstract {
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #aeaeae;
+  font-style: italic;
+}
+
+div.epigraph {
+  margin-right: 10px;
+  margin-left: 25%;
+  margin-top: 0px;
+  padding-top: 0px;
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+  border-bottom: solid #aeaeae 1px;
+}
+
+div.epigraph p  {
+  font-style: italic;
+  margin-bottom: 0pt;
+  padding-bottom: 0pt;
+}
+
+div.epigraph div.literallayout p {
+  /* turn off all the special literallayout formatting */
+  padding: 0px;
+  border-bottom-style: none;
+  border-top-style: none;
+}
+
+div.attribution {
+  text-align: right;
+  margin-right: 25%;
+}
+
+.staging {
+  background-color: #FFFFDD;
+}
+
+#content,
+.body-content {
+  margin-left: 20px;
+  padding-right: 20px;
+  /*max-width: 45em;*/
+}
+
+#comments {
+  border-top: 1px solid #aeaeae;
+  margin-top: 20px;
+  padding-top: 8px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+#comments h2 {
+  font-weight: normal;
+  font-size: 1.1em;
+  font-style: italic;
+  text-decoration: underline;
+  margin-top: 0px;
+  padding-top: 0px;
+  margin-bottom: 0px;
+  padding-bottom: 2px;
+}
+
+div.comment {
+  border-bottom: 1px dotted black;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  font-size: 90%;
+  font-family: sans-serif;
+}
+
+div.comment-admin {
+  text-align: right;
+}
+
+#newcomment {
+  display: none;
+}
+
+#footer {
+  padding-top: 4px;
+  border-top: 1px solid #aeaeae;
+  margin-top: 20px;
+  margin-left: 20px;
+  padding-right: 20px;
+  font-size: 80%;
+}
+
+h2.runin {
+  font-weight: bold;
+  font-size: medium;
+}
+
+.runin {
+  display: inline;
+}
+
+div.artwork {
+  margin-top: 4px;
+  text-align: center;
+}
+
+div.artwork img {
+  border: 1px solid black;
+  padding: 1px;
+}
+
+div.artinfo h3 {
+  margin-top: 0px;
+  padding-top: 2px;
+  margin-bottom: 0px;
+  font-style: italic;
+}
+
+div.artwork div.description {
+  font-style: italic;
+  text-align: left;
+  font-size: small;
+  margin-top: 0px;
+  padding-top: 0px;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+div.flickr-photo div.photo {
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid #6F6F6F;
+  padding: 2px;
+}
+
+div.flickr-photo div.link {
+  position: relative;
+  top: -20px;
+  left: 275px;
+  height: 0px;
+  padding-left: 2pt;
+  padding-right: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin: 0px;
+}
+
+div.flickr-photo h3 {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-size: 95%;
+  margin-top: 0px;
+  margin-bottom: 3px;
+  padding-top: 4px;
+  padding-bottom: 0px;
+}
+
+div.flickr-photo img {
+  border: none;
+  padding: 0px;
+}
+
+div.photo {
+  margin-top: 8px;
+}
+
+div.photo img  {
+  border: 1px solid #7e7e7e;
+  padding: 1px;
+}
+
+div.photoinfo  {
+  margin-left: 160px;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+p a.plink {
+  text-decoration: none;
+  color: white; /* the page background color */
+}
+
+p:hover a.plink,
+a:hover.plink {
+  color: #b6d4d4;
+}
+
+.foil {
+  border: 3px double #aaaaaa;
+  margin-left: 2em;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin-right: 1em;
+  margin-top: 2em;
+}
+
+.foil .foilnum {
+  position: relative;
+  left: 93%;
+  bottom: 0px;
+  font-size: small;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #aaaaaa;
+}

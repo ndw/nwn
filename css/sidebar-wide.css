@@ -1,0 +1,53 @@
+#content,
+.body-content {
+  margin-right: 230px;
+}
+
+#footer {
+  margin-right: 260px;
+}
+
+#comments {
+  margin-right: 260px;
+}
+
+#sidebar {
+  font-family: Georgia, serif;
+  font-size: 90%;
+  position: absolute;
+  top: 140px;
+  right: 10px;
+  width: 200px;
+  margin-right: 10px;
+  padding-left: 10px;
+  padding-bottom: 30px;
+  padding-top: 10px;
+  border-left: 1px solid #aeaeae;
+  border-top: 1px solid #aeaeae;
+}
+
+#sidebar input {
+  width: 180px;
+}
+
+#sidebar > div {
+  padding-bottom: 1em;
+}
+
+#sidebar h3 {
+  font-weight: normal;
+  font-size: 1.1em;
+  font-style: italic;
+  text-decoration: underline;
+  margin-top: 0px;
+  padding-top: 0px;
+  margin-bottom: 0px;
+  padding-bottom: 2px;
+}
+
+#sidebar dl {
+  margin-top: 0px;
+  padding-top: 0px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}

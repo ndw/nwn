@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<?xml-stylesheet type='text/xsl' href='/style/rdf.xsl'?>
+<rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'
+         xmlns:cvs='http://nwalsh.com/rdf/cvs#'
+         xmlns:dc='http://purl.org/dc/elements/1.1/'>
+  <rdf:Description rdf:about='http://norman.walsh.name/schema/essay.rnc'>
+    <dc:type rdf:resource='http://purl.org/dc/dcmitype/Text'/>
+    <dc:format>text/plain</dc:format>
+    <dc:title>Essay Schema</dc:title>
+    <dc:date>2005-02-07</dc:date>
+    <cvs:date>$Date$</cvs:date>
+    <dc:rights>Copyright &#169; 2003, 2004, 2005 Norman Walsh. All rights reserved.</dc:rights>
+    <dc:description>DocBook NG based grammar for norman.walsh.name essays</dc:description>
+  </rdf:Description>
+</rdf:RDF>

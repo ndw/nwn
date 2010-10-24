@@ -1,0 +1,58 @@
+#sidebar {
+  font-family: Georgia, serif;
+  font-size: 90%;
+  border-top: 1px solid #aeaeae;
+  padding-top: 10px;
+  margin-left: 20px;
+  margin-top: 30px;
+}
+
+#sidebar .snapshot,
+#sidebar .homelinks {
+  display: none;
+}
+
+#sidebar input {
+  width: 80%;
+}
+
+#sidebar dl,
+#sidebar dt,
+#sidebar p {
+  display: inline;
+}
+
+#sidebar > div {
+  padding-left: 30px;
+}
+
+#sidebar div.disclaimer {
+  padding-left: 0px;
+  font-size: 90%;
+}
+
+#sidebar div h3 {
+  font-weight: bold;
+  font-size: 1em;
+  margin-top: 0px;
+  padding-top: 0px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  margin-left: -30px;
+}
+
+#sidebar dt:before {
+  content: ", ";
+}
+
+#sidebar dt:first-child:before {
+  content: "";
+}
+
+#sidebar .itinerary dt:before {
+  content: "";
+}
+
+#sidebar h3:after {
+  content: " ";
+}

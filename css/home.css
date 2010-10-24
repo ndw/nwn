@@ -1,0 +1,70 @@
+/* -*- CSS -*- */
+
+.essay-listitem h3 {
+  font-family: Arial, Helvetica, sans-serif;
+  margin-top: 1em;
+  margin-bottom: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.essay-listitem-date {
+  font-weight: normal;
+  font-size: 10pt;
+}
+
+.essay-listitem-abstract {
+  margin-left: 2em;
+  margin-top: 1em;
+}
+
+.essay-listitem-topics {
+  font-size: small;
+}
+
+div.homelinks {
+  margin-top: 1em;
+}
+
+div.link {
+  margin-top: 2px;
+  padding-left: 4px;
+}
+
+a.button:hover {
+   border-bottom-style: none;
+}
+
+div.snapshot .imagetitle {
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+ font-size: 85%;
+}
+
+div.snap {
+ margin-top: 8px;
+}
+
+div.itinerary dl dd {
+  margin-left: 0px;
+  padding-left: 1em;
+}
+
+div.disclaimer {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 80%;
+  font-weight: normal;
+  border-top: solid #aeaeae 1px;
+  margin-top: 10px;
+  padding-top: 5px;
+  padding-bottom: 1in;
+}
+
+div.icons {
+  position: absolute;
+  right: 4px;
+  top: 14px;
+}
+
+img.icon {
+  border: solid 1px #cccccc;
+}

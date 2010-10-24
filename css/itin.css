@@ -1,0 +1,35 @@
+/* ============================================================ */
+/* Calendars */
+
+div.calMonth {
+  padding-top: 4px;
+  padding-bottom: 8px;
+}
+
+tr.title td {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
+tr.dow td {
+  font-size: 9pt;
+}
+
+td.highlight {
+  font-style: italic;
+  text-decoration: underline;
+}
+
+td.yearmonth {
+  padding-right: 16px;
+  padding-bottom: 8px;
+}
+
+/* ============================================================ */
+/* Maps */
+
+#mapmarks { 
+  font-family: sans-serif;
+  font-size: small;
+  padding-top: 2px;            
+}
