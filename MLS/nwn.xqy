@@ -443,7 +443,7 @@ declare function nwn:patch-metadata($essay as element(db:essay)) as element(db:e
          { nwn:extract-topics($essay) }
          { nwn:extract-subjects($essay) }
          { nwn:extract-geo($essay) }
-         { $essay/db:info/node() }
+         { $essay/db:info/node()[not(namespace-uri(.) = "http://norman.walsh.name/ns/metadata")] }
        </info>
   return
     <essay xmlns="http://docbook.org/ns/docbook">
