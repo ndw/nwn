@@ -1,11 +1,17 @@
 xquery version "1.0-ml";
 
+module namespace pop="http://norman.walsh.name/ns/modules/utils/popular";
+
 import module namespace nwn="http://norman.walsh.name/ns/modules/utils"
        at "nwn.xqy";
+
+declare default function namespace "http://www.w3.org/2005/xpath-functions";
 
 declare namespace audit="http://norman.walsh.name/ns/modules/audit";
 declare namespace db="http://docbook.org/ns/docbook";
 declare namespace html="http://www.w3.org/1999/xhtml";
+
+declare option xdmp:mapping "false";
 
 declare variable $r200       := cts:element-value-query(xs:QName("audit:code"), "200");
 declare variable $irrdir     := cts:or-query(for $dir in ("css", "local", "js", "graphics",
@@ -22,7 +28,7 @@ declare variable $irrext     := cts:or-query(for $ext in ("atom")
 declare variable $irrelevant := cts:or-query(($irrdir, $irrext));
 
 
-declare function local:urilist($startTime as xs:dateTime) as element()* {
+declare function pop:urilist($startTime as xs:dateTime) as element()* {
   let $agequery := cts:element-range-query(xs:QName("audit:datetime"), ">=", $startTime)
   let $posquery := cts:and-query(($agequery, $r200))
   let $uris     := cts:element-values(xs:QName("audit:uri"), (),
@@ -50,7 +56,7 @@ declare function local:urilist($startTime as xs:dateTime) as element()* {
          <dl>
            { for $ref in $refs
              return
-               <dt>{local:link($ref)}</dt>
+               <dt>{pop:link($ref)}</dt>
            }
          </dl>
        </dd>
@@ -58,19 +64,26 @@ declare function local:urilist($startTime as xs:dateTime) as element()* {
        ())
 };
 
-declare function local:link($ref as xs:string) as element()* {
+declare function pop:link($ref as xs:string) as element()* {
   let $host := substring-before(substring-after($ref, "//"), "/")
+  let $base := concat("http://", $host, "/")
   let $s    := if ($host = "images.search.yahoo.com")
-               then local:param($ref, "p")
+               then pop:param($ref, "p")
                else if ($host = "www.bing.com" or contains($host, "www.google."))
-               then local:param($ref, "q")
+               then pop:param($ref, "q")
                else ()
   return
-    (<a xmlns="http://www.w3.org/1999/xhtml" href="{$ref}" title="{$ref}">http://{$host}/...</a>,
-     <span xmlns="http://www.w3.org/1999/xhtml">{$s}</span>)
+    if ($ref = "")
+    then
+      <span xmlns="http://www.w3.org/1999/xhtml">(no referrer)</span>
+    else
+      (<a xmlns="http://www.w3.org/1999/xhtml" href="{$ref}" title="{$ref}">
+         { concat($base, if ($base != $ref) then "..." else "") }
+       </a>,
+       <span xmlns="http://www.w3.org/1999/xhtml">&#160;{$s}</span>)
 };
 
-declare function local:param($ref as xs:string, $name as xs:string) as xs:string? {
+declare function pop:param($ref as xs:string, $name as xs:string) as xs:string? {
   let $qparam := substring-after($ref, "?")
   let $params := tokenize($qparam, "&amp;")
   let $stwith := concat($name, "=")
@@ -86,28 +99,17 @@ declare function local:param($ref as xs:string, $name as xs:string) as xs:string
     $param[1]
 };
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <title>Popular</title>
-    { nwn:css-links() }
-  </head>
-  <body>
-    { nwn:banner("/popular", "Popular", (), nwn:most-recent-update()) }
-    <div id="content">
-      <div class="abstract">
-        <p>Is life a popularity contest?</p>
-      </div>
-      <h2>Popular today</h2>
-      <dl>
-        { local:urilist(xs:dateTime(format-dateTime(current-dateTime(),
-                                                    "[Y0001]-[M01]-[D01]T00:00:00"))) }
-      </dl>
-
-      <h2>Popular this week</h2>
-      <dl>
-        { local:urilist(current-dateTime() - xs:dayTimeDuration("P7D")) }
-      </dl>
-    </div>
-  </body>
-</html>
+declare function pop:popular() as element(html:div) {
+  <div xmlns="http://www.w3.org/1999/xhtml">
+    <h2>Popular today</h2>
+    <dl>
+      { pop:urilist(xs:dateTime(format-dateTime(current-dateTime(),
+                                                "[Y0001]-[M01]-[D01]T00:00:00"))) }
+    </dl>
+    <h2>Popular this week</h2>
+    <dl>
+      { pop:urilist(current-dateTime() - xs:dayTimeDuration("P7D")) }
+    </dl>
+  </div>
+};
 
