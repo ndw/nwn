@@ -10,6 +10,7 @@ import module namespace cache="http://norman.walsh.name/ns/modules/cache"
        at "cache.xqy";
 
 declare namespace db="http://docbook.org/ns/docbook";
+declare namespace html="http://www.w3.org/1999/xhtml";
 declare namespace mldb="http://norman.walsh.name/ns/metadata";
 declare namespace tax="http://norman.walsh.name/ns/taxonomy";
 declare namespace skos="http://www.w3.org/2004/02/skos/core#";
@@ -138,6 +139,63 @@ declare function local:rssfeed($feed as xs:string) as document-node() {
     }
 };
 
+declare function local:sonnet() as element(html:div) {
+  let $sonnets := doc("/etc/sonnets.xml")
+  let $today   := current-date()
+  let $start   := xs:date("2004-09-11")
+  let $mod     := days-from-duration($today - $start) mod 154
+  let $number  := if ($mod = 0) then 154 else $mod
+  let $sonnet := $sonnets/sonnets/sonnet[$number]
+  let $lines := tokenize(string($sonnet), "&#10;")
+  return
+    <div xmlns="http://www.w3.org/1999/xhtml" class="sonnet">
+      <h1>Sonnet Number {$number}</h1>
+      <h3>By William Shakespeare</h3>
+      <div class="sonnet-body">
+        { for $line in $lines
+          return
+            ($line, <br/>)
+        }
+      </div>
+    </div>
+};
+
+declare function local:sonnet-feed() {
+  let $today   := current-date()
+  let $start   := xs:date("2004-09-11")
+  let $mod     := days-from-duration($today - $start) mod 154
+  let $number  := if ($mod = 0) then 154 else $mod
+  let $nowZ    := adjust-dateTime-to-timezone(current-dateTime(), xs:dayTimeDuration("PT0H"))
+  return
+    <feed xmlns="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"
+          xmlns:dcterms="http://purl.org/dc/terms/"
+          xml:lang="EN-us">
+      <title>The Sonnets of William Shakespeare</title>
+      <link rel="alternate" type="text/html" href="http://norman.walsh.name/2004/09/11/sonnets"/>
+      <link rel="self" href="http://norman.walsh.name/atom/sonnets-of-shakespeare.xml"/>
+      <id>http://norman.walsh.name/atom/sonnets-of-shakespeare.xml</id>
+      <updated>{ $nowZ }</updated>
+      <author>
+        <name>William Shakespeare</name>
+      </author>
+      <dc:language>en-us</dc:language>
+      <entry>
+        <title>Sonnet Number {$number}</title>
+        <id>http://norman.walsh.name/atom/sonnets-of-shakespeare.xml?number={$number}</id>
+        <published>{$nowZ}</published>
+        <updated>{$nowZ}</updated>
+        <summary type="xhtml">
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>Sonnet Number {$number}</p>
+          </div>
+        </summary>
+        <content type="xhtml" xml:base="http://norman.walsh.name/2004/09/11/sonnets">
+          { local:sonnet() }
+        </content>
+      </entry>
+    </feed>
+};
+
 let $type := if (xdmp:get-request-field("type") = "rss") then "rss" else "atom"
 return
   if ($feed = "whatsnew" or ($type = "atom" and $feed = "whatsnew-fulltext"))
@@ -152,5 +210,9 @@ return
     return
       $feedbody
   else
-    (xdmp:set-response-code(404, "Not Found."),
-     concat("404 resource not found."))
+    if ($feed = "sonnets-of-shakespeare")
+    then
+      local:sonnet-feed()
+    else
+      (xdmp:set-response-code(404, "Not Found."),
+       concat("404 resource not found."))
