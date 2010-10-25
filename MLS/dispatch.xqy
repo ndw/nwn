@@ -3,6 +3,9 @@ xquery version "1.0-ml";
 import module namespace nwn="http://norman.walsh.name/ns/modules/utils"
        at "nwn.xqy";
 
+import module namespace pop="http://norman.walsh.name/ns/modules/utils/popular"
+       at "popular.xqy";
+
 declare namespace c="http://nwalsh.com/rdf/contacts#";
 declare namespace db="http://docbook.org/ns/docbook";
 declare namespace dc="http://purl.org/dc/elements/1.1/";
@@ -391,7 +394,11 @@ declare function local:include($pi as processing-instruction()) as element()? {
   then
     local:sonnet()
   else
-    xdmp:log(concat("Unexpected include: ", $pi))
+    if (contains(string($pi), "/dynamic/popular"))
+    then
+      pop:popular()
+    else
+      xdmp:log(concat("Unexpected include: ", $pi))
 };
 
 declare function local:sonnet() as element(html:div) {
