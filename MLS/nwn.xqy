@@ -410,6 +410,54 @@ declare function nwn:extract-geo($essay as element(db:essay)) as element(mldb:ge
         ()
 };
 
+declare function nwn:patch-metadata($essay as element(db:essay)) as element(db:essay) {
+  let $lmdate := current-dateTime()
+  let $pubdate := string($essay/db:info/db:pubdate)
+  let $pubdt
+    := if (string-length($pubdate) = 7)
+       then concat($pubdate, "-01T12:00:00Z")
+       else if ($pubdate castable as xs:dateTime)
+            then $pubdate
+            else concat($pubdate,"T12:00:00Z")
+  let $info
+    := <info xmlns="http://docbook.org/ns/docbook">
+         <mldb:id>
+           { if ($essay/db:info/db:volumenum)
+             then
+               concat($essay/db:info/db:volumenum,",",$essay/db:info/db:issuenum)
+             else
+               string($essay/db:info/db:biblioid[not(@class='uri')])
+           }
+         </mldb:id>
+         { if ($pubdt castable as xs:dateTime)
+           then
+             <mldb:pubdate>
+               { $pubdt }
+             </mldb:pubdate>
+           else
+             xdmp:log(concat("Cannot cast ", $pubdt, " as a dateTime"))
+         }
+         <mldb:updated>
+           { $lmdate }
+         </mldb:updated>
+         { nwn:extract-topics($essay) }
+         { nwn:extract-subjects($essay) }
+         { nwn:extract-geo($essay) }
+         { $essay/db:info/node() }
+       </info>
+  return
+    <essay xmlns="http://docbook.org/ns/docbook">
+      { $essay/namespace::* }
+      { $essay/@* }
+      { for $node in $essay/node()
+        return
+          if ($node/self::db:info)
+          then $info
+          else $node
+      }
+    </essay>
+};
+
 declare function nwn:css-meta() {
   (<meta xmlns="http://www.w3.org/1999/xhtml"
          name="foaf:maker" content="foaf:mbox mailto:ndw@nwalsh.com" />,
