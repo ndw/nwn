@@ -145,13 +145,21 @@ declare function local:decorate($uri as xs:string, $body as document-node()?) {
                                   format-dateTime($dt,
                                         "[FNn,*-3], [D01] [MNn,*-3] [Y0001] [H01]:[m01]:[s01] GMT"))
 
+
+  let $expdur
+    := if (contains($uri, "/popular/popular"))
+       then xs:dayTimeDuration("PT4H")
+       else if (contains($uri, "/2004/09/11/sonnets"))
+            then xs:dayTimeDuration("PT12H")
+            else xs:dayTimeDuration("P7D")
+
   let $expires
     := if (nwn:admin())
        then
          ()
        else
          xdmp:add-response-header("Expires",
-                                  format-dateTime(current-dateTime()+xs:dayTimeDuration("P30D"),
+                                  format-dateTime(current-dateTime()+$expdur,
                                      "[FNn,*-3], [D01] [MNn,*-3] [Y0001] [H01]:[m01]:[s01] GMT"))
 
   return
