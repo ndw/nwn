@@ -85,62 +85,6 @@ declare function local:homepage() as document-node() {
     }
 };
 
-declare function local:homelinks() {
-  let $links
-    := <links xmlns="http://norman.walsh.name/ns/etc">
-         <link title="Friend of a Friend" alt="[FOAF]" href="/foaf" image="foaf.png"/>
-         <link title="My Brain" alt="[MyBrain]"
-               href="http://www.ldodds.com/micro-util/brain-subscribe.jsp?foaf=http://norman.walsh.name/foaf&amp;mbox_sha1sum=9f5c771a25733700b2f96af4f8e6f35c9b0ad327"
-               image="brain.png"/>
-         <link title="nwalsh.com" alt="[nwalsh.com]" href="http://nwalsh.com/" image="nwalsh.com.png"/>
-         <link title="docbook.org" alt="[docbook.org]" href="http://docbook.org/"
-               image="docbook.org.png" />
-         <link title="travelloft.biz" alt="[travelloft.biz]" href="http://travelloft.biz/"
-               image="travelloft.biz.png" />
-         <link title="Creative Commons License" alt="[CC License]" rel="license"
-               href="http://creativecommons.org/licenses/by-nc/2.0/"
-               image="cclicensed.png" />
-         <link title="Powered by MarkLogic" alt="[MarkLogic]" href="http://www.marklogic.com/"
-               image="marklogic.png"/>
-         <link title="Geographically nearby sites" alt="[GeoURL]"
-               href="http://geourl.org/near/?p=http://norman.walsh.name/" image="geourl.png"/>
-         <link title="Technorati" alt="[Technorati]"
-               href="http://www.technorati.com/profile/nwalsh/2266770/38a6e5450ec73a5baf68e90588416239"
-               image="technorati.png"/>
-         <link title="del.icio.us bookmarks" alt="[del.icio.us]" href="http://del.icio.us/ndw"
-               image="del.icio.us.png"/>
-         <link title="Flickr photographs" alt="[flickr]" href="http://www.flickr.com/photos/ndw/"
-               image="flickr-button.png"/>
-         <link title="Last.fm profile" alt="[last.fm]" href="http://www.last.fm/user/nwalsh"
-               image="lastfm.png"/>
-         <link title="Friend of the Guild" alt="[XML Guild]" href="http://www.xmlguild.org/"
-               image="xmlguild.png"/>
-         <link title="Green hosting" alt="[Green Hosting]"
-               href="http://www.dreamhost.com/green.cgi?norman.walsh.name"
-               image="greenhosting.png"/>
-         <link title="Out Campaign" alt="[Out Campaign]" href="http://outcampaign.org"
-               image="outcampaign.png"/>
-         <link title="{year-from-dateTime(current-dateTime())} Itineraries"
-               alt="[Itineraries]" href="/{year-from-dateTime(current-dateTime())}/itinerary/"
-               image="itinerary.png"/>
-       </links>
-  return
-    <div class="homelinks" xmlns="http://www.w3.org/1999/xhtml">
-      <h3>Buttons:</h3>
-      <dl>
-        { for $link in $links/etc:link
-          return
-            <dt>
-              <a href="{$link/@href}" title="{$link/@title}" class="button">
-                { if ($link/@rel) then $link/@rel else () }
-                <img src="/graphics/{$link/@image}" alt="{$link/@alt}" border="0"/>
-              </a>
-            </dt>
-        }
-      </dl>
-    </div>
-};
-
 declare function local:random-list($max as xs:integer,
                                    $count as xs:integer,
                                    $numbers as xs:integer*) as xs:integer* {
@@ -201,15 +145,15 @@ declare function local:icons() {
                  $alwayslinks/etc:link[4])
 
   return
-  <div class="icons">
-    { for $link in $links
-      return
-        <a href="{$link/@href}" title="{$link/@title}" class="button">
-          { if ($link/@rel) then $link/@rel else () }
-          <img src="/graphics/{$link/@image}" alt="{$link/@alt}" border="0" class="icon"/>
-        </a>
-    }
-  </div>
+    <div class="icons">
+      { for $link in $links
+        return
+          <a href="{$link/@href}" title="{$link/@title}" class="button">
+            { if ($link/@rel) then $link/@rel else () }
+            <img src="/graphics/{$link/@image}" alt="{$link/@alt}" border="0" class="icon"/>
+          </a>
+      }
+    </div>
 };
 
 let $homeuri  := if (nwn:admin()) then "/home.admin.html" else "/home.html"
@@ -234,21 +178,7 @@ return
     </head>
     <body>
       <div id="banner">
-        <div id="hnav">
-          { if (nwn:admin())
-            then
-              attribute { QName("","class") } { "admin" }
-            else
-              ()
-          }
-          { if (nwn:admin())
-            then
-              (<span>{"&#160;"}</span>,
-              <div id="admin" class="admin">Welcome admin</div>)
-            else
-              ()
-          }
-        </div>
+        <div id="hnav"></div>
         { let $base := "http://chart.apis.google.com/chart?chs=125x125&amp;cht=qr"
           let $text := "http://norman.walsh.name/"
           return
@@ -262,6 +192,15 @@ return
           {format-dateTime(nwn:most-recent-update(), "[D01] [MNn,*-3] [Y0001]")}
       </div>
     </div>
+    { if (nwn:admin())
+      then
+        <div class="admin" id="admin">
+          <span>Welcome admin | </span>
+          <a href="/admin/promote">promote</a>
+        </div>
+      else
+        ()
+    }
     <div id="content">
       <div class="abstract">
         <p>Norm's musings. Make of them what you will.</p>
@@ -332,10 +271,6 @@ return
           <dt><a href="/coverage">Geo</a></dt>
         </dl>
       </div>
-
-{(:
-      { local:homelinks() }
-:)}
 
       { let $sq := cts:element-attribute-range-query(
                        xs:QName("itin:trip"), QName("","startDate"), ">=",

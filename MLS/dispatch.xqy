@@ -236,6 +236,25 @@ declare function local:decorate($uri as xs:string, $body as document-node()?) {
 
         { nwn:banner($essay) }
 
+        { if (nwn:admin())
+          then
+            <div id="admin" class="admin">
+              { if (starts-with(xdmp:node-uri($essay), "/staging/"))
+                then
+                  (<a href="/admin/promote?post=post&amp;{$uri}=1">promote</a>,
+                   <span>&#160;|&#160;</span>)
+                 else
+                   ()
+              }
+              <a href="/admin/taxonomy?uri={nwn:httpuri($uri)}">taxonomy</a>
+              <span>&#160;|&#160;</span>
+              <a href="/admin/flush-cache?uri={nwn:httpuri($uri)}">flush cache</a>
+              <span>&#160;</span>
+            </div>
+          else
+            ()
+        }
+
         { local:walk($body/html:div) }
 
         { if (xdmp:document-get-collections(xdmp:node-uri($essay)) = $nwn:icoll)

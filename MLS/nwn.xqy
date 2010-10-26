@@ -517,26 +517,9 @@ as element(html:div)
 {
   <div id="banner" xmlns="http://www.w3.org/1999/xhtml">
     <div id="hnav">
-      { if (nwn:admin())
-        then
-          attribute { QName("","class") } { "admin" }
-        else
-          ()
-      }
       <div class="title">
         <a href="/">Norman<span class="punct">.</span>Walsh<span class="punct">.name</span></a>
       </div>
-      { if (nwn:admin())
-        then
-          <div id="admin" class="admin">
-            <a href="/promote.xqy?post=post&amp;/staging{$uri}.xml=1">promote</a>
-            <span>&#160;|&#160;</span>
-            <a href="/flush-cache?uri={$uri}">flush cache</a>
-            <span>&#160;</span>
-          </div>
-        else
-          ()
-      }
     </div>
     { if (empty($uri))
       then
