@@ -23,7 +23,7 @@ close (F);
 print "Content-type: text/plain\n\n";
 
 my @results = ();
-open (F, "calabash -isource=$temp /MarkLogic/nwn/apache/xpl/validate-essay.xpl 2>$err |");
+open (F, "/Users/ndw/bin/calabash -isource=$temp /MarkLogic/nwn/apache/xpl/validate-essay.xpl 2>$err |");
 while (<F>) {
     push (@results, $_);
 }
