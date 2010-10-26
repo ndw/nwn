@@ -22,10 +22,6 @@ declare variable $rwopts
          <pattern>^/cgi-bin/talkback(\?(.*))?$</pattern>
          <replace>/talkback.xqy$1</replace>
        </map>
-       <map method="POST">
-         <pattern>^(/pub/[^?]+)(\?(.*))?$</pattern>
-         <replace>/post.xqy?uri=$1&amp;$3</replace>
-       </map>
        <map>
          <pattern>^/(\?.*)?$</pattern>
          <replace>/default.xqy$1</replace>
@@ -156,6 +152,12 @@ declare variable $rwopts
          <pattern>^/process-comment/([^\?]+)(\?(.*))$</pattern>
          <privilege uri="http://norman.walsh.name/ns/priv/weblog-update">execute</privilege>
          <replace>/admin/process-comment.xqy?action=$1&amp;$3</replace>
+       </map>
+
+       <map method="POST">
+         <pattern>^(/[^?]+)(\?(.*))?$</pattern>
+         <privilege uri="http://norman.walsh.name/ns/priv/weblog-update">execute</privilege>
+         <replace>/post.xqy?uri=$1&amp;$3</replace>
        </map>
 
        <map>
