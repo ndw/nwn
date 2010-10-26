@@ -149,11 +149,25 @@
 
   <xsl:variable name="monthDays" select="day-from-date($last)"/>
 
+  <!--
+  <xsl:message>date: <xsl:value-of select="$date"/></xsl:message>
+  -->
+
   <!-- [Fo]: 1=monday, 2=tuesday, ... 6=saturday, 7=sunday -->
   <!-- [Fo] mod 7: 0=sunday, 1=monday, ... 5=friday, 6=saturday -->
+  <!--
   <xsl:variable name="firstDay"
 		select="xs:decimal(format-date($date,'[F1]','en',(),'us'))
 			mod 7"/>
+  -->
+
+  <!-- MARKLOGIC XSLT BUG 12150
+       [Fo]: 1=sunday, 2=monday, ... 6=friday, 7=saturday
+       [Fo] mod 7: 1=sunday, 2=monday, ... 6=friday, 0=saturday -->
+  <xsl:variable name="firstDayBug"
+		select="xs:decimal(format-date($date,'[F1]','en',(),'us'))
+			mod 7"/>
+  <xsl:variable name="firstDay" select="if ($firstDayBug=0) then 6 else $firstDayBug - 1"/>
 
   <!--
   <xsl:message>firstday: <xsl:value-of select="$firstDay"/></xsl:message>
