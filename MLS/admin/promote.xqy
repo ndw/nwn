@@ -1,7 +1,7 @@
 xquery version "1.0-ml";
 
 import module namespace nwn="http://norman.walsh.name/ns/modules/utils"
-       at "nwn.xqy";
+       at "/nwn.xqy";
 
 declare default function namespace "http://www.w3.org/2005/xpath-functions";
 
@@ -70,7 +70,7 @@ declare function local:show-page() {
     </head>
     <body>
       <h1>Promote pages</h1>
-      <form action="/promote.xqy" method="POST">
+      <form action="/admin/promote" method="POST">
         <input type="hidden" name="post" value="1"/>
         <dl>
           { for $page in collection($nwn:scoll)

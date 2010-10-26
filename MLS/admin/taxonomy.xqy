@@ -1,7 +1,7 @@
 xquery version "1.0-ml";
 
 import module namespace nwn="http://norman.walsh.name/ns/modules/utils"
-       at "nwn.xqy";
+       at "/nwn.xqy";
 
 declare namespace atom="http://www.w3.org/2005/Atom";
 declare namespace db="http://docbook.org/ns/docbook";
@@ -97,7 +97,16 @@ return
       return
         (xdmp:document-insert($this, $updessay, (), ($tcoll, $extrac)),
          xdmp:node-replace($doc/db:essay/db:info, $updessay/db:info),
-         concat("Updated subjects for ", $uri, ".xml"))
+         <html xmlns="http://www.w3.org/1999/xhtml">
+           <head>
+             <title>Taxonomy</title>
+             <meta http-equiv='refresh' content="0;url={$uri}"/>
+           </head>
+           <body>
+             <h1>Taxonomy</h1>
+             <p>Updated subjects for <a href="{$uri}">{$uri}.xml</a>.</p>
+           </body>
+         </html>)
     else
       <html xmlns="http://www.w3.org/1999/xhtml">
         <head>
@@ -105,7 +114,7 @@ return
         </head>
         <body>
           <h1>Taxonomy</h1>
-          <form action="/taxonomy.xqy" method="get">
+          <form action="/admin/taxonomy" method="get">
             <input type="hidden" name="uri" value="{$uri}"/>
             <input type="hidden" name="update" value="update"/>
             <dl>
