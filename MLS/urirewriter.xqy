@@ -23,7 +23,7 @@ declare variable $rwopts
          <replace>/talkback.xqy$1</replace>
        </map>
        <map method="POST">
-         <pattern>^(/[^?]+)(\?(.*))?$</pattern>
+         <pattern>^(/pub/[^?]+)(\?(.*))?$</pattern>
          <replace>/post.xqy?uri=$1&amp;$3</replace>
        </map>
        <map>
@@ -137,10 +137,21 @@ declare variable $rwopts
        </map>
 
        <map>
-         <pattern>^/flush-cache(\?(.*))$</pattern>
+         <pattern>^/admin/flush-cache(\?(.*))$</pattern>
          <privilege uri="http://norman.walsh.name/ns/priv/weblog-update">execute</privilege>
          <replace>/admin/flush-cache.xqy$1</replace>
        </map>
+       <map>
+         <pattern>^/admin/taxonomy(\?(.*))$</pattern>
+         <privilege uri="http://norman.walsh.name/ns/priv/weblog-update">execute</privilege>
+         <replace>/admin/taxonomy.xqy$1</replace>
+       </map>
+       <map>
+         <pattern>^/admin/promote(\?(.*))?$</pattern>
+         <privilege uri="http://norman.walsh.name/ns/priv/weblog-update">execute</privilege>
+         <replace>/admin/promote.xqy$1</replace>
+       </map>
+
        <map>
          <pattern>^/process-comment/([^\?]+)(\?(.*))$</pattern>
          <privilege uri="http://norman.walsh.name/ns/priv/weblog-update">execute</privilege>
