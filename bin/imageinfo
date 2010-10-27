@@ -1,0 +1,34 @@
+#!/usr/bin/perl -- # -*- Perl -*-
+
+use strict;
+use LWP;
+use Image::Info qw(image_info);
+use Getopt::Std;
+use vars qw($opt_h);
+
+my $usage = "Usage: $0 [-h host] dburi-of-image\n";
+
+die $usage if ! getopts('h:');
+
+my $image = shift;
+my $info = undef;
+my $host = $opt_h ? $opt_h : "localhost:7123";
+
+my $ua = new LWP::UserAgent;
+my $req = new HTTP::Request("GET" => "http://$host/admin/raw$image");
+my $resp = $ua->request($req);
+my $data = $resp->content();
+$info = image_info(\$data);
+
+my $height = $info->{'height'};
+my $width = $info->{'width'};
+
+if ($width =~ /^\d+/ && $height =~ /^\d+/) {
+    my $uri = "http://$host/admin/setprop?uri=$image&height=$height&width=$width";
+    $req = new HTTP::Request("GET" => $uri);
+    $resp = $ua->request($req);
+    $data = $resp->content();
+    print $data;
+} else {
+    die "Failed to read dimensions from $image: ${width}x$height\n";
+}
