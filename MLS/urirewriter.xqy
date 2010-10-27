@@ -147,6 +147,16 @@ declare variable $rwopts
          <privilege uri="http://norman.walsh.name/ns/priv/weblog-update">execute</privilege>
          <replace>/admin/promote.xqy$1</replace>
        </map>
+       <map>
+         <pattern>^/admin/setprop(\?(.*))?$</pattern>
+         <privilege uri="http://norman.walsh.name/ns/priv/weblog-update">execute</privilege>
+         <replace>/admin/setprop.xqy$1</replace>
+       </map>
+       <map>
+         <pattern>^/admin/raw(/.+)$</pattern>
+         <privilege uri="http://norman.walsh.name/ns/priv/weblog-update">execute</privilege>
+         <replace>/admin/raw.xqy?uri=$1</replace>
+       </map>
 
        <map>
          <pattern>^/process-comment/([^\?]+)(\?(.*))$</pattern>
