@@ -896,4 +896,18 @@
   </div>
 </xsl:template>
 
+<!-- ====================================================================== -->
+
+<xsl:template name="dbt:image-properties" as="xs:integer*">
+  <xsl:param name="image" required="yes"/>
+
+  <xsl:variable name="uri" select="nwn:docuri($image)"/>
+  <xsl:variable name="width"
+                select="xdmp:document-get-properties($uri, xs:QName('etc:width'))[1]"/>
+  <xsl:variable name="height"
+                select="xdmp:document-get-properties($uri, xs:QName('etc:height'))[1]"/>
+
+  <xsl:sequence select="($height,$width)"/>
+</xsl:template>
+
 </xsl:stylesheet>
