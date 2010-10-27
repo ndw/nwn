@@ -43,7 +43,7 @@
    xmlns:p="http://nwalsh.com/rdf/pim#"
 -->
 
-<xsl:import href="docbook/stylesheets/base/html/marklogic.xsl"/>
+<xsl:import href="mldbhtml.xsl"/>
 
 <xdmp:import-module namespace="http://norman.walsh.name/ns/modules/utils"
                     href="/nwn.xqy"/>
