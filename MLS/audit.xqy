@@ -12,7 +12,8 @@ declare variable $ip := if (xdmp:get-request-header("X-Real-IP", ()))
 
 declare function audit:_audit($node as element()) as empty-sequence() {
   xdmp:invoke("/audit-add.xqy",
-              (xs:QName("node"), $node),
+              (xs:QName("node"), $node,
+               xs:QName("uri"), ""),
               <options xmlns="xdmp:eval">
                 <database>{xdmp:database("nwn-audit")}</database>
               </options>)
