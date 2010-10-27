@@ -10,16 +10,12 @@ declare variable $ip := if (xdmp:get-request-header("X-Real-IP", ()))
                         then xdmp:get-request-header("X-Real-IP")
                         else xdmp:get-request-client-address();
 
-declare variable $perms := (xdmp:permission("weblog-reader", "read"),
-                            xdmp:permission("weblog-editor", "read"),
-                            xdmp:permission("weblog-editor", "update"));
-
 declare function audit:_audit($node as element()) as empty-sequence() {
-  let $tstamp := format-dateTime(current-dateTime(), "/audit/[Y0001]-[M01]-[D01]/[H01]/")
-  let $docuri := concat($tstamp, xdmp:integer-to-hex(xdmp:random()), ".xml")
-  return
-    xdmp:document-insert($docuri, $node, $perms,
-                         "http://norman.walsh.name/ns/collections/audit")
+  xdmp:invoke("/audit-add.xqy",
+              (xs:QName("node"), $node),
+              <options xmlns="xdmp:eval">
+                <database>{xdmp:database("nwn-audit")}</database>
+              </options>)
 };
 
 declare function audit:http($verb as xs:string, $uri as xs:string, $code as xs:decimal?)
