@@ -1,7 +1,5 @@
 xquery version "1.0-ml";
 
-module namespace pop="http://norman.walsh.name/ns/modules/utils/popular";
-
 import module namespace nwn="http://norman.walsh.name/ns/modules/utils"
        at "nwn.xqy";
 
@@ -28,7 +26,7 @@ declare variable $irrext     := cts:or-query(for $ext in ("atom")
 declare variable $irrelevant := cts:or-query(($irrdir, $irrext));
 
 
-declare function pop:urilist($startTime as xs:dateTime) as element()* {
+declare function local:urilist($startTime as xs:dateTime) as element()* {
   let $agequery := cts:element-range-query(xs:QName("audit:datetime"), ">=", $startTime)
   let $posquery := cts:and-query(($agequery, $r200))
   let $uris     := cts:element-values(xs:QName("audit:uri"), (),
@@ -56,7 +54,7 @@ declare function pop:urilist($startTime as xs:dateTime) as element()* {
          <dl>
            { for $ref in $refs
              return
-               <dt>{pop:link($ref)}</dt>
+               <dt>{local:link($ref)}</dt>
            }
          </dl>
        </dd>
@@ -64,13 +62,13 @@ declare function pop:urilist($startTime as xs:dateTime) as element()* {
        ())
 };
 
-declare function pop:link($ref as xs:string) as element()* {
+declare function local:link($ref as xs:string) as element()* {
   let $host := substring-before(substring-after($ref, "//"), "/")
   let $base := concat("http://", $host, "/")
   let $s    := if ($host = "images.search.yahoo.com")
-               then pop:param($ref, "p")
+               then local:param($ref, "p")
                else if ($host = "www.bing.com" or contains($host, "www.google."))
-               then pop:param($ref, "q")
+               then local:param($ref, "q")
                else ()
   return
     if ($ref = "")
@@ -83,7 +81,7 @@ declare function pop:link($ref as xs:string) as element()* {
        <span xmlns="http://www.w3.org/1999/xhtml">&#160;{$s}</span>)
 };
 
-declare function pop:param($ref as xs:string, $name as xs:string) as xs:string? {
+declare function local:param($ref as xs:string, $name as xs:string) as xs:string? {
   let $qparam := substring-after($ref, "?")
   let $params := tokenize($qparam, "&amp;")
   let $stwith := concat($name, "=")
@@ -99,17 +97,16 @@ declare function pop:param($ref as xs:string, $name as xs:string) as xs:string? 
     $param[1]
 };
 
-declare function pop:popular() as element(html:div) {
-  <div xmlns="http://www.w3.org/1999/xhtml">
-    <h2>Popular today</h2>
-    <dl>
-      { pop:urilist(xs:dateTime(format-dateTime(current-dateTime(),
+<div xmlns="http://www.w3.org/1999/xhtml">
+  <h2>Popular today</h2>
+  <dl>
+    { local:urilist(xs:dateTime(format-dateTime(current-dateTime(),
                                                 "[Y0001]-[M01]-[D01]T00:00:00"))) }
-    </dl>
-    <h2>Popular this week</h2>
-    <dl>
-      { pop:urilist(current-dateTime() - xs:dayTimeDuration("P7D")) }
-    </dl>
-  </div>
-};
+  </dl>
+  <h2>Popular this week</h2>
+  <dl>
+    { local:urilist(current-dateTime() - xs:dayTimeDuration("P7D")) }
+  </dl>
+</div>
+
 
