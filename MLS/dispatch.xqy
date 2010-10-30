@@ -252,6 +252,50 @@ declare function local:decorate($uri as xs:string, $body as document-node()?) {
             ()
         }
 
+        { let $this  := concat("http://norman.walsh.name", nwn:httpuri($uri))
+          let $replq := cts:element-value-query(QName("http://purl.org/dc/terms/", "replaces"),
+                                                $this, ("exact"))
+          let $repl  := cts:search(collection($nwn:pcoll), $replq)
+          return
+            if (empty($repl))
+            then
+              ()
+            else
+              <div class="replaced">
+                { "Attention: this essay is no longer current. It has been replaced by " }
+                { if (count($repl) = 1)
+                  then
+                    let $essay := doc(xdmp:node-uri($repl))/db:essay
+                    return
+                      <span>
+                        <a href="{nwn:httpuri(xdmp:node-uri($repl))}">
+                          <cite>{string($essay/db:info/db:title)}</cite>
+                        </a>
+                        { " from " }
+                        { format-dateTime(xs:dateTime($essay/db:info/mldb:pubdate), 
+                                          "[D01] [MNn,*-3] [Y0001].")
+                        }
+                      </span>
+                  else
+                    <ul>
+                      { for $essay in $repl/db:essay
+                        order by $essay/db:info/mldb:pubdate descending
+                        return
+                          <li>
+                            <a href="{nwn:httpuri(xdmp:node-uri($essay))}">
+                              <cite>{string($essay/db:info/db:title)}</cite>
+                            </a>
+                            { ", " }
+                            { format-dateTime(xs:dateTime($essay/db:info/mldb:pubdate), 
+                                              "[D01] [MNn,*-3] [Y0001]")
+                            }
+                          </li>
+                      }
+                    </ul>
+                }
+              </div>
+        }
+
         { local:walk($body/html:div) }
 
         { if (xdmp:document-get-collections(xdmp:node-uri($essay)) = $nwn:icoll)

@@ -133,6 +133,14 @@ div.attribution {
   background-color: #FFFFDD;
 }
 
+div.replaced {
+  border: 1px solid #aeaeae;
+  background-color: #FFCECE;
+  margin-top: 1em;
+  margin-left: 20px;
+  padding: 5px;
+}
+
 #content,
 .body-content {
   margin-left: 20px;
