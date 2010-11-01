@@ -14,6 +14,7 @@ declare namespace patom="http://purl.org/atom/ns#";
 declare namespace rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 declare namespace t="http://norman.walsh.name/ns/taxonomy";
 declare namespace ttag="http://developers.technorati.com/wiki/RelTag#";
+declare namespace xlink="http://www.w3.org/1999/xlink";
 
 declare default function namespace "http://www.w3.org/2005/xpath-functions";
 
@@ -188,6 +189,7 @@ declare function local:decorate($uri as xs:string, $body as document-node()?) {
         </script>
         <script type="text/javascript" src="/js/nwn.js">
         </script>
+
         { if (starts-with($uri, "/staging/"))
           then
             (<meta name="lastmodified.time" content="{$essay/db:info/mldb:updated}"/>,
@@ -221,6 +223,19 @@ declare function local:decorate($uri as xs:string, $body as document-node()?) {
           then
 	    (<script src="/js/MapUtils.js" type="text/javascript"/>,
 	     <script src="/js/FlightMap.js" type="text/javascript"/>)
+          else
+            ()
+        }
+        { if ($essay//db:para[@xlink:actuate='onLoad'])
+          then
+            (<script type="text/javascript" src="/js/gmapfunc.js"></script>,
+             <script type="text/javascript">// Populate map(s)
+$(document).ready(function() {{
+  { for $id in $essay//db:para[@xlink:actuate='onLoad']/@xml:id
+    return
+      "addMapMarks();&#10;"
+  }
+}});</script>)
           else
             ()
         }
