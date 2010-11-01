@@ -10,7 +10,7 @@
 
 function checkUpToDate() {
     var docuri = $("meta[name='document.uri']").attr("content");
-    $.getJSON("http://localhost:7123/ajax/lm.xqy", { "uri": docuri }, upToDateCallback);
+    $.getJSON("http://localhost:8401/ajax/lm.xqy", { "uri": docuri }, upToDateCallback);
 }
 
 function upToDateCallback(data) {
