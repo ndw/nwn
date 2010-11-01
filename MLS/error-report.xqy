@@ -1,8 +1,5 @@
 xquery version "1.0-ml";
 
-import module namespace nwn="http://norman.walsh.name/ns/modules/utils"
-       at "nwn.xqy";
-
 import module namespace audit="http://norman.walsh.name/ns/modules/audit"
        at "audit.xqy";
 
@@ -53,28 +50,15 @@ declare function local:errors($age as xs:dateTime) {
 
 let $now := current-dateTime()
 return
-  <html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-      <title>Error report</title>
-      { nwn:css-links() }
-    </head>
-    <body>
-      { nwn:banner("/errors", "Error report", (), ()) }
-      <div id="content">
-        <div class="abstract">
-          <p>It all went pear shaped.</p>
-        </div>
-
-        <h1>In the last hour...</h1>
-        { local:errors($now - xs:dayTimeDuration("PT1H")) }
-        <h1>In the last day...</h1>
-        { local:errors($now - xs:dayTimeDuration("P1D")) }
-        <h1>In the last week...</h1>
-        { local:errors($now - xs:dayTimeDuration("P7D")) }
-        <h1>In the last month...</h1>
-        { local:errors($now - xs:dayTimeDuration("P31D")) }
-
-      </div>
-      { nwn:footer() }
-    </body>
-  </html>
+  <div xmlns="http://www.w3.org/1999/xhtml">
+    <h3>In the last hour...</h3>
+    { local:errors($now - xs:dayTimeDuration("PT1H")) }
+    <h3>In the last day...</h3>
+    { local:errors($now - xs:dayTimeDuration("P1D")) }
+{(:
+    <h3>In the last week...</h3>
+    { local:errors($now - xs:dayTimeDuration("P7D")) }
+    <h3>In the last month...</h3>
+    { local:errors($now - xs:dayTimeDuration("P31D")) }
+:)}
+  </div>

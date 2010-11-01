@@ -153,6 +153,11 @@ declare variable $rwopts
          <replace>/admin/setprop.xqy$1</replace>
        </map>
        <map>
+         <pattern>^/admin/errors(\?(.*))?$</pattern>
+         <privilege uri="http://norman.walsh.name/ns/priv/weblog-update">execute</privilege>
+         <replace>/admin/errors.xqy$1</replace>
+       </map>
+       <map>
          <pattern>^/admin/raw(/.+)$</pattern>
          <privilege uri="http://norman.walsh.name/ns/priv/weblog-update">execute</privilege>
          <replace>/admin/raw.xqy?uri=$1</replace>
