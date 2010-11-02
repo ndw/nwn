@@ -586,10 +586,35 @@ declare function local:comments($essay as element(db:essay)) as element() {
     </div>
 };
 
+declare function local:special-case-404($uri as xs:string) {
+  <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+      <title>Resource not found</title>
+      { nwn:css-links() }
+    </head>
+    <body>
+      { nwn:banner((), concat("Resource not found: ", $uri), (), ()) }
+      <div id="content">
+        <div class="abstract">
+          <p>We apologize for the inconvenience...</p>
+        </div>
+        <p>There's nothing here with that name. I've reported the problem, perhaps
+        Norm will be able to get it online.</p>
+      </div>
+      { nwn:footer() }
+    </body>
+  </html>
+};
+
 let $docuri := nwn:docuri($uri)
 return
   if (doc-available($docuri))
   then
     doc($docuri)
   else
-    local:decorate(concat($docuri, ".xml"), nwn:format-essay($docuri))
+    if (contains($docuri, "/examples/") and doc-available(concat($docuri, ".xml")))
+    then
+      (xdmp:set-response-code(404, "Document does not exist."),
+       local:special-case-404($uri))
+    else
+      local:decorate(concat($docuri, ".xml"), nwn:format-essay($docuri))
