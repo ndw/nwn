@@ -484,7 +484,14 @@ declare function local:include($pi as processing-instruction()) as element()? {
                     <database>{xdmp:database("nwn-audit")}</database>
                   </options>)
     else
-      xdmp:log(concat("Unexpected include: ", $pi))
+      if (contains(string($pi), "/2008/03/31/places.html"))
+      then
+        xdmp:invoke("/modules/nearbyphotos.xqy", (),
+                    <options xmlns="xdmp:eval">
+                      <database>{xdmp:database("Flickr")}</database>
+                    </options>)
+      else
+        xdmp:log(concat("Unexpected include: ", $pi))
 };
 
 declare function local:sonnet() as element(html:div) {
