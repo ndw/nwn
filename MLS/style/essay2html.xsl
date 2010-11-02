@@ -639,7 +639,7 @@
 
 <xsl:template match="db:para[@xlink:actuate='onLoad']" priority="100">
   <div class="artwork" id="{@xml:id}" style="width: 540px; height: 540px;"/>
-  <div id="{@xml:id}_messages"></div>
+  <div class="map-messages" id="{@xml:id}_messages"></div>
   <script type="text/javascript" src="{nwn:httpuri(resolve-uri(@xlink:href, base-uri(.)))}"></script>
 </xsl:template>
 
