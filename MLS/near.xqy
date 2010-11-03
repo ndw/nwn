@@ -72,6 +72,14 @@ let $here  := (for $place in cts:search(/rdf:Description,
               order by cts:distance($center, $p)
               return
                 $place)[1]
+
+(: I wish I could do this in the browser, but XSS... :)
+let $geo   := xdmp:http-get(concat("http://maps.googleapis.com/maps/api/geocode/xml?latlng=",
+                                             $lat, ",", $long, "&amp;sensor=false"))[2]
+let $geores := $geo/GeocodeResponse/result[type="political"]
+let $locality := string(($geores/address_component[type="locality" and type="political"])[1]/long_name)
+let $country := string(($geores/address_component[type="country" and type="political"])[1]/long_name)
+
 let $nearby := local:nearby-essays($center)
 return
   <html xmlns="http://www.w3.org/1999/xhtml" v="urn:schemas-microsoft-com:vml">
@@ -99,7 +107,11 @@ $(document).ready(function() {{
           <p>Essays near
           { if (empty($here))
             then
-              concat($lat, ", ", $long, ".")
+              if ($locality != "" and $country != "")
+              then
+                concat($locality, ", ", $country)
+              else
+                concat($lat, ", ", $long, ".")
             else
               concat(($here/c:associatedTitle, $here/c:associatedName)[1], ".")
           }
@@ -122,7 +134,6 @@ if (GBrowserIsCompatible()) {{
               { local:format-nearby-essays($nearby) }
             </dl>
         }
-
       </div>
       { nwn:footer() }
     </body>
