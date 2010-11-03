@@ -27,10 +27,14 @@ declare default function namespace "http://www.w3.org/2005/xpath-functions";
                               cts:element-value-query(xs:QName("flickr:locality"), $locality)))
                let $count := xdmp:estimate(cts:search(collection(), $cq))
                let $photo := cts:search(collection(), $cq)[1]
+               let $region := string($photo/flickr:photo/flickr:location/flickr:region)
                let $lat := xs:decimal($photo/flickr:photo/flickr:location/@latitude)
                let $long := xs:decimal($photo/flickr:photo/flickr:location/@longitude)
                return
-                 <dt>{$count} photographs near <a href="/near/{$lat},{$long}">{$locality}</a></dt>
+                 <dt>{$count} photographs
+                   <a href="/near/{$lat},{$long}">near {$locality}</a>
+                   { if ($region = "") then () else concat(", ", $region) }
+                 </dt>
            }
          </dl>
        </dd>)

@@ -19,26 +19,27 @@ declare default function namespace "http://www.w3.org/2005/xpath-functions";
 
 declare option xdmp:mapping "false";
 
-declare function local:nearby-essays($center as cts:point) {
+declare function local:nearby-essays($center as cts:point) as element(essay)* {
   let $geoq := cts:element-pair-geospatial-query(
                            xs:QName("mldb:geoloc"),
                            xs:QName("geo:lat"), xs:QName("geo:long"),
                            cts:circle(100, $center))
-  let $nearby
-    := for $essay in cts:search(collection($nwn:ecoll),
-                           cts:and-not-query($geoq, cts:collection-query($nwn:vcoll)))/db:essay
-       let $p := cts:point($essay/db:info/mldb:geoloc[1]/geo:lat,
-                           $essay/db:info/mldb:geoloc[1]/geo:long)
-       order by cts:distance($center, $p) ascending,
-                $essay/db:info/mldb:pubdate descending
-       return
-         <essay>
-           <dist>{format-number(cts:distance($center, $p), "0")}</dist>
-           <uri>{xdmp:node-uri($essay)}</uri>
-         </essay>
+  return
+    for $essay in cts:search(collection($nwn:ecoll),
+                        cts:and-not-query($geoq, cts:collection-query($nwn:vcoll)))/db:essay
+    let $p := cts:point($essay/db:info/mldb:geoloc[1]/geo:lat,
+                        $essay/db:info/mldb:geoloc[1]/geo:long)
+    order by cts:distance($center, $p) ascending,
+             $essay/db:info/mldb:pubdate descending
+    return
+      <essay>
+        <dist>{format-number(cts:distance($center, $p), "0")}</dist>
+        <uri>{xdmp:node-uri($essay)}</uri>
+      </essay>
+};
 
+declare function local:format-nearby-essays($nearby as element(essay)*) {
    let $groups := xdmp:xslt-invoke("/style/nearby.xsl", document {<doc>{$nearby}</doc>})/essays
-
    for $dist in $groups/dist
    let $mi := string($dist/@mi)
    let $uris := $dist/uri
@@ -71,11 +72,25 @@ let $here  := (for $place in cts:search(/rdf:Description,
               order by cts:distance($center, $p)
               return
                 $place)[1]
+let $nearby := local:nearby-essays($center)
 return
-  <html xmlns="http://www.w3.org/1999/xhtml">
+  <html xmlns="http://www.w3.org/1999/xhtml" v="urn:schemas-microsoft-com:vml">
     <head>
       <title>Nearby...</title>
       { nwn:css-links() }
+      <script type="text/javascript" src="/js/jquery-1.4.2.min.js">
+      </script>
+      <script type="text/javascript" src="/js/nwn.js">
+      </script>
+      <style type="text/css">v\:* {{ behavior:url(#default#VML); }}</style>
+      <script type="text/javascript"
+              src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAO1qAaQsvBqLxt1nDHmVdXRT2NEtcpIGhYQyn6m1C7TS31DAKixTrwZexV8cQaZV92n_CCyWlNd6Mxw">
+      </script>
+      <script type="text/javascript" src="/js/gmapfunc.js"></script>
+      <script type="text/javascript">// Populate map(s)
+$(document).ready(function() {{
+      addMapMarks()
+}});</script>
     </head>
     <body>
       { nwn:banner(concat("/near?lat=", $lat, ",", $long), "Nearby...", (), ()) }
@@ -90,9 +105,24 @@ return
           }
           </p>
         </div>
-        <dl>
-          { local:nearby-essays($center) }
-        </dl>
+
+        <div class="artwork" id="map" style="width: 540px; height: 540px;"></div>
+        <div class="map-messages" id="map_messages"></div>
+        <script type="text/javascript">
+if (GBrowserIsCompatible()) {{
+   var map = new GMap2(document.getElementById("map"));
+   configureMap(map, {$lat}, {$long}, 12);
+}}</script>
+
+        { if (empty($nearby))
+          then
+            <p>There are no nearby essays.</p>
+          else
+            <dl>
+              { local:format-nearby-essays($nearby) }
+            </dl>
+        }
+
       </div>
       { nwn:footer() }
     </body>
