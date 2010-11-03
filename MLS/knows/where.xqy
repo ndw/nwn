@@ -51,6 +51,25 @@ declare function local:html($rdf as element(rdf:Description)?) as element(html:h
       <link rel="contents" title="Contents" href="/dates.html" />
       <link rel="index" title="Index" href="/subjects.html" />
       { nwn:css-links() }
+
+      { if ($rdf/geo:lat and $rdf/geo:long)
+        then
+          (<script type="text/javascript" src="/js/jquery-1.4.2.min.js">,
+           </script>,
+           <script type="text/javascript" src="/js/nwn.js">
+           </script>,
+           <style type="text/css">v\:* {{ behavior:url(#default#VML); }}</style>,
+           <script type="text/javascript"
+                   src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAO1qAaQsvBqLxt1nDHmVdXRRmKWS1301z5Fh_GGbkv8hbLjV6hhQ4is-kQXREdm4xdeaGAevsL6pqpA">
+           </script>,
+           <script type="text/javascript" src="/js/gmapfunc.js"></script>,
+           <script type="text/javascript">// Populate map(s)
+$(document).ready(function() {{
+      addMapMarks()
+}});</script>)
+        else
+           ()
+      }
     </head>
     <body>
       { nwn:banner(nwn:httpuri(xdmp:node-uri($rdf)),
@@ -62,6 +81,20 @@ declare function local:html($rdf as element(rdf:Description)?) as element(html:h
           else
             ()
         }
+
+      { if ($rdf/geo:lat and $rdf/geo:long)
+        then
+          (<div class="artwork" id="map" style="width: 540px; height: 540px;"></div>,
+           <div class="map-messages" id="map_messages"></div>,
+           <script type="text/javascript">
+if (GBrowserIsCompatible()) {{
+   var map = new GMap2(document.getElementById("map"));
+   configureMap(map, {string($rdf/geo:lat)}, {string($rdf/geo:long)}, 13);
+}}</script>)
+        else
+          ()
+      }
+
         <dl>
           <dt>URI</dt>
           <dd>
