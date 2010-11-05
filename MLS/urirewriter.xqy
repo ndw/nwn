@@ -63,11 +63,6 @@ declare variable $rwopts
          <replace>/local.xqy?uri=$1&amp;$3</replace>
        </map>
        <map>
-         <pattern>^/errors(\?(.*))?$</pattern>
-         <privilege uri="http://norman.walsh.name/ns/priv/weblog-update">execute</privilege>
-         <replace>/error-report.xqy$1</replace>
-       </map>
-       <map>
          <pattern>^(/audit/.+)$</pattern>
          <privilege uri="http://norman.walsh.name/ns/priv/weblog-update">execute</privilege>
          <exists>$1</exists>
