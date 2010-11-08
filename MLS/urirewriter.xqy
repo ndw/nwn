@@ -241,6 +241,12 @@ declare variable $rwopts
          <exists>/production$1.flickrmap</exists>
          <replace>/imageredir.xqy?map=/production$1.flickrmap&amp;image=$2&amp;uri=$1$2.jpg</replace>
        </map>
+       <map>
+         <pattern>^/(.*/images/.*)$</pattern>
+         <function apply="doc-exists"
+                   ns="http://norman.walsh.name/ns/modules/utils" at="nwn.xqy">/$1.jpg</function>
+         <replace>/serve.xqy?uri=/$1.jpg</replace>
+       </map>
      </options>;
 
 let $uri    := xdmp:get-request-url()
