@@ -551,7 +551,7 @@ as element(html:div)
           (<span class="date">
              { format-dateTime($pubdate, "[D01] [MNn,*-3] [Y0001]") }
            </span>,
-           if (empty($moddate) or not(nwn:same-date($moddate,$pubdate)))
+           if (empty($moddate) or nwn:same-date($moddate,$pubdate))
            then
              ()
            else
