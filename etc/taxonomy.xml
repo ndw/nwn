@@ -102,6 +102,12 @@
                <skos:prefLabel>JavaOne '04</skos:prefLabel>
             </JavaOne04>
          </JavaOne>
+         <TPAC anchor="tpac" ttag:tag="tpac">
+            <skos:altLabel>W3C TPAC</skos:altLabel>
+            <TPAC2010>
+               <skos:prefLabel>W3C TPAC 2010</skos:prefLabel>
+            </TPAC2010>
+         </TPAC>
          <MLUC anchor="mluc" ttag:tag="MLUC">
             <MLUC2010 anchor="mluc10" ttag:tag="mluc10">
                <skos:prefLabel>Mark Logic User Conference 2010</skos:prefLabel>
