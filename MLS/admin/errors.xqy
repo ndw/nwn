@@ -13,7 +13,7 @@ declare default function namespace "http://www.w3.org/2005/xpath-functions";
   <body>
     { nwn:banner("/admin/errors", "Errors", (), current-dateTime()) }
     <div id="content">
-      { xdmp:invoke("/error-report.xqy", (),
+      { xdmp:invoke("/modules/error-report.xqy", (),
                     <options xmlns="xdmp:eval">
                       <database>{xdmp:database("nwn-audit")}</database>
                     </options>)
