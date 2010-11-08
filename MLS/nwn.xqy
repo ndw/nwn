@@ -592,7 +592,12 @@ declare function nwn:format-essay($uri as xs:string) as document-node()? {
     then
       if (xs:dateTime($cacheddt) > xs:dateTime($sourcedt))
       then
-        let $trace := xdmp:log(concat("Cached ", $uri))
+        let $ref := xdmp:get-request-header("Referer")
+        let $ip  := if (xdmp:get-request-header("X-Real-IP", ()))
+                    then xdmp:get-request-header("X-Real-IP")
+                    else xdmp:get-request-client-address()
+        let $trace := xdmp:log(concat("Cached ", $uri, " for ", $ip,
+                                      if (empty($ref)) then "" else concat(": ", $ref)))
         return
           doc($cached)
       else
