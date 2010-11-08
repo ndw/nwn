@@ -137,7 +137,7 @@ declare function local:patch($doc as document-node()) as document-node() {
   let $pnums := for $p in $doc//db:para[matches(@xml:id, "^p\d+$")]
                 return
                   xs:integer(substring($p/@xml:id, 2))
-  let $set := xdmp:set($paraid, max($pnums)+1)
+  let $set := xdmp:set($paraid, if (empty($pnums)) then 1 else max($pnums)+1)
   return
     document { local:walk($doc/node()) }
 };
