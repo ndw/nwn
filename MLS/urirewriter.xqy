@@ -63,12 +63,6 @@ declare variable $rwopts
          <replace>/local.xqy?uri=$1&amp;$3</replace>
        </map>
        <map>
-         <pattern>^(/audit/.+)$</pattern>
-         <privilege uri="http://norman.walsh.name/ns/priv/weblog-update">execute</privilege>
-         <exists>$1</exists>
-         <replace>/serve.xqy?uri=$1</replace>
-       </map>
-       <map>
          <pattern>^/knows/who/((.*)\.html)?(\?(.*))?$</pattern>
          <replace>/knows/who.xqy?who=$2&amp;type=html&amp;$4</replace>
        </map>
@@ -241,6 +235,11 @@ declare variable $rwopts
          <pattern>^(.+\.xml)$</pattern>
          <privilege uri="http://norman.walsh.name/ns/priv/weblog-update">execute</privilege>
          <replace>/create.xqy?uri=$1</replace>
+       </map>
+       <map>
+         <pattern>^(/.*/images/)([^/]+)\.jpg$</pattern>
+         <exists>/production$1.flickrmap</exists>
+         <replace>/imageredir.xqy?map=/production$1.flickrmap&amp;image=$2&amp;uri=$1$2.jpg</replace>
        </map>
      </options>;
 
