@@ -59,6 +59,10 @@ declare variable $rwopts
          <replace>/feed.xqy?feed=$2&amp;type=rss&amp;$4</replace>
        </map>
        <map>
+         <pattern>^/index.rss$</pattern>
+         <replace>/feed.xqy?feed=whatsnew&amp;type=rss</replace>
+       </map>
+       <map>
          <pattern>^/local(/[^?]+)(\?(.*))?$</pattern>
          <replace>/local.xqy?uri=$1&amp;$3</replace>
        </map>
