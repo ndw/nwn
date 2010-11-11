@@ -178,6 +178,9 @@
          <MarkLogic ttag:tag="marklogic">
             <rdfs:seeAlso rdf:resource="http://www.marklogic.com/"/>
             <skos:prefLabel>Mark Logic</skos:prefLabel>
+            <InformationStudio ttag:tag="informationstudio">
+              <skos:prefLabel>Information Studio</skos:prefLabel>
+            </InformationStudio>
          </MarkLogic>
       </Organizations>
       <People icon="people">
