@@ -110,7 +110,7 @@ declare function local:index() as element(html:html) {
           { for $rdf in /rdf:Description[rdf:type/@rdf:resource="http://xmlns.com/foaf/0.1/Person"]
             order by concat($rdf/foaf:surname, ",", $rdf/foaf:firstName)
             return
-              <dt>
+              <dt id="{substring-after($rdf/@rdf:about, 'knows/who/')}">
                 <a href="/knows/who/{substring-after($rdf/@rdf:about, 'knows/who/')}">
                   { string($rdf/foaf:name) }
                 </a>

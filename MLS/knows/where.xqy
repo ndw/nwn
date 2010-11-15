@@ -222,7 +222,7 @@ declare function local:index() as element(html:html) {
                                          ="http://nwalsh.com/rdf/contacts#Place"]
             order by string($rdf/c:associatedName)
             return
-              <dt>
+              <dt id="{substring-after($rdf/@rdf:about, 'knows/where/')}">
                 <a href="/knows/where/{substring-after($rdf/@rdf:about, 'knows/where/')}">
                   { string($rdf/c:associatedName) }
                 </a>

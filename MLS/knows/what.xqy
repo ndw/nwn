@@ -221,7 +221,7 @@ declare function local:index() as element(html:html) {
                                          and starts-with(xdmp:node-uri(.), "/production/")]
             order by string($rdf/c:associatedName)
             return
-              <dt>
+              <dt id="{substring-after($rdf/@rdf:about, 'knows/what/')}">
                 <a href="/knows/what/{substring-after($rdf/@rdf:about, 'knows/what/')}">
                   { string($rdf/c:associatedName) }
                 </a>
