@@ -69,6 +69,14 @@
             </NewYears>
          </Holidays>
       </Celebrations>
+
+      <Gastronomy>
+        <Candy/>
+        <PotentPotables anchor="potentpotables" ttag:tag="potentpotables">
+          <skos:prefLabel>Potent Potables</skos:prefLabel>
+        </PotentPotables>
+      </Gastronomy>
+
       <Community/>
       <Conferences feed="conferences">
          <Balisage anchor="balisage" ttag:tag="balisageConference">
@@ -163,9 +171,6 @@
          <Books ttag:tag="books"/>
          <Contests/>
          <Humor/>
-         <PotentPotables anchor="potentpotables" ttag:tag="potentpotables">
-            <skos:prefLabel>Potent Potables</skos:prefLabel>
-         </PotentPotables>
          <TV ttag:tag="television">
             <skos:altLabel>TV</skos:altLabel>
             <skos:prefLabel>Television</skos:prefLabel>
@@ -473,6 +478,7 @@
                   <rdfs:seeAlso rdf:resource="http://xproc.org/"/>
                   <Calabash ttag:tag="calabash">
                      <rdfs:seeAlso rdf:resource="http://xmlcalabash.com/"/>
+                     <skos:prefLabel>XML Calabash</skos:prefLabel>
                   </Calabash>
                   <XProcBook ttag:tag="xprocbook">
                      <rdfs:seeAlso rdf:resource="http://xprocbook.com/"/>
