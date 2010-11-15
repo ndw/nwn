@@ -566,7 +566,7 @@ as element(html:div)
 declare function nwn:same-date($d1 as xs:dateTime, $d2 as xs:dateTime) as xs:boolean {
   (year-from-dateTime($d1) = year-from-dateTime($d2)
    and month-from-dateTime($d1) = month-from-dateTime($d2)
-   and day-from-dateTime($d1) = month-from-dateTime($d2))
+   and day-from-dateTime($d1) = day-from-dateTime($d2))
 };
 
 declare function nwn:footer() as element(html:div) {
