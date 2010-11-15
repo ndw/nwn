@@ -149,8 +149,6 @@
   </xsl:perform-sort>
 </xsl:variable>
 
-<xsl:variable name="flickr.xml" select="document('/home/ndw/flickr.xml')"/>
-
 <xsl:variable name="images.xml" select="document('/etc/images.xml')/*"/>
 
 <!-- ====================================================================== -->
