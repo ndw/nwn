@@ -43,6 +43,9 @@
                <SelfPortrait anchor="SelfPortraits">
                   <skos:prefLabel>Self Portraits</skos:prefLabel>
                </SelfPortrait>
+               <StreetArt>
+                  <skos:prefLabel>Street Art</skos:prefLabel>
+               </StreetArt>
             </Photography>
             <Programming feed="programming" ttag:tag="programming"/>
             <Travel icon="travel" ttag:tag="travel"/>
