@@ -11,8 +11,12 @@ declare variable $perms := (xdmp:permission("weblog-reader", "read"),
                             xdmp:permission("weblog-editor", "read"),
                             xdmp:permission("weblog-editor", "update"));
 
-declare function local:run-task($task as element()) {
-  let $trace := xdmp:log(concat("Running queued task: ", xdmp:node-uri($task)))
+declare variable $maxtasks := 1; (: Only doing one now, while debugging the task server problems :)
+declare variable $tasklist := cts:search(collection(), cts:directory-query("/tasks/", "1"));
+declare variable $tasks    := $tasklist[1 to $maxtasks];
+
+declare function local:run-task($index as xs:int, $task as element()) {
+  let $trace := xdmp:log(concat("Running queued task (", $index, " of ", $maxtasks, "; ", count($tasklist), " remain): ", xdmp:node-uri($task)))
   return
   typeswitch ($task)
     case element(flickr:update-user-photos)
@@ -92,13 +96,10 @@ declare function local:get-photo-data($photo as element(flickr:photo)) as elemen
     </photo>
 };
 
-let $tasklist := cts:search(collection(), cts:directory-query("/tasks/", "1"))
-let $tasks := $tasklist[1] (: Only doing one now, while debugging the task server problems :)
-return
-  if (empty($tasks))
-  then
-    ()
-  else
-    for $task in $tasks
-    return
-      local:run-task($task/*)
+if (empty($tasks))
+then
+  ()
+else
+   for $task at $index in $tasks
+   return
+     local:run-task($index, $task/*)
