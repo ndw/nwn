@@ -30,7 +30,7 @@
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:xdmp="http://marklogic.com/xdmp"
                 xmlns:nwn="http://norman.walsh.name/ns/modules/utils"
-                xmlns:flickr="http://norman.walsh.name/ns/flickr"
+                xmlns:flickr="http://www.flickr.com/services/api/"
                 exclude-result-prefixes="atom db dbf dbm dbt html itin c cvs daml
 					 dc dcterms etc f foaf gal geo
 					 m out rdf rdfs skos nwn flickr
@@ -342,8 +342,7 @@
 		select="substring-before(substring-after($uri,'/photos/ndw/'),
 			                 '/')"/>
 
-  <xsl:variable name="photo" as="element()?"
-		select="doc(concat('/production/etc/photos/', $photoId, '.xml'))/*"/>
+  <xsl:variable name="photo" as="element()?" select="nwn:get-photo($photoId)"/>
 
   <xsl:variable name="flickr.width"
 		select="$photo/flickr:sizes/flickr:size[@label='Medium']/@width"/>
@@ -364,7 +363,6 @@
   </xsl:variable>
 
   <xsl:variable name="title" select="$photo/flickr:title"/>
-  <xsl:variable name="desc" select="$photo/flickr:description"/>
 
   <xsl:variable name="t_geotagged"
 		select="$photo/flickr:tags/flickr:tag[@raw='geotagged']"/>
@@ -419,14 +417,6 @@
       <h3>
 	<xsl:value-of select="$title[1]"/>
       </h3>
-
-      <xsl:if test="$desc != ''">
-	<div class="description">
-	  <p>
-	    <xsl:value-of select="$desc[1]"/>
-	  </p>
-	</div>
-      </xsl:if>
     </div>
   </div>
 </xsl:template>

@@ -660,3 +660,13 @@ declare function nwn:subject-mentions($page as xs:string) as xs:decimal {
   return
     xdmp:estimate(cts:search(/db:essay, cts:and-query((cts:collection-query($nwn:pcoll), $q))))
 };
+
+declare function nwn:get-photo($photoid as xs:string) as element()? {
+  let $doc := xdmp:invoke("/get-photo.xqy",
+                          (fn:QName("","photoid"), $photoid),
+                          <options xmlns='xdmp:eval'>
+                            <database>{xdmp:database("Flickr")}</database>
+                          </options>)
+  return
+    $doc/*
+};
