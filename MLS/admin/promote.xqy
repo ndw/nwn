@@ -75,12 +75,15 @@ declare function local:show-page() {
         <dl>
           { for $page in collection($nwn:scoll)
             let $uri := xdmp:node-uri($page)
+            let $href := if (starts-with($uri, "/staging/comments/"))
+                         then substring-after(substring-before($uri, "."), "/staging/comments")
+                         else nwn:httpuri($uri)
             order by $uri
             return
               <dt>
                 <input type="checkbox" name="{$uri}"/>
                 { "&#160;" }
-                <a href="{nwn:httpuri($uri)}">{ $uri }</a>
+                <a href="{$href}">{ $uri }</a>
               </dt>
           }
         </dl>
