@@ -549,8 +549,16 @@ declare function local:comments($essay as element(db:essay)) as element() {
                       { $comment/patom:content/node() }
                     </div>
                     <div class="name">
-                      Posted by <a href="{$comment/patom:author/patom:uri}">
-                      {string($comment/patom:author/patom:name)}</a> on 
+                      Posted by
+                      { if (normalize-space($comment/patom:author/patom:uri) != "")
+                        then
+                          <a href="{$comment/patom:author/patom:uri}">
+                            {string($comment/patom:author/patom:name)}
+                          </a>
+                        else
+                          string($comment/patom:author/patom:name)
+                      }
+                      { " on " }
                       {format-dateTime($comment/patom:modified,
                                        "[D01] [MNn,*-3] [Y0001] @ [h01]:[m01][P] UTC")}
                       { " " }
