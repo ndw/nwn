@@ -278,28 +278,34 @@ return
         let $eq := cts:element-attribute-range-query(
                        xs:QName("itin:trip"), QName("","startDate"), "<=",
                        current-dateTime() + xs:dayTimeDuration("P180D"))
+        let $cq := cts:collection-query(($nwn:pcoll,
+                       if (nwn:show-staging()) then $nwn:scoll else ()))
         let $q  := cts:and-not-query(
-                       cts:and-query(($sq,$eq)),
+                       cts:and-query(($sq,$eq,$cq)),
                        cts:collection-query($nwn:vcoll))
         let $r  := cts:search(collection($nwn:ecoll), $q)/db:essay
         return
-          <div class="itinerary">
-            <h3>Upcoming travel:</h3>
-            <dl>
-            { for $trip in $r
-              let $start := $trip/itin:trip/@startDate
-              let $title := $trip/db:info/db:title
-              return
-                (<dt>
-                   { if (year-from-dateTime($start) = year-from-dateTime(current-dateTime()))
-                     then format-dateTime($start, "[D01] [MNn,*-3]")
-                     else format-dateTime($start, "[D01] [MNn,*-3] [Y0001]")
-                   }
-                 </dt>,
-                 <dd><a href="{nwn:httpuri(xdmp:node-uri($trip))}">{string($title)}</a></dd>)
-            }
-            </dl>
-          </div>
+          if (empty($r))
+          then
+            ()
+          else
+            <div class="itinerary">
+              <h3>Upcoming travel:</h3>
+              <dl>
+              { for $trip in $r
+                let $start := $trip/itin:trip/@startDate
+                let $title := $trip/db:info/db:title
+                return
+                  (<dt>
+                     { if (year-from-dateTime($start) = year-from-dateTime(current-dateTime()))
+                       then format-dateTime($start, "[D01] [MNn,*-3]")
+                       else format-dateTime($start, "[D01] [MNn,*-3] [Y0001]")
+                     }
+                   </dt>,
+                   <dd><a href="{nwn:httpuri(xdmp:node-uri($trip))}">{string($title)}</a></dd>)
+              }
+              </dl>
+            </div>
       }
 
       <div class="disclaimer">I work at MarkLogic Corporation. The opinions
