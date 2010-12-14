@@ -3,31 +3,12 @@
 #
 # rdf:
 # dc:title Google mapping functions
-# dc:date 2010-10-31
+# dc:date 2010-12-13
 # dc:creator http://norman.walsh.name/knows/who/norman-walsh
-# dc:description Utility routines for Google Map plots.
+# dc:description Utility routines for Google Map plots. Updated for Google Maps V3.
 */
 
-var icon = new GIcon();
-icon.image = "http://norman.walsh.name/googlemap/x.png";
-icon.shadow = "http://norman.walsh.name/googlemap/xshadow.png";
-icon.iconSize = new GSize(3, 3);
-icon.shadowSize = new GSize(3, 3);
-icon.iconAnchor = new GPoint(1, 1);
-icon.infoWindowAnchor = new GPoint(2, 0);
-
 var colors = ["red", "blue", "green", "orange", "cyan", "pink", "purple", "yellow"];
-var photoIcons = new Object();
-for (idx in colors) {
-    var micon = new GIcon();
-    micon.image = "http://norman.walsh.name/graphics/pins/" + colors[idx] + ".png";
-    micon.shadow = "http://norman.walsh.name/graphics/pins/shadow.png";
-    micon.iconSize = new GSize(32, 32);
-    micon.shadowSize = new GSize(56, 32);
-    micon.iconAnchor = new GPoint(16, 32);
-    micon.infoWindowAnchor = new GPoint(16, 0);
-    photoIcons[colors[idx]] = micon;
-}
 
 var ndwid = "24401095@N00";
 
@@ -38,71 +19,57 @@ var localMarkers = new Array();
 var markerDiv = "";
 var photographerCount = 0;
 
-function configureMap(map,lat,lon,mag) {
-    map.addMapType(G_PHYSICAL_MAP);
-    map.addControl(new GLargeMapControl());
-    map.addControl(new GMapTypeControl());
-    map.setCenter(new GLatLng(lat,lon),mag)
+var mapdata;
+var map;
 
-    //GEvent.addListener(map,"dragend",mapDragged);
-    //GEvent.addListener(map,"zoomend",mapZoomed);
-    // moveend seems to subsume dragend and zoomend, and I don't want multiple calls...
-    GEvent.addListener(map,"moveend",mapDragged);
+function plotTracks(mparam, divid) {
+    mapdata = mparam;
 
-    return map;
-}
+    var latlng = new google.maps.LatLng(mapdata.centerlat, mapdata.centerlng);
+    var mapopts = {
+        zoom: mapdata.zoom,
+        center: latlng,
+    };
 
-// Creates one of our tracking points
-function createPoint(point) {
-    var opts = {
-        icon: icon,
-        clickable: true,
-        title: "Point #" + point.pointcount
+    if (mapdata.type == "terrain") {
+        mapopts.mapTypeId = google.maps.MapTypeId.TERRAIN
+    } else { // FIXME: deal with the other types...
+        mapopts.mapTypeId = google.maps.MapTypeId.ROADMAP
     }
-    var marker = new GMarker(point, opts);
-    GEvent.addListener(marker, "click", function() {
-        var html = "<div>Track point #" + point.pointcount;
-        if (point.timestamp != '') {
-            html = html + " on<br />" + point.timestamp + "<br />";
-        } else {
-            html = html + "<br />";
+
+    map = new google.maps.Map(document.getElementById(divid), mapopts);
+
+    for (var pos = 0; pos < mapdata.tracks.length; pos++) {
+        var track = mapdata.tracks[pos];
+        var points = new Array();
+        for (var ppos = 0; ppos < track.length; ppos++) {
+            var pt = track[ppos];
+            points.push(trkPt(map,pt.lat,pt.lng,pt.ele,pt.time,pt.dist,pt.velocity,pt.count));
         }
-        html = html + "Lat: " + point.latitude + "<br />";
-        html = html + "Lon: " + point.longitude + "<br />";
-        html = html + "Ele: " + point.elevation + "<br />";
-        html = html + "Dis: " + point.distance + "mi<br />";
-        if (point.unitsperhour != 'unk') {
-            html = html + "Spd: " + point.unitsperhour + "mi/hr<br />";
+
+        var lopts = {
+            path: points,
+            strokeColor: mapdata.trackColor,
+            strokeWeight: mapdata.strokeWeight,
+            strokeOpacity: mapdata.strokeOpacity
         }
-        html = html + "</div>";
-        marker.openInfoWindowHtml(html);
-    });
-    map.addOverlay(marker);
-}
 
-// Creates a popup marker
-function createMarker(point,name) {
-    var marker = new GMarker(point);
-    var html = "<b>" + name + "</b>";
-    GEvent.addListener(marker, "click", function() {
-        marker.openInfoWindowHtml(html);
-    });
+        if (mapdata.lastTrackColor != null && pos+1 == mapdata.tracks.length) {
+            lopts.strokeColor = mapdata.lastTrackColor;
+        }
 
-    return marker;
-}
+        var line = new google.maps.Polyline(lopts);
+        line.setMap(map);
+    }
 
-// Creates a popup image marker
-function createImageMarker(lat,lon,opts,html) {
-    var marker = new GMarker(new GPoint(lon,lat), opts);
-    GEvent.addListener(marker, "click", function() {
-        marker.openInfoWindowHtml(html);
-    });
-    return marker;
+    if (mapdata.showImageMarks) {
+        google.maps.event.addListener(map, 'bounds_changed', addMapMarks);
+    }
 }
 
 // Creates an extended GPoint
-function trkPt(lat, lon, elev, time, dist, uph, count) {
-    var pt = new GPoint(lon, lat);
+function trkPt(map, lat, lon, elev, time, dist, uph, count) {
+    var pt = new google.maps.LatLng(lat,lon);
     pt.latitude = lat;
     pt.longitude = lon;
     pt.elevation = elev;
@@ -110,22 +77,47 @@ function trkPt(lat, lon, elev, time, dist, uph, count) {
     pt.distance = dist;
     pt.unitsperhour = uph;
     pt.pointcount = count;
+
+    if (mapdata.showTrackMarks) {
+        var opts = {
+            icon: "http://norman.walsh.name/googlemap/x.png",
+            position: pt,
+            title: "Point #" + count,
+            map: map
+        };
+
+        var mark = new google.maps.Marker(opts);
+
+        var html = "<div>Track point #" + count;
+        html = html + " on<br />" + time + "<br />";
+        html = html + "Lat: " + lat + "<br />";
+        html = html + "Lon: " + lon + "<br />";
+        html = html + "Ele: " + elev + "<br />";
+        html = html + "Dis: " + dist + "mi<br />";
+        if (uph != null) {
+            html = html + "Spd: " + uph + "mi/hr<br />";
+        }
+        html = html + "</div>";
+
+        var infowindow = new google.maps.InfoWindow({
+            content: html
+        });
+
+        google.maps.event.addListener(mark, 'click', function() { infowindow.open(map,mark); });
+    }
+
     return pt;
-}
-
-function mapDragged() {
-    addMapMarks();
-}
-
-function mapZoomed(oldLevel,newLevel) {
-    addMapMarks();
 }
 
 function addMapMarks() {
     var clat = map.getCenter().lat();
     var clon = map.getCenter().lng();
-
     var bounds = map.getBounds();
+
+    if (bounds == null) {
+        return;
+    }
+
     var southWest = bounds.getSouthWest();
     var northEast = bounds.getNorthEast();
 
@@ -135,7 +127,7 @@ function addMapMarks() {
     var maxlat = northEast.lat();
     var maxlng = northEast.lng();
 
-    var id = $(map.getContainer()).attr("id");
+    var id = $(map.getDiv()).attr("id");
 
     $("#" + id + "_messages").html("Loading photographs...");
 
@@ -154,15 +146,12 @@ function moreMapMarks() {
     placeMapMarks(data);
 }
 
-/*
-function moveMapTo(lat,lon) {
-    var center = new GLatLng(lat,lon);
-    map.setCenter(center);
-}
-*/
-
 function clearMapMarks() {
-    map.clearOverlays();
+    // Remove the markers from the map...
+    for (var id in imageMarkers) {
+        imageMarkers[id].setMap(null);
+    }
+
     imageMarkers = new Object();
     photoColors = new Object();
     colorIdx = 1;
@@ -186,17 +175,17 @@ function placeMapMarks(data) {
 
     while (pos < markers.length) {
 	var m = markers[pos];
+        var markobj = m;
 	total += m.more + 1;
 
-	if (imageMarkers[m.id] == 1) {
+	if (imageMarkers[markobj.id]) {
 	    // This one's already on the map
 	    pos += m.more + 1; // Skip the others at this coord
 	    showing += m.more + 1;
 	    continue;
-	}
+        }
 
 	if (limit > 0) {
-	    imageMarkers[m.id] = 1;
 	    showing += m.more + 1;
 
 	    if (photoColors[m.nsid] == undefined) {
@@ -223,21 +212,18 @@ function placeMapMarks(data) {
 		}
 	    }
 
-	    var opts = {
-		icon: photoIcons[photoColors[m.nsid]],
-		clickable: true
-	    }
+            var wtitle = "";
 
 	    if (samedate && samephotog) {
 		if (m.more > 0) {
-		    opts.title = (m.more+1) + " photos by " + m.date.substr(15)
+		    wtitle = (m.more+1) + " photos by " + m.date.substr(15)
 		} else {
-		    opts.title = '"' + m.title + '" taken ' + m.date
+		    wtitle = '"' + m.title + '" taken ' + m.date
 		}
 	    } else if (samephotog) {
-		opts.title = (m.more+1) + " photos by " + m.date.substr(15)
+		wtitle = (m.more+1) + " photos by " + m.date.substr(15)
 	    } else {
-		opts.title = (m.more+1) + " photographs"
+		wtitle = (m.more+1) + " photographs"
 	    }
 
 	    var maxthumb = 9;
@@ -292,8 +278,18 @@ function placeMapMarks(data) {
 
 	    html += "</p>" + morep;
 
-	    // It's ok to use m.lat/m.lon because they're all the same
-	    map.addOverlay(createImageMarker(m.lat,m.lon,opts,html));
+	    var markopts = {
+                icon: "http://norman.walsh.name/graphics/pins/" + photoColors[m.nsid] + ".png",
+                position: new google.maps.LatLng(markobj.lat,markobj.lon),
+                title: wtitle,
+                map: map
+	    };
+
+            var infoopts = {
+                content: html
+            };
+
+            addMarker(markopts, infoopts, markobj.id);
 
 	    limit--;
 	    pos++
@@ -317,4 +313,13 @@ function placeMapMarks(data) {
     } else {
         $("#" + mapid + "_messages").html("There are no images on this map.");
     }
+}
+
+function addMarker(markopts, infoopts, id) {
+    var mark = new google.maps.Marker(markopts);
+    var info = new google.maps.InfoWindow(infoopts);
+    google.maps.event.addListener(mark, 'click', function() {
+        info.open(map,mark);
+    });
+    imageMarkers[id] = mark;
 }

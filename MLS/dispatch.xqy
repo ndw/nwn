@@ -18,15 +18,6 @@ declare namespace xlink="http://www.w3.org/1999/xlink";
 
 declare default function namespace "http://www.w3.org/2005/xpath-functions";
 
-declare variable $gmapkeys as element(mldb:key)+
-  := (<mldb:key year="2005">ABQIAAAAO1qAaQsvBqLxt1nDHmVdXRQaxGUNbORhLjKsdxT2fN7zfTlu6BQB3zlHgZpviSyUEZyXzE9bLYtfjQ</mldb:key>,
-      <mldb:key year="2006">ABQIAAAAO1qAaQsvBqLxt1nDHmVdXRRSBrM0wCQ9e1u_MYFPzUBRT0kXqxSxJyDsi5F41eyBVwpdT06rHx_LZQ</mldb:key>,
-      <mldb:key year="2007">ABQIAAAAO1qAaQsvBqLxt1nDHmVdXRSLojWLVFGEeYBSTbKNzBZocPoFCxQ4NTQHc32Yb5f7hlevcbLL0qRGdg</mldb:key>,
-      <mldb:key year="2008">ABQIAAAAO1qAaQsvBqLxt1nDHmVdXRS7GFsFDuVFY7uakuScJlP6OGtY0xRe2PvFyj8bhEFSr5wDxHtqG2SAGQ</mldb:key>,
-      <mldb:key year="2009">ABQIAAAAO1qAaQsvBqLxt1nDHmVdXRSYmGB0xIXypCwmDDwoeD2Eki7i9RQokr92iiT44f3iUvBsyxiMygIsjA</mldb:key>,
-      <mldb:key year="2010">ABQIAAAAO1qAaQsvBqLxt1nDHmVdXRQvJfc3DLMGLdPSbNVnGpgBD0-eYxTSScXws2F4hoWmFHoX4bFc6Qswww</mldb:key>,
-      <mldb:key year="2011">ABQIAAAAO1qAaQsvBqLxt1nDHmVdXRQNGsBBMSj5WVKWVKOt0X5wrR6q5hTQac_L7VAs0XmXP0Iati9xto-jrg</mldb:key>);
-
 declare option xdmp:mapping "false";
 declare option xdmp:output "indent=no";
 
@@ -123,13 +114,9 @@ declare function local:decorate($uri as xs:string, $body as document-node()?) {
   let $essay   := doc($uri)/db:essay
   let $pubdate := xs:dateTime($essay/db:info/mldb:pubdate)
 
-  let $gmapversion := 2
-  let $gmapkey := if ($essay//itin:trip/itin:itinerary/itin:leg[@class='flight']
-                      or $essay//itin:trip/itin:itinerary/itin:leg[@class='train'])
-                  then
-                    $gmapkeys[@year=substring($essay//itin:trip[1]/@startDate,1,4)]
-                  else
-                    string($essay/db:info/db:releaseinfo[@role="gmapkey"])
+  let $gmap as xs:boolean := ($essay//itin:trip/itin:itinerary/itin:leg[@class='flight']
+                              or $essay//itin:trip/itin:itinerary/itin:leg[@class='train'])
+                             or $essay//db:para[@xlink:actuate='onLoad']
 
   let $prop := xdmp:document-get-properties($uri, xs:QName("prop:last-modified"))[1]
   let $dt   := if ($prop castable as xs:dateTime)
@@ -163,10 +150,6 @@ declare function local:decorate($uri as xs:string, $body as document-node()?) {
 
   return
     <html xmlns="http://www.w3.org/1999/xhtml">
-      { if ($gmapkey != "")
-        then namespace { "v" } { "urn:schemas-microsoft-com:vml" }
-        else ()
-      }
       <head>
         <title>{string($essay/db:info/db:title)}</title>
         <meta name="DC.title" content="{string($essay/db:info/db:title)}"/>
@@ -210,20 +193,19 @@ declare function local:decorate($uri as xs:string, $body as document-node()?) {
         }
         { $essay/db:info/html:* }
 
-        { if ($gmapkey != "")
+        { if ($gmap)
           then
             (<style type="text/css">v\:* {{ behavior:url(#default#VML); }}</style>,
              <script type="text/javascript"
-             src="http://maps.google.com/maps?file=api&amp;v={$gmapversion}&amp;key={$gmapkey}">
-	     </script>)
+                     src="http://maps.google.com/maps/api/js?sensor=false">
+             </script>)
            else
              ()
         }
         { if ($essay//itin:trip/itin:itinerary/itin:leg[@class='flight']
 	      or $essay//itin:trip/itin:itinerary/itin:leg[@class='train'])
           then
-	    (<script src="/js/MapUtils.js" type="text/javascript"/>,
-	     <script src="/js/FlightMap.js" type="text/javascript"/>)
+	    <script src="/js/FlightMap.js" type="text/javascript"/>
           else
             ()
         }
@@ -234,7 +216,7 @@ declare function local:decorate($uri as xs:string, $body as document-node()?) {
 $(document).ready(function() {{
   { for $id in $essay//db:para[@xlink:actuate='onLoad']/@xml:id
     return
-      "addMapMarks();&#10;"
+      concat("plotTracks(mapdata, '", $id, "');&#10;")
   }
 }});</script>)
           else
