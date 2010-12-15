@@ -173,6 +173,8 @@ return
       <link rel="home" href="/" title="NWN" />
       <link rel="contents" title="Contents" href="/dates.html" />
       <link rel="index" title="Index" href="/subjects.html" />
+      <link rel="openid.server" href="https://pip.verisignlabs.com/server" />
+      <link rel="openid.delegate" href="http://ndw.pip.verisignlabs.com/" />
       { nwn:css-links() }
       <link rel="stylesheet" type="text/css" href="/css/home.css" />
     </head>
