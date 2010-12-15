@@ -21,6 +21,8 @@ var photographerCount = 0;
 
 var mapdata;
 var map;
+var lastUpdate = new Date();
+var timerRunning = false;
 
 function plotTracks(mparam, divid) {
     mapdata = mparam;
@@ -63,6 +65,7 @@ function plotTracks(mparam, divid) {
     }
 
     if (mapdata.showImageMarks) {
+        lastUpdate.setDate(lastUpdate.getDate() - 1); // Make sure we do the first update
         google.maps.event.addListener(map, 'bounds_changed', addMapMarks);
     }
 }
@@ -110,6 +113,24 @@ function trkPt(map, lat, lon, elev, time, dist, uph, count) {
 }
 
 function addMapMarks() {
+    lastUpdate = new Date();
+    if (!timerRunning) {
+        timerRunning = true;
+        $("body").everyTime(250, "maptimer", checkMovement);
+    }
+}
+
+function checkMovement() {
+    var date = new Date();
+    var diff = date - lastUpdate;
+
+    if (diff > 250) {
+        $("body").stopTime("maptimer");
+        timerRunning = false;
+    } else {
+        return;
+    }
+
     var clat = map.getCenter().lat();
     var clon = map.getCenter().lng();
     var bounds = map.getBounds();
