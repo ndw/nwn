@@ -178,7 +178,7 @@ declare function local:decorate($uri as xs:string, $body as document-node()?) {
           then
             (<meta name="lastmodified.time" content="{$essay/db:info/mldb:updated}"/>,
              <meta name="document.uri" content="{$uri}"/>,
-             <script type="text/javascript" src="/local/js/jquery.timers-1.2.js">
+             <script type="text/javascript" src="/js/jquery.timers-1.2.js">
              </script>,
              <script type="text/javascript" src="/local/js/staging.js">
              </script>)
@@ -211,8 +211,8 @@ declare function local:decorate($uri as xs:string, $body as document-node()?) {
         }
         { if ($essay//db:para[@xlink:actuate='onLoad'])
           then
-            (<script type="text/javascript" src="/local/js/gmapfunc.js"></script>,
-             <script type="text/javascript" src="/local/js/jquery.timers-1.2.js">
+            (<script type="text/javascript" src="/js/gmapfunc.js"></script>,
+             <script type="text/javascript" src="/js/jquery.timers-1.2.js">
              </script>,
              <script type="text/javascript">// Populate map(s)
 $(document).ready(function() {{
