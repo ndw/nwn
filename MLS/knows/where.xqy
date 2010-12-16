@@ -56,17 +56,13 @@ declare function local:html($rdf as element(rdf:Description)?) as element(html:h
         then
           (<script type="text/javascript" src="/js/jquery-1.4.2.min.js">,
            </script>,
+           <script type="text/javascript" src="/js/jquery.timers-1.2.js">
+           </script>,
            <script type="text/javascript" src="/js/nwn.js">
            </script>,
-           <style type="text/css">v\:* {{ behavior:url(#default#VML); }}</style>,
-           <script type="text/javascript"
-                   src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAO1qAaQsvBqLxt1nDHmVdXRRmKWS1301z5Fh_GGbkv8hbLjV6hhQ4is-kQXREdm4xdeaGAevsL6pqpA">
+           <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false">
            </script>,
-           <script type="text/javascript" src="/js/gmapfunc.js"></script>,
-           <script type="text/javascript">// Populate map(s)
-$(document).ready(function() {{
-      addMapMarks()
-}});</script>)
+           <script type="text/javascript" src="/js/gmapfunc.js"></script>)
         else
            ()
       }
@@ -87,10 +83,18 @@ $(document).ready(function() {{
           (<div class="artwork" id="map" style="width: 540px; height: 540px;"></div>,
            <div class="map-messages" id="map_messages"></div>,
            <script type="text/javascript">
-if (GBrowserIsCompatible()) {{
-   var map = new GMap2(document.getElementById("map"));
-   configureMap(map, {string($rdf/geo:lat)}, {string($rdf/geo:long)}, 13);
-}}</script>)
+var mapdata = {{
+     "centerlat": {string($rdf/geo:lat)},
+     "centerlng": {string($rdf/geo:long)},
+     "zoom": 13,
+     "showTrackMarks": false,
+     "showImageMarks": true,
+     "tracks": []
+}}</script>,
+           <script type="text/javascript">// Populate map(s)
+$(document).ready(function() {{
+      plotTracks(mapdata,"map")
+}});</script>)
         else
           ()
       }
