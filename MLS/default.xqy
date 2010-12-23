@@ -310,6 +310,20 @@ return
             </div>
       }
 
+      { if (nwn:admin())
+        then
+          <div class="stats">
+            <h3>Stats:</h3>
+            { xdmp:invoke("/admin/stats.xqy", (QName("","uri"), "/"),
+            <options xmlns="xdmp:eval">
+              <database>{xdmp:database("nwn-audit")}</database>
+              </options>)
+            }
+          </div>
+        else
+          ()
+      }
+
       <div class="disclaimer">I work at MarkLogic Corporation. The opinions
         expressed here are my own, and neither MarkLogic nor any other party
         necessarily agrees with them.
