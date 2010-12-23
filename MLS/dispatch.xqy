@@ -430,6 +430,20 @@ $(document).ready(function() {{
                  </dl>
                </div>)
           }
+
+          { if (nwn:admin())
+            then
+              <div class="stats">
+                 <h3>Stats:</h3>
+                 { xdmp:invoke("/admin/stats.xqy", (QName("","uri"), nwn:httpuri($uri)),
+                  <options xmlns="xdmp:eval">
+                    <database>{xdmp:database("nwn-audit")}</database>
+                  </options>)
+                 }
+              </div>
+            else
+              ()
+          }
         </div>
         { nwn:footer() }
       </body>
