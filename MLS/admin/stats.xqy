@@ -25,15 +25,16 @@ let $last7d  := for $count in reverse((0 to 7))
                   $endofday - $dur
 
 let $q-200  := cts:element-value-query(xs:QName("audit:code"), "200", ("exact"))
-let $q-uri  := cts:element-value-query(xs:QName("audit:uri"), $uri, ("exact"))
+let $q-uri  := if ($uri = "/")
+               then ()
+               else cts:element-value-query(xs:QName("audit:uri"), $uri, ("exact"))
 
 let $dcount := for $day in (1 to 7)
                let $q-s := cts:element-range-query(xs:QName("audit:datetime"), ">=", $last7d[$day])
                let $q-e := cts:element-range-query(xs:QName("audit:datetime"), "<=", $last7d[$day+1])
-               let $r   := cts:search(/audit:http,
-                                      cts:and-query(($q-200, $q-uri, $q-s, $q-e)))
                return
-                 count($r)
+                 xdmp:estimate(cts:search(/audit:http,
+                                          cts:and-query(($q-200, $q-uri, $q-s, $q-e))))
 
 let $daylbl := string-join(for $day in (1 to 7)
                            let $name := format-dateTime($last7d[$day], "[FNn,*-3]")
@@ -61,10 +62,9 @@ let $last24h := for $count in reverse((0 to 24))
 let $hcount := for $hour in (1 to 24)
                let $q-s := cts:element-range-query(xs:QName("audit:datetime"), ">=", $last24h[$hour])
                let $q-e := cts:element-range-query(xs:QName("audit:datetime"), "<=", $last24h[$hour+1])
-               let $r   := cts:search(/audit:http,
-                                      cts:and-query(($q-200, $q-uri, $q-s, $q-e)))
                return
-                 count($r)
+                 xdmp:estimate(cts:search(/audit:http,
+                                          cts:and-query(($q-200, $q-uri, $q-s, $q-e))))
 
 let $hourlbl := string-join(for $pos in (1 to 24)
                             let $hour := hours-from-dateTime($last24h[$pos])
