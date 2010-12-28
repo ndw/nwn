@@ -480,15 +480,25 @@
 <xsl:template name="it:time">
   <xsl:param name="hcal" select="0"/>
 
+  <xsl:variable name="sofs" as="xs:dayTimeDuration"
+                select="if (it:startOffset)
+                        then xs:dayTimeDuration(string(it:startOffset))
+                        else xs:dayTimeDuration('PT0H')"/>
+
+  <xsl:variable name="eofs" as="xs:dayTimeDuration"
+                select="if (it:endOffset)
+                        then xs:dayTimeDuration(string(it:endOffset))
+                        else xs:dayTimeDuration('PT0H')"/>
+
   <xsl:choose>
     <xsl:when test="$hcal != 0">
       <abbr class="dtstart" title="{it:startDate}">
-	<xsl:value-of select="format-dateTime(xs:dateTime(it:startDate),
+	<xsl:value-of select="format-dateTime(xs:dateTime(it:startDate) - $sofs,
 	                                      '[h01]:[m01][Pn,*-1]')"/>
       </abbr>
     </xsl:when>
     <xsl:otherwise>
-      <xsl:value-of select="format-dateTime(xs:dateTime(it:startDate),
+      <xsl:value-of select="format-dateTime(xs:dateTime(it:startDate) - $sofs,
 	                                    '[h01]:[m01][Pn,*-1]')"/>
     </xsl:otherwise>
   </xsl:choose>
@@ -498,12 +508,12 @@
   <xsl:choose>
     <xsl:when test="$hcal != 0">
       <abbr class="dtend" title="{it:endDate}">
-	<xsl:value-of select="format-dateTime(xs:dateTime(it:endDate),
+	<xsl:value-of select="format-dateTime(xs:dateTime(it:endDate) - $eofs,
 			                      '[h01]:[m01][Pn,*-1]')"/>
       </abbr>
     </xsl:when>
     <xsl:otherwise>
-      <xsl:value-of select="format-dateTime(xs:dateTime(it:endDate),
+      <xsl:value-of select="format-dateTime(xs:dateTime(it:endDate) - $eofs,
 			                    '[h01]:[m01][Pn,*-1]')"/>
     </xsl:otherwise>
   </xsl:choose>
