@@ -92,7 +92,7 @@
     <div class="calendar">
       <xsl:choose>
         <xsl:when test="substring(@startDate,1,7) != substring(@endDate,1,7)">
-          <table id="itincal" border="0" cellpadding="0" cellspacing="0" summary="Calendar">
+          <table id="itincal" border="0" cellpadding="0" cellspacing="0" summary="Calendar" class="calendar">
             <tr>
               <td valign="top">
                 <xsl:call-template name="calendar">
@@ -153,7 +153,7 @@
 <xsl:template match="it:itinerary">
   <p class="bigtitle">Itinerary:</p>
 
-  <table border="0" summary="Itinerary">
+  <table border="0" summary="Itinerary" class="itinerary">
     <xsl:apply-templates/>
   </table>
 </xsl:template>
@@ -165,10 +165,16 @@
 	<xsl:with-param name="hcal" select="1"/>
       </xsl:call-template>
     </td>
-    <td valign="top">
-      <xsl:call-template name="it:time">
+    <td valign="top" align="right">
+      <xsl:apply-templates select="it:startDate">
 	<xsl:with-param name="hcal" select="1"/>
-      </xsl:call-template>
+      </xsl:apply-templates>
+    </td>
+    <td valign="top">–</td>
+    <td valign="top">
+      <xsl:apply-templates select="it:endDate">
+	<xsl:with-param name="hcal" select="1"/>
+      </xsl:apply-templates>
     </td>
     <td valign="top">
       <xsl:call-template name="it:icon"/>
@@ -214,7 +220,7 @@
 <xsl:template match="it:lodging">
   <p class="bigtitle">Lodging:</p>
 
-  <table border="0" summary="Lodging">
+  <table border="0" summary="Lodging" class="lodging">
     <xsl:apply-templates/>
   </table>
 </xsl:template>
@@ -257,7 +263,7 @@
 <xsl:template match="it:rentalcars">
   <p class="bigtitle">Rental:</p>
 
-  <table border="0" summary="Rental cars">
+  <table border="0" summary="Rental cars" class="rentalcars">
     <xsl:apply-templates/>
   </table>
 </xsl:template>
@@ -294,7 +300,7 @@
 
 <xsl:template match="it:appointments">
   <p class="bigtitle">Appointments:</p>
-  <table border="0" summary="Appointments">
+  <table border="0" summary="Appointments" class="appointments">
     <xsl:apply-templates/>
   </table>
 </xsl:template>
@@ -477,7 +483,7 @@
   </xsl:if>
 </xsl:template>
 
-<xsl:template name="it:time">
+<xsl:template name="it:XXX-time">
   <xsl:param name="hcal" select="0"/>
 
   <xsl:variable name="sofs" as="xs:dayTimeDuration"
@@ -503,6 +509,13 @@
     </xsl:otherwise>
   </xsl:choose>
 
+  <xsl:if test="it:startTZ">
+    <abbr class="tz">
+      <xsl:text>&#160;</xsl:text>
+      <xsl:value-of select="it:startTZ"/>
+    </abbr>
+  </xsl:if>
+
   <xsl:text>–</xsl:text>
 
   <xsl:choose>
@@ -517,6 +530,85 @@
 			                    '[h01]:[m01][Pn,*-1]')"/>
     </xsl:otherwise>
   </xsl:choose>
+
+  <xsl:if test="it:endTZ">
+    <abbr class="tz">
+      <xsl:text>&#160;</xsl:text>
+      <xsl:value-of select="it:endTZ"/>
+    </abbr>
+  </xsl:if>
+</xsl:template>
+
+<xsl:template name="it:time">
+  <xsl:param name="hcal" select="0"/>
+
+  <xsl:apply-templates select="it:startDate">
+    <xsl:with-param name="hcal" select="$hcal"/>
+  </xsl:apply-templates>
+
+  <xsl:text>–</xsl:text>
+
+  <xsl:apply-templates select="it:endDate">
+    <xsl:with-param name="hcal" select="$hcal"/>
+  </xsl:apply-templates>
+</xsl:template>
+
+<xsl:template match="it:startDate">
+  <xsl:param name="hcal" select="0"/>
+
+  <xsl:variable name="sofs" as="xs:dayTimeDuration"
+                select="if (../it:startOffset)
+                        then xs:dayTimeDuration(string(../it:startOffset))
+                        else xs:dayTimeDuration('PT0H')"/>
+
+  <xsl:choose>
+    <xsl:when test="$hcal != 0">
+      <abbr class="dtstart" title="{.}">
+	<xsl:value-of select="format-dateTime(xs:dateTime(.) - $sofs,
+	                                      '[h01]:[m01][Pn,*-1]')"/>
+      </abbr>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:value-of select="format-dateTime(xs:dateTime(.) - $sofs,
+	                                    '[h01]:[m01][Pn,*-1]')"/>
+    </xsl:otherwise>
+  </xsl:choose>
+
+  <xsl:if test="../it:startTZ">
+    <abbr class="tz">
+      <xsl:text>&#160;</xsl:text>
+      <xsl:value-of select="../it:startTZ"/>
+    </abbr>
+  </xsl:if>
+</xsl:template>
+
+<xsl:template match="it:endDate">
+  <xsl:param name="hcal" select="0"/>
+
+  <xsl:variable name="eofs" as="xs:dayTimeDuration"
+                select="if (../it:endOffset)
+                        then xs:dayTimeDuration(string(../it:endOffset))
+                        else xs:dayTimeDuration('PT0H')"/>
+
+  <xsl:choose>
+    <xsl:when test="$hcal != 0">
+      <abbr class="dtend" title="{.}">
+	<xsl:value-of select="format-dateTime(xs:dateTime(.) - $eofs,
+			                      '[h01]:[m01][Pn,*-1]')"/>
+      </abbr>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:value-of select="format-dateTime(xs:dateTime(.) - $eofs,
+			                    '[h01]:[m01][Pn,*-1]')"/>
+    </xsl:otherwise>
+  </xsl:choose>
+
+  <xsl:if test="../it:endTZ">
+    <abbr class="tz">
+      <xsl:text>&#160;</xsl:text>
+      <xsl:value-of select="../it:endTZ"/>
+    </abbr>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template name="it:icon">
