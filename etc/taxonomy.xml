@@ -372,6 +372,7 @@
             <Sidekick anchor="sidekick" ttag:tag="sidekick"/>
             <iPhone anchor="iphone" ttag:tag="iphone"/>
             <Android anchor="android" ttag:tag="android"/>
+            <GalaxyTab anchor="galaxytab" ttag:tag="galaxytab"/>
          </Gadgets>
          <Greasemonkey ttag:tag="greasemonkey">
             <rdfs:seeAlso rdf:resource="http://en.wikipedia.org/wiki/Greasemonkey"/>
