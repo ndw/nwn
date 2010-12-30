@@ -631,6 +631,26 @@
   <script type="text/javascript" src="{nwn:httpuri(resolve-uri(@xlink:href, base-uri(.)))}"></script>
 </xsl:template>
 
+<xsl:template match="db:para[@revisionflag='deleted']">
+  <xsl:param name="class" select="''" tunnel="yes"/>
+
+  <p>
+    <xsl:call-template name="dbt:id"/>
+    <xsl:choose>
+      <xsl:when test="$class = ''">
+        <xsl:call-template name="class"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:attribute name="class" select="$class"/>
+      </xsl:otherwise>
+    </xsl:choose>
+
+    <del>
+      <xsl:apply-templates/>
+    </del>
+  </p>
+</xsl:template>
+
 <xsl:template match="db:phrase[@revisionflag='deleted']">
   <del>
     <xsl:apply-templates/>
