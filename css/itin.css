@@ -25,11 +25,16 @@ td.yearmonth {
   padding-bottom: 8px;
 }
 
+abbr.tz {
+  font-variant: small-caps;
+  font-size: 9pt;
+}
+
 /* ============================================================ */
 /* Maps */
 
-#mapmarks { 
+#mapmarks {
   font-family: sans-serif;
   font-size: small;
-  padding-top: 2px;            
+  padding-top: 2px;
 }
