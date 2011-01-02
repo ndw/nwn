@@ -55,6 +55,10 @@ declare variable $rwopts
          <replace>/feed.xqy?feed=$2&amp;type=atom&amp;$4</replace>
        </map>
        <map>
+         <pattern>^/atom(/(.*))(\?(.*))?$</pattern>
+         <replace>/feed.xqy?feed=$2&amp;type=atom&amp;$4</replace>
+       </map>
+       <map>
          <pattern>^/rss(/(.*)\.rss)?(\?(.*))?$</pattern>
          <replace>/feed.xqy?feed=$2&amp;type=rss&amp;$4</replace>
        </map>

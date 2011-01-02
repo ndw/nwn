@@ -214,5 +214,6 @@ return
     then
       local:sonnet-feed()
     else
-      (xdmp:set-response-code(404, "Not Found."),
+      (xdmp:log(concat("404 on feed=", $feed)),
+       xdmp:set-response-code(404, "Not Found."),
        concat("404 resource not found."))
