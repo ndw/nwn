@@ -12,13 +12,18 @@ declare variable $me
 
 declare option xdmp:mapping "false";
 
+let $tasklist := cts:search(collection(), cts:directory-query("/tasks/", "1"))
 let $contacts := ($me, flickr:contacts.getList((), 1000, ())/flickr:contact)
 return
-  (for $contact in $contacts
-   return
-     (xdmp:document-insert(concat("/flickr/contacts/", $contact/@nsid, ".xml"), $contact),
-      xdmp:document-insert(concat("/tasks/update-user-photos-", $contact/@nsid, ".xml"),
-                           <flickr:update-user-photos userid="{$contact/@nsid}"/>)),
-   concat("Read ", count($contacts), " users."),
-   xdmp:log(concat("Read ", count($contacts), " users.")))
-
+  if (empty($tasklist))
+  then
+    (for $contact in $contacts
+     return
+       (xdmp:document-insert(concat("/flickr/contacts/", $contact/@nsid, ".xml"), $contact),
+        xdmp:document-insert(concat("/tasks/update-user-photos-", $contact/@nsid, ".xml"),
+                             <flickr:update-user-photos userid="{$contact/@nsid}"/>)),
+     concat("Read ", count($contacts), " users."),
+     xdmp:log(concat("Read ", count($contacts), " users.")))
+  else
+    (xdmp:log(concat("Read ", count($contacts), " users.")),
+     xdmp:log(concat("Skipping queue, not empty. (size=", count($tasklist), ")")))
