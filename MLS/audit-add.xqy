@@ -10,6 +10,7 @@ declare variable $node external;
 declare variable $uri external;
 
 declare variable $perms := (xdmp:permission("weblog-reader", "read"),
+                            xdmp:permission("weblog-reader", "update"),
                             xdmp:permission("weblog-editor", "read"),
                             xdmp:permission("weblog-editor", "update"));
 
