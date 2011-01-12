@@ -32,7 +32,7 @@ then
   return
     if (empty($doc))
     then
-      xdmp:document-insert($docuri, <auditlog>{ $node }</auditlog>, $perms,
+      xdmp:document-insert($docuri, <audit:log>{ $node }</audit:log>, $perms,
                            "http://norman.walsh.name/ns/collections/audit")
     else
       xdmp:node-insert-child($doc/*, $node)
