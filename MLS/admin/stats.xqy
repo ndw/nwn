@@ -33,7 +33,7 @@ let $dcount := for $day in (1 to 7)
                let $q-s := cts:element-range-query(xs:QName("audit:datetime"), ">=", $last7d[$day])
                let $q-e := cts:element-range-query(xs:QName("audit:datetime"), "<=", $last7d[$day+1])
                return
-                 xdmp:estimate(cts:search(/audit:http,
+                 xdmp:estimate(cts:search(//audit:http,
                                           cts:and-query(($q-200, $q-uri, $q-s, $q-e))))
 
 let $daylbl := string-join(for $day in (1 to 7)
@@ -63,7 +63,7 @@ let $hcount := for $hour in (1 to 24)
                let $q-s := cts:element-range-query(xs:QName("audit:datetime"), ">=", $last24h[$hour])
                let $q-e := cts:element-range-query(xs:QName("audit:datetime"), "<=", $last24h[$hour+1])
                return
-                 xdmp:estimate(cts:search(/audit:http,
+                 xdmp:estimate(cts:search(//audit:http,
                                           cts:and-query(($q-200, $q-uri, $q-s, $q-e))))
 
 let $hourlbl := string-join(for $pos in (1 to 24)

@@ -7,7 +7,6 @@ declare default function namespace "http://www.w3.org/2005/xpath-functions";
 declare option xdmp:mapping "false";
 
 declare variable $node external;
-declare variable $uri external;
 
 declare variable $perms := (xdmp:permission("weblog-reader", "read"),
                             xdmp:permission("weblog-reader", "update"),
@@ -25,16 +24,15 @@ declare function local:should-be-logged($uri as xs:string) as xs:boolean {
 
 if (local:should-be-logged($node/audit:uri))
 then
-  let $docuri := if ($uri = "")
-                 then format-dateTime(current-dateTime(), "/audit/[Y0001]-[M01]-[D01]/[H01].xml")
-                 else $uri
-  let $doc := doc($docuri)
+  let $docuri := format-dateTime(current-dateTime(), "/audit/[Y0001]-[M01]-[D01]/[H01].xml")
+  let $lock   := xdmp:lock-for-update($docuri)
+  let $doc    := doc($docuri)
   return
     if (empty($doc))
     then
-      xdmp:document-insert($docuri, <audit:log>{ $node }</audit:log>, $perms,
-                           "http://norman.walsh.name/ns/collections/audit")
+       xdmp:document-insert($docuri, <audit:log>{ $node }</audit:log>, $perms,
+                            "http://norman.walsh.name/ns/collections/audit")
     else
-      xdmp:node-insert-child($doc/*, $node)
+       xdmp:node-insert-child($doc/*, $node)
 else
   ( (: Nevermind :) )
