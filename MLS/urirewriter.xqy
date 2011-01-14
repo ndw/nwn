@@ -1,13 +1,13 @@
 xquery version "1.0-ml";
 
 import module namespace nwn="http://norman.walsh.name/ns/modules/utils"
-       at "nwn.xqy";
+       at "/nwn.xqy";
 
 import module namespace audit="http://norman.walsh.name/ns/modules/audit"
-       at "audit.xqy";
+       at "/audit/audit.xqy";
 
 import module namespace rwlib="http://norman.walsh.name/ns/modules/rwlib"
-       at "rwlib.xqy";
+       at "/rwlib.xqy";
 
 declare variable $method := xdmp:get-request-method();
 

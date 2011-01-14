@@ -1,10 +1,10 @@
 xquery version "1.0-ml";
 
 import module namespace nwn="http://norman.walsh.name/ns/modules/utils"
-       at "nwn.xqy";
+       at "/nwn.xqy";
 
 import module namespace audit="http://norman.walsh.name/ns/modules/audit"
-       at "audit.xqy";
+       at "/audit/audit.xqy";
 
 declare default function namespace "http://www.w3.org/2005/xpath-functions";
 
