@@ -8,9 +8,10 @@ declare option xdmp:mapping "false";
 
 declare variable $now as xs:dateTime := current-dateTime();
 declare variable $cutoff as xs:dayTimeDuration := xs:dayTimeDuration("P33D");
+declare variable $max-delete as xs:unsignedLong := 25000;
 
 declare function local:purge-uris() as xs:string* {
-  for $uri in cts:uris()[matches(., "^/audit/\d\d\d\d-\d\d-\d\d/\d\d")]
+  for $uri in cts:uris()[matches(., "^/audit/\d\d\d\d-\d\d-\d\d/\d\d.*\.xml$")]
   let $dt := xs:dateTime(replace($uri, "^/audit/(\d\d\d\d-\d\d-\d\d)/(\d\d).*$", "$1T$2:00:00"))
   return
     if ($now - $dt > $cutoff)
@@ -20,5 +21,9 @@ declare function local:purge-uris() as xs:string* {
       ()
 };
 
-local:purge-uris()
+let $alluris := local:purge-uris()
+let $uris := $alluris[1 to $max-delete]
+return
+  (for $uri in $uris return xdmp:document-delete($uri),
+   concat("Removed ", count($uris), " of ", count($alluris), " out-of-date audit log entries.&#10;"))
 
