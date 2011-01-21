@@ -162,12 +162,32 @@ $(document).ready(function() {{
                      <a href="http://www.mapquest.com/maps/map.adp?latlongtype=decimal&amp;latitude={$rdf/geo:lat}&amp;longitude={$rdf/geo:long}&amp;size=big&amp;zoom=8">MapQuest</a>
                    </li>
                    <li>
-                     <a href="http://www.multimap.com/map/browse.cgi?mapsize=big&amp;scale=25000&amp;lat={$rdf/geo:lat}&amp;lon={$rdf/geo:long}">multimap</a>
+                     <a href="http://www.bing.com/maps/?lvl=14&amp;cp={$rdf/geo:lat}~{$rdf/geo:long}">bing Maps</a>
                    </li>
                  </ul>
                </dd>)
              else
                ()
+          }
+
+          { if ($rdf/foaf:page)
+            then
+              (<dt>See also</dt>,
+               <dd>
+                 <ul>
+                   { for $home in $rdf/foaf:page
+                     let $uri := string($home/@rdf:resource)
+                     let $title
+                       := if (contains($uri, 'getty.edu'))
+                          then "Getty Thesaurus of Geographic Names"
+                          else $uri
+                     return
+                       <li><a href="{$uri}">{$title}</a></li>
+                   }
+                 </ul>
+               </dd>)
+            else
+              ()
           }
 
           { (: HACK! :) }
