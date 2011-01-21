@@ -1,4 +1,5 @@
-<Everything feed="everything"
+<?xml version="1.0" encoding="UTF-8"?>
+<Everything xml:lang="en" feed="everything"
             xmlns="http://norman.walsh.name/ns/taxonomy"
             xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
             xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -48,7 +49,11 @@
                </StreetArt>
             </Photography>
             <Programming feed="programming" ttag:tag="programming"/>
-            <Travel icon="travel" ttag:tag="travel"/>
+            <Travel icon="travel" ttag:tag="travel">
+              <CountingCountries ttag:tag="countingcountries">
+                <skos:prefLabel>Counting Countries</skos:prefLabel>
+              </CountingCountries>
+            </Travel>
             <Typography ttag:tag="typography"/>
             <Wine ttag:tag="wine"/>
          </Interests>
@@ -199,6 +204,24 @@
             <skos:altLabel>Antigua</skos:altLabel>
             <skos:prefLabel>Antigua and Barbuda</skos:prefLabel>
          </AntiguaAndBarbuda>
+         <Austria icon="austria" ttag:tag="austria">
+           <Vienna icon="vienna" ttag:tag="at-vienna">
+               <skos:altLabel>Vienna</skos:altLabel>
+               <skos:prefLabel>Vienna, Austria</skos:prefLabel>
+           </Vienna>
+           <Krems icon="krems" ttag:tag="at-krems">
+               <skos:altLabel>Krems</skos:altLabel>
+               <skos:prefLabel>Krems, Austria</skos:prefLabel>
+           </Krems>
+           <Linz icon="linz" ttag:tag="at-linz">
+               <skos:altLabel>Linz</skos:altLabel>
+               <skos:prefLabel>Linz, Austria</skos:prefLabel>
+           </Linz>
+           <Salzburg icon="salzburg" ttag:tag="at-salzburg">
+               <skos:altLabel>Salzburg</skos:altLabel>
+               <skos:prefLabel>Salzburg, Austria</skos:prefLabel>
+           </Salzburg>
+         </Austria>
          <Belgium ttag:tag="belgium"/>
          <Canada ttag:tag="canada">
             <CA-BC-Vancouver ttag:tag="ca-bc-vancouver">
@@ -229,6 +252,22 @@
                <skos:prefLabel>Paris, France</skos:prefLabel>
             </Paris>
          </France>
+         <Germany icon="germany" ttag:tag="germany">
+           <Passau icon="passau" ttag:tag="de-passau">
+               <skos:altLabel>Passau</skos:altLabel>
+               <skos:prefLabel>Passau, Germany</skos:prefLabel>
+           </Passau>
+         </Germany>
+         <Hungary icon="hungary" ttag:tag="hungary">
+           <Budapest icon="budapest" ttag:tag="hu-budapest">
+               <skos:altLabel>Budapest</skos:altLabel>
+               <skos:prefLabel>Budapest, Hungary</skos:prefLabel>
+           </Budapest>
+           <Szentendre icon="szentendre" ttag:tag="hu-szentendre">
+               <skos:altLabel>Szentendre</skos:altLabel>
+               <skos:prefLabel>Szentendre, Hungary</skos:prefLabel>
+           </Szentendre>
+         </Hungary>
          <Italy icon="italy" ttag:tag="italy">
             <Rome ttag:tag="it-rome">
                <skos:altLabel>Rome</skos:altLabel>
@@ -257,6 +296,12 @@
                <skos:prefLabel>Edinburgh, Scotland</skos:prefLabel>
             </Edinburgh>
          </Scotland>
+         <Slovakia icon="slovakia" ttag:tag="slovakia">
+           <Bratislava icon="bratislava" ttag:tag="sk-bratislava">
+               <skos:altLabel>Bratislava</skos:altLabel>
+               <skos:prefLabel>Bratislava, Slovakia</skos:prefLabel>
+           </Bratislava>
+         </Slovakia>
          <Switzerland ttag:tag="switzerland"/>
          <Thailand icon="thailand" ttag:tag="thailand">
             <Bangkok icon="bangkok" ttag:tag="th-bangkok">
@@ -390,6 +435,7 @@
                <rdfs:seeAlso rdf:resource="http://www.netbeans.org/"/>
             </NetBeans>
          </Java>
+         <JavaScript/>
          <Lightroom ttag:tag="lightroom"/>
          <Linux icon="linux" ttag:tag="linux">
             <Ubuntu icon="ubuntu" ttag:tag="ubuntu"/>
@@ -422,7 +468,9 @@
             </W3CXMLSchema>
             <skos:prefLabel>Schema Languages</skos:prefLabel>
          </Schemas>
-         <Software/>
+         <Software>
+           <App/>
+         </Software>
          <Solaris ttag:tag="solaris"/>
          <SourceControl anchor="sourcecodecontrol">
             <CVS ttag:tag="cvs"/>
