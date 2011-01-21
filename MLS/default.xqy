@@ -297,6 +297,7 @@ return
               { for $trip in $r
                 let $start := $trip/itin:trip/@startDate
                 let $title := $trip/db:info/db:title
+                order by $start
                 return
                   (<dt>
                      { if (year-from-dateTime($start) = year-from-dateTime(current-dateTime()))
