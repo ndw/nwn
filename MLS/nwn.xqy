@@ -162,14 +162,31 @@ as element(db:essay)*
   let $incoll  := (if (nwn:show-staging()) then "staging" else (), "production")
   let $outcoll := "itinerary"
   return
-    nwn:get-essays($incoll, $outcoll, $cutoff, $direction, $count)
+    nwn:get-essays($incoll, $outcoll, $cutoff, $direction, $count, ())
 };
 
-declare function nwn:get-essays($incl as xs:string*,
-                                $excl as xs:string*,
-                                $cutoff as xs:dateTime,
-                                $direction as xs:string,
-                                $count as xs:decimal)
+declare function nwn:get-topic-essays(
+  $cutoff as xs:dateTime,
+  $direction as xs:string,
+  $count as xs:decimal,
+  $topic as xs:string?)
+as element(db:essay)*
+{
+  let $incoll  := (if (nwn:show-staging()) then "staging" else (), "production")
+  let $outcoll := "itinerary"
+  return
+    nwn:get-essays($incoll, $outcoll, $cutoff, $direction, $count, $topic)
+};
+
+
+
+declare function nwn:get-essays(
+  $incl as xs:string*,
+  $excl as xs:string*,
+  $cutoff as xs:dateTime,
+  $direction as xs:string,
+  $count as xs:decimal,
+  $topic as xs:string?)
 as element(db:essay)*
 {
   let $search-options
@@ -189,6 +206,14 @@ as element(db:essay)*
              }
            </range>
          </constraint>
+
+         <constraint name="topic">
+           <value>
+             <attribute ns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" name="resource"/>
+             <element ns="http://purl.org/dc/elements/1.1/" name="subject"/>
+           </value>
+         </constraint>
+
          <search:operator name="sort">
            <search:state name="relevance">
              <search:sort-order>
@@ -213,8 +238,13 @@ as element(db:essay)*
   let $outcoll  := string-join(for $c in $excl
                                return concat("-collection:", $c), " ")
 
+  let $topic    := if (empty($topic))
+                   then ""
+                   else concat(" topic:http://norman.walsh.name/knows/taxonomy#", $topic)
+
+
   let $query    := concat("collection:essay dt:range (", $incoll, ") ",
-                          $outcoll, " sort:pubdate")
+                          $outcoll, $topic, " sort:pubdate")
 
   let $search   := search:search($query, $search-options)
 

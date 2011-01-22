@@ -23,16 +23,26 @@ declare option xdmp:mapping "false";
 
 declare variable $feed := xdmp:get-request-field("feed");
 
-declare function local:feedbody($feed as xs:string, $type as xs:string) as document-node() {
+declare function local:feedbody(
+  $feed as xs:string,
+  $type as xs:string,
+  $topic as xs:string?)
+as document-node()
+{
   if ($type = "rss")
   then
-    local:rssfeed($feed)
+    local:rssfeed($feed, $topic)
   else
-    local:atomfeed($feed)
+    local:atomfeed($feed, $topic)
 };
 
-declare function local:get-essays($feed as xs:string) as element(db:essay)* {
-  let $essays := nwn:get-essays(current-dateTime(), "descending", 30)
+declare function local:get-essays($feed as xs:string, $topic as xs:string?) as element(db:essay)* {
+  let $essays
+    := if (empty($topic))
+       then
+         nwn:get-essays(current-dateTime(), "descending", 30)
+       else
+         nwn:get-topic-essays(current-dateTime(), "descending", 30, $topic)
   return
     $essays
 };
@@ -41,8 +51,8 @@ declare function local:z($dt as xs:dateTime) as xs:dateTime {
   adjust-dateTime-to-timezone($dt, xs:dayTimeDuration("PT0H"))
 };
 
-declare function local:atomfeed($feed as xs:string) as document-node() {
-  let $essays := local:get-essays($feed)
+declare function local:atomfeed($feed as xs:string, $topic as xs:string?) as document-node() {
+  let $essays := local:get-essays($feed, $topic)
   return
     document {
       <feed xmlns="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -97,8 +107,8 @@ declare function local:atomfeed($feed as xs:string) as document-node() {
     }
 };
 
-declare function local:rssfeed($feed as xs:string) as document-node() {
-  let $essays := local:get-essays($feed)
+declare function local:rssfeed($feed as xs:string, $topic as xs:string?) as document-node() {
+  let $essays := local:get-essays($feed, $topic)
   return
     document {
       <rdf:RDF xmlns="http://purl.org/rss/1.0/"
@@ -196,6 +206,27 @@ declare function local:sonnet-feed() {
     </feed>
 };
 
+declare function local:topic-feed($type as xs:string, $topic as xs:string) {
+  let $taxonomy := doc("/production/etc/taxonomy.xml")
+  let $topic := $taxonomy//tax:*[@feed=$topic]
+  return
+    if (count($topic) != 1)
+    then
+      (xdmp:log(concat("404 on feed=", $feed)),
+       xdmp:set-response-code(404, "Not Found."),
+       concat("404 resource not found."))
+    else
+      let $feeduri  := concat("/", $type, "/", $feed, ".xml")
+      let $feeddoc  := if (cache:ready($feeduri, nwn:most-recent-update()))
+                       then
+                         cache:get($feeduri)
+                       else
+                         cache:put($feeduri, local:feedbody($feed, $type,local-name($topic)))
+      let $feedbody := $feeddoc/*
+      return
+        $feedbody
+};
+
 let $type := if (xdmp:get-request-field("type") = "rss") then "rss" else "atom"
 return
   if ($feed = "whatsnew" or ($type = "atom" and $feed = "whatsnew-fulltext"))
@@ -205,7 +236,7 @@ return
                      then
                        cache:get($feeduri)
                      else
-                       cache:put($feeduri, local:feedbody($feed, $type))
+                       cache:put($feeduri, local:feedbody($feed, $type, ()))
     let $feedbody := $feeddoc/*
     return
       $feedbody
@@ -214,6 +245,4 @@ return
     then
       local:sonnet-feed()
     else
-      (xdmp:log(concat("404 on feed=", $feed)),
-       xdmp:set-response-code(404, "Not Found."),
-       concat("404 resource not found."))
+      local:topic-feed($type, $feed)
