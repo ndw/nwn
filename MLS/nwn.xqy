@@ -316,7 +316,7 @@ declare function nwn:flight-map($trip as element(itin:trip)) as element(html:scr
                       then xdmp:log(concat("No RDF for ", $uri))
                       else ()
         return
-          <line>{"    "}{$var} = new Airport({string($place/geo:lat)}, {string($place/geo:long)}, "{$point}", {if ($place/foaf:homepage) then concat("""", $place/foaf:homepage/@rdf:resource, """") else """"""});</line>
+          <line>{"    "}{$var} = new Airport({string($place/geo:lat)}, {string($place/geo:long)}, "{$point}", {if ($place/foaf:homepage) then concat("""", $place/foaf:homepage[1]/@rdf:resource, """") else """"""});</line>
       }
       { for $leg in $legs
         let $dep := substring-after($leg/itin:depart, '#')
