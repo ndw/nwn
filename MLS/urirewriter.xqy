@@ -128,7 +128,10 @@ declare variable $rwopts
                    ns="http://norman.walsh.name/ns/modules/utils" at="nwn.xqy">$1.xml</function>
          <replace>/comments.xqy?uri=$1</replace>
        </map>
-
+       <map>
+         <pattern>^(/.*)/(.*)\.doap$</pattern>
+         <replace>/doap.xqy?path=$1&amp;name=$2</replace>
+       </map>
        <map>
          <pattern>^/admin/flush-cache(\?(.*))$</pattern>
          <privilege uri="http://norman.walsh.name/ns/priv/weblog-update">execute</privilege>
