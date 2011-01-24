@@ -24,7 +24,7 @@ declare option xdmp:mapping "false";
 declare variable $MONTHS := ("January","Februar","March","April","May","June",
                              "July","August","September","October","November","December");
 
-declare variable $MESSAGE := "This site will be down for a few minutes on Monday for a server upgrade.";
+declare variable $MESSAGE := "";
 
 declare variable $ecoll := "http://norman.walsh.name/ns/collections/essay";
 declare variable $scoll := "http://norman.walsh.name/ns/collections/staging";
