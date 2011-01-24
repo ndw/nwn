@@ -190,6 +190,7 @@ return
             </div>
         }
         <h1>Norman<span class="punct">.</span>Walsh<span class="punct">.name</span></h1>
+        {nwn:message()}
         <div id="dateline">
           {format-dateTime(nwn:most-recent-update(), "[D01] [MNn,*-3] [Y0001]")}
       </div>

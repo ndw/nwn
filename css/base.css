@@ -21,6 +21,14 @@ h1,h2,h3,h4,h5 {
   padding-bottom: 0px;
 }
 
+#globalmsg {
+  border: 4px solid #ffaaaa;
+  margin: 18pt;
+  padding: 9pt;
+  width: 75%;
+  font-size: 14pt;
+}
+
 #dateline {
   padding-left: 20px;
 }

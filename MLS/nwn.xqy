@@ -24,6 +24,8 @@ declare option xdmp:mapping "false";
 declare variable $MONTHS := ("January","Februar","March","April","May","June",
                              "July","August","September","October","November","December");
 
+declare variable $MESSAGE := "This site will be down for a few minutes on Monday for a server upgrade.";
+
 declare variable $ecoll := "http://norman.walsh.name/ns/collections/essay";
 declare variable $scoll := "http://norman.walsh.name/ns/collections/staging";
 declare variable $pcoll := "http://norman.walsh.name/ns/collections/production";
@@ -515,6 +517,14 @@ declare function nwn:css-links() {
          href="/css/print.css" />)
 };
 
+declare function nwn:message() as element(html:div)? {
+  (: FIXME: This should be in the database so the modules don't have to be changed! :)
+  if ($MESSAGE = "")
+  then ()
+  else
+    <div xmlns="http://www.w3.org/1999/xhtml" id="globalmsg">{$MESSAGE}</div>
+};
+
 declare function nwn:banner($essay as element(db:essay)) as element(html:div) {
   let $title   := string($essay/db:info/db:title)
   let $issue   := if ($essay/db:info/db:volumenum)
@@ -564,6 +574,7 @@ as element(html:div)
           </div>
     }
     <h1>{$title}</h1>
+    {nwn:message()}
 
     <div id="dateline">
       { if (empty($issue))
