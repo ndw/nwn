@@ -67,9 +67,35 @@ declare function local:show-page() {
   <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
       <title>Promote pages</title>
+      {nwn:css-meta()}
+      {nwn:css-links()}
+      <script type="text/javascript" src="/js/jquery-1.4.2.min.js">
+      </script>
+      <script type="text/javascript" src="/js/nwn.js">
+      </script>
+      <script type="text/javascript">
+function checkall() {{
+  $("input:checkbox").each(function(){{this.checked = true;}});
+}}
+function checknone() {{
+  $("input:checkbox").each(function(){{this.checked = false;}});
+}}
+      </script>
     </head>
     <body>
+      <div id="banner" xmlns="http://www.w3.org/1999/xhtml">
+        <div id="hnav">
+          <div class="title">
+            <a href="/">Norman<span class="punct">.</span>Walsh<span class="punct">.name</span></a>
+          </div>
+        </div>
+      </div>
       <h1>Promote pages</h1>
+      <div>
+        <a href="/admin/promote">Reload</a>, Check
+        <a href="javascript:checkall()">all</a>,
+        <a href="javascript:checknone()">none</a>.
+      </div>
       <form action="/admin/promote" method="POST">
         <input type="hidden" name="post" value="1"/>
         <dl>
@@ -96,10 +122,26 @@ declare function local:show-page() {
 declare function local:do-promote() {
   <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-      <title>Promoted pages</title>
+      <title>Promote pages</title>
+      {nwn:css-meta()}
+      {nwn:css-links()}
+      <script type="text/javascript" src="/js/jquery-1.4.2.min.js">
+      </script>
+      <script type="text/javascript" src="/js/nwn.js">
+      </script>
     </head>
     <body>
+      <div id="banner" xmlns="http://www.w3.org/1999/xhtml">
+        <div id="hnav">
+          <div class="title">
+            <a href="/">Norman<span class="punct">.</span>Walsh<span class="punct">.name</span></a>
+          </div>
+        </div>
+      </div>
       <h1>Promoted pages</h1>
+      <div>
+        <a href="/admin/promote">Reload</a>
+      </div>
       <dl>
         { for $uri in xdmp:get-request-field-names()
           return
