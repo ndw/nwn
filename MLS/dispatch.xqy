@@ -193,7 +193,7 @@ declare function local:decorate($uri as xs:string, $body as document-node()?) {
         }
         { if ($essay//db:itemizedlist[@role="tweets"])
           then
-            <link rel="stylesheet" type="text/css" href="/local/css/shortform.css" />
+            <link rel="stylesheet" type="text/css" href="/css/shortform.css" />
           else
             ()
         }
