@@ -191,6 +191,12 @@ declare function local:decorate($uri as xs:string, $body as document-node()?) {
           else
             ()
         }
+        { if ($essay//db:itemizedlist[@role="tweets"])
+          then
+            <link rel="stylesheet" type="text/css" href="/local/css/shortform.css" />
+          else
+            ()
+        }
         { $essay/db:info/html:* }
 
         { if ($gmap)
@@ -445,7 +451,7 @@ $(document).ready(function() {{
               ()
           }
         </div>
-        { nwn:footer() }
+        { nwn:footer($essay) }
       </body>
     </html>
 };
@@ -468,6 +474,10 @@ declare function local:dispatch($x as node()) as node()* {
                 { $x/@*, local:passthru($x) }
     case processing-instruction('include')
       return local:include($x)
+    case processing-instruction('twitter-pre-nav')
+      return ()
+    case processing-instruction('twitter-post-nav')
+      return local:twitter-nav($x)
     default return $x
 };
 
@@ -512,6 +522,31 @@ declare function local:sonnet() as element(html:div) {
         }
       </div>
     </div>
+};
+
+declare function local:twitter-nav($pi as processing-instruction()) {
+  let $name     := local-name($pi)
+  let $date     := xs:date(string($pi))
+  let $pdate    := $date - xs:dayTimeDuration("P1D")
+  let $ndate    := $date + xs:dayTimeDuration("P13D")
+  let $plinkuri := format-date($pdate, "/[Y0001]/[M01]/[D01]/shortform")
+  let $nlinkuri := format-date($ndate, "/[Y0001]/[M01]/[D01]/shortform")
+  let $pdocuri  := nwn:docuri($plinkuri)
+  let $ndocuri  := nwn:docuri($nlinkuri)
+  return
+    if (empty($pdocuri) and empty($ndocuri))
+    then
+      ()
+    else
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>
+          { "See also: " }
+          { if (empty($pdocuri)) then "" else <a href="{$plinkuri}">the previous week's review</a> }
+          { if (not(empty($pdocuri)) and not(empty($ndocuri))) then " or " else "" }
+          { if (empty($ndocuri)) then "" else <a href="{$nlinkuri}">the next week's review</a> }
+          { "." }
+        </p>
+      </div>
 };
 
 (: ============================================================ :)

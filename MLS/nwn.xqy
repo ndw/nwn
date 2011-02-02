@@ -21,7 +21,7 @@ declare default function namespace "http://www.w3.org/2005/xpath-functions";
 
 declare option xdmp:mapping "false";
 
-declare variable $MONTHS := ("January","Februar","March","April","May","June",
+declare variable $MONTHS := ("January","February","March","April","May","June",
                              "July","August","September","October","November","December");
 
 declare variable $MESSAGE := "";
@@ -164,7 +164,7 @@ as element(db:essay)*
   let $incoll  := (if (nwn:show-staging()) then "staging" else (), "production")
   let $outcoll := "itinerary"
   return
-    nwn:get-essays($incoll, $outcoll, $cutoff, $direction, $count, ())
+    nwn:get-essays($incoll, $outcoll, $cutoff, $direction, $count, (), ("Omit"))
 };
 
 declare function nwn:get-topic-essays(
@@ -177,9 +177,8 @@ as element(db:essay)*
   let $incoll  := (if (nwn:show-staging()) then "staging" else (), "production")
   let $outcoll := "itinerary"
   return
-    nwn:get-essays($incoll, $outcoll, $cutoff, $direction, $count, $topic)
+    nwn:get-essays($incoll, $outcoll, $cutoff, $direction, $count, $topic, ("Omit"))
 };
-
 
 
 declare function nwn:get-essays(
@@ -188,7 +187,8 @@ declare function nwn:get-essays(
   $cutoff as xs:dateTime,
   $direction as xs:string,
   $count as xs:decimal,
-  $topic as xs:string?)
+  $incltopic as xs:string?,
+  $excltopic as xs:string*)
 as element(db:essay)*
 {
   let $search-options
@@ -240,13 +240,21 @@ as element(db:essay)*
   let $outcoll  := string-join(for $c in $excl
                                return concat("-collection:", $c), " ")
 
-  let $topic    := if (empty($topic))
-                   then ""
-                   else concat(" topic:http://norman.walsh.name/knows/taxonomy#", $topic)
+  let $incltopic := if (empty($incltopic))
+                    then ""
+                    else concat(" topic:http://norman.walsh.name/knows/taxonomy#", $incltopic)
 
+  let $excltopic := if (empty($excltopic))
+                    then ""
+                    else
+                      concat(" (",
+                             string-join(for $t in $excltopic
+                                         return
+                                           concat("-topic:http://norman.walsh.name/knows/taxonomy#", $t), " OR "),
+                             ") ")
 
   let $query    := concat("collection:essay dt:range (", $incoll, ") ",
-                          $outcoll, $topic, " sort:pubdate")
+                          $outcoll, $incltopic, $excltopic, " sort:pubdate")
 
   let $search   := search:search($query, $search-options)
 
@@ -619,6 +627,29 @@ declare function nwn:footer() as element(html:div) {
       href="http://creativecommons.org/licenses/by-nc/2.0/">Creative Commons License</a>.
       { comment { "/Creative Commons License" } }
       </p>
+    </div>
+  </div>
+};
+
+declare function nwn:footer($essay as element(db:essay)) as element(html:div) {
+  <div id="footer" xmlns="http://www.w3.org/1999/xhtml">
+    <div class="rights">
+      <p>Copyright &#169; 1998–{year-from-dateTime(nwn:most-recent-update())} Norman Walsh.
+      { comment { "Creative Commons License" } }
+      This work is licensed under a <a rel="license"
+      href="http://creativecommons.org/licenses/by-nc/2.0/">Creative Commons License</a>.
+      { comment { "/Creative Commons License" } }
+      </p>
+    { if ($essay//db:itemizedlist[@role="tweets"])
+      then
+        let $title := string($essay/db:info/db:title)
+        let $year := substring($title, string-length($title)-4)
+        return
+          <p>Portions of this page attributed to other authors are
+             Copyright &#169; {$year} by their respective authors.</p>
+      else
+        ()
+    }
     </div>
   </div>
 };

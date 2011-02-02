@@ -487,7 +487,13 @@
             <skos:altLabel>The Web</skos:altLabel>
             <Ajax anchor="ajax" ttag:tag="ajax"/>
             <Lazyweb ttag:tag="lazyweb"/>
-            <Microblogging anchor="microblogging" ttag:tag="microblogging"/>
+            <Microblogging anchor="microblogging" ttag:tag="microblogging">
+              <Twitter>
+                <shortform ttag:tag="shortform">
+                  <skos:altLabel>Short-form fragments</skos:altLabel>
+                </shortform>
+              </Twitter>
+            </Microblogging>
             <OASIS feed="oasis" ttag:tag="oasis">
                <TC anchor="OASISTC">
                   <skos:altLabel>OASIS TC</skos:altLabel>

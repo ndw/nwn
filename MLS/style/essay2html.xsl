@@ -474,6 +474,10 @@
   <xsl:copy/>
 </xsl:template>
 
+<xsl:template match="processing-instruction('twitter-pre-nav')|processing-instruction('twitter-post-nav')">
+  <xsl:copy/>
+</xsl:template>
+
 <xsl:template match="processing-instruction('bloglines-blogroll')">
   <xsl:variable name="id" select="dbf:pi(.,'id')"/>
   <xsl:variable name="folder" select="dbf:pi(.,'folder')"/>
@@ -901,6 +905,27 @@
       <xsl:apply-templates select="*[not(self::db:info) and not(self::db:title)]"/>
     </div>
     <div class="foilnum">Foil #<xsl:value-of select="$foilnum"/></div>
+  </div>
+</xsl:template>
+
+<!-- ====================================================================== -->
+
+<xsl:template match="db:itemizedlist[@role='tweets']">
+  <div class="tweetlist">
+    <xsl:apply-templates/>
+  </div>
+</xsl:template>
+
+<xsl:template match="db:itemizedlist[@role='tweets']/db:listitem">
+  <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="db:itemizedlist[@role='tweets']/db:listitem/db:para">
+  <div class="tweet {@role}">
+    <xsl:if test="contains(@role, 'favorite')">
+      <div class="favmark"><img src="/graphics/favorite.gif" alt="FAV"/></div>
+    </xsl:if>
+    <xsl:apply-templates/>
   </div>
 </xsl:template>
 
