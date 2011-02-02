@@ -1,0 +1,47 @@
+div.tweetlist {
+  padding-left: 2em;
+}
+
+div.tweet {
+  border: 1px solid #aaaaaa;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+  padding-right: 0.25em;
+  padding-left: 0.25em;
+  color: #777777;
+}
+
+div.tweet a {
+  color: #7777ff;
+}
+
+div.mine {
+  color: black;
+}
+
+div.mine a {
+  color: #0000ff;
+}
+
+div.favorite {
+  background-color: #ffffdd;
+  color: black;
+}
+
+div.favorite a {
+  color: #0000ff;
+}
+
+div.favmark {
+  width: 0px;
+  height: 0px;
+  position: relative;
+  right: 2em;
+  top: 0px;
+}
+
+span.attribution {
+  white-space: nowrap;
+}
