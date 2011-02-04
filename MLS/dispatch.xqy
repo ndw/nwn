@@ -488,7 +488,7 @@ declare function local:include($pi as processing-instruction()) as element()? {
   else
     if (contains(string($pi), "/dynamic/popular"))
     then
-      xdmp:invoke("/popular.xqy", (),
+      xdmp:invoke("/audit/popular.xqy", (),
                   <options xmlns="xdmp:eval">
                     <database>{xdmp:database("nwn-audit")}</database>
                   </options>)
