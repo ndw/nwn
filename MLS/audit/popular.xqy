@@ -1,7 +1,7 @@
 xquery version "1.0-ml";
 
 import module namespace nwn="http://norman.walsh.name/ns/modules/utils"
-       at "nwn.xqy";
+       at "/nwn.xqy";
 
 declare default function namespace "http://www.w3.org/2005/xpath-functions";
 
@@ -18,12 +18,18 @@ declare variable $irrdir     := cts:or-query(for $dir in ("css", "local", "js", 
                                              return
                                                cts:element-value-query(xs:QName("audit:dir"),
                                                                        $dir));
-declare variable $irrext     := cts:or-query(for $ext in ("atom")
+declare variable $irrext     := cts:or-query(for $ext in ("atom", "rss")
                                              return
                                                cts:element-value-query(xs:QName("audit:ext"),
                                                                        $ext));
 
-declare variable $irrelevant := cts:or-query(($irrdir, $irrext));
+declare variable $irruri     := cts:or-query(for $uri in ("http://localhost:8121/links.html")
+                                             return
+                                               cts:element-value-query(xs:QName("audit:referrer"),
+                                                                       $uri));
+
+
+declare variable $irrelevant := cts:or-query(($irrdir, $irrext, $irruri));
 
 
 declare function local:urilist($startTime as xs:dateTime) as element()* {
@@ -32,29 +38,45 @@ declare function local:urilist($startTime as xs:dateTime) as element()* {
   let $uris     := cts:element-values(xs:QName("audit:uri"), (),
                        ("descending", "frequency-order", "limit=10"),
                        cts:and-not-query($posquery, $irrelevant))
-  for $uri in $uris
+  for $uri at $index in $uris
   let $count := xdmp:estimate(
-                  cts:search(/audit:http,
+                  cts:search(/audit:log/audit:http,
                              cts:and-not-query(
                                cts:and-query(
                                  (cts:element-value-query(xs:QName("audit:uri"), $uri),
                                  $posquery)),
                                $irrelevant)))
-  let $doc := doc(nwn:docuri($uri))
 
   let $refs := cts:element-values(xs:QName("audit:referrer"), (),
-                       ("descending", "frequency-order", "limit=5"),
-                       cts:and-query(($r200, cts:element-value-query(xs:QName("audit:uri"),$uri))))
+                       ("descending", "frequency-order", "limit=8"),
+                       cts:and-not-query(
+                         cts:and-query(($posquery, cts:element-value-query(xs:QName("audit:uri"),$uri))),
+                         $irrelevant))
 
   return
-    (<dt xmlns="http://www.w3.org/1999/xhtml"><a href="{$uri}">{$uri}</a> ({$count})</dt>,
+    (<dt xmlns="http://www.w3.org/1999/xhtml">
+       { if ($index = 1) then "Popular URI: " else "" }
+       <a href="{$uri}">{$uri}</a> ({$count})
+     </dt>,
      if ($refs)
      then
        <dd xmlns="http://www.w3.org/1999/xhtml">
          <dl>
+           { if ($index = 1) then <dt>Most common referrers:</dt> else () }
            { for $ref in $refs
+             let $count := xdmp:estimate(
+                                cts:search(/audit:log/audit:http,
+                                  cts:and-not-query(
+                                    cts:and-query(($posquery,
+                                                   cts:element-value-query(xs:QName("audit:uri"),$uri),
+                                                   cts:element-value-query(xs:QName("audit:referrer"),$ref))),
+                                    $irrelevant)))
              return
-               <dt>{local:link($ref)}</dt>
+               if (contains($ref, "http://microwave:") or contains($ref, "http://localhost:"))
+               then
+                 ()
+               else
+                 <dt>{local:link($ref)} ({$count})</dt>
            }
          </dl>
        </dd>
