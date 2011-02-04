@@ -229,7 +229,7 @@ declare function local:topic-feed($type as xs:string, $topic as xs:string) {
 
 let $type := if (xdmp:get-request-field("type") = "rss") then "rss" else "atom"
 return
-  if ($feed = "whatsnew" or ($type = "atom" and $feed = "whatsnew-fulltext"))
+  if ($feed = "whatsnew" or $feed = "index" or ($type = "atom" and $feed = "whatsnew-fulltext"))
   then
     let $feeduri  := concat("/", $type, "/", $feed, ".xml")
     let $feeddoc  := if (cache:ready($feeduri, nwn:most-recent-update()))
