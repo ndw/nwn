@@ -29,12 +29,24 @@ let $q-uri  := if ($uri = "/")
                then ()
                else cts:element-value-query(xs:QName("audit:uri"), $uri, ("exact"))
 
+let $irrdir := cts:or-query(for $dir in ("css", "local", "js", "graphics",
+                                         "popular.xqy", "favicon.ico",
+                                         "atom", "rss", "cgi-bin", "knows")
+                            return
+                              cts:element-value-query(xs:QName("audit:dir"), $dir))
+let $irrext := cts:or-query(for $ext in ("atom")
+                            return
+                              cts:element-value-query(xs:QName("audit:ext"), $ext))
+
+let $irrelevant := cts:or-query(($irrdir, $irrext))
+
 let $dcount := for $day in (1 to 7)
                let $q-s := cts:element-range-query(xs:QName("audit:datetime"), ">=", $last7d[$day])
                let $q-e := cts:element-range-query(xs:QName("audit:datetime"), "<=", $last7d[$day+1])
+               let $relevant := cts:and-query(($q-200, $q-uri, $q-s, $q-e))
                return
                  xdmp:estimate(cts:search(//audit:http,
-                                          cts:and-query(($q-200, $q-uri, $q-s, $q-e))))
+                                          cts:and-not-query($relevant, $irrelevant)))
 
 let $daylbl := string-join(for $day in (1 to 7)
                            let $name := format-dateTime($last7d[$day], "[FNn,*-3]")
@@ -62,9 +74,10 @@ let $last24h := for $count in reverse((0 to 24))
 let $hcount := for $hour in (1 to 24)
                let $q-s := cts:element-range-query(xs:QName("audit:datetime"), ">=", $last24h[$hour])
                let $q-e := cts:element-range-query(xs:QName("audit:datetime"), "<=", $last24h[$hour+1])
+               let $relevant := cts:and-query(($q-200, $q-uri, $q-s, $q-e))
                return
                  xdmp:estimate(cts:search(//audit:http,
-                                          cts:and-query(($q-200, $q-uri, $q-s, $q-e))))
+                                          cts:and-not-query($relevant, $irrelevant)))
 
 let $hourlbl := string-join(for $pos in (1 to 24)
                             let $hour := hours-from-dateTime($last24h[$pos])
