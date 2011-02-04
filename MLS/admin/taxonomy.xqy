@@ -3,6 +3,9 @@ xquery version "1.0-ml";
 import module namespace nwn="http://norman.walsh.name/ns/modules/utils"
        at "/nwn.xqy";
 
+import module namespace versions="http://norman.walsh.name/ns/modules/versions"
+       at "/versions/versions.xqy";
+
 declare namespace atom="http://www.w3.org/2005/Atom";
 declare namespace db="http://docbook.org/ns/docbook";
 declare namespace dc="http://purl.org/dc/elements/1.1/";
@@ -87,15 +90,9 @@ return
                            </essay>
                         )
 
-
-      let $tcoll  := "http://norman.walsh.name/ns/collections/versions"
       let $extrac := "http://norman.walsh.name/ns/collections/essay"
-      let $Z      := xs:dayTimeDuration("PT0H")
-      let $nowz   := adjust-dateTime-to-timezone(current-dateTime(), $Z)
-      let $tstamp := format-dateTime($nowz, "[Y0001]-[M01]-[D01]/[H01]-[m01]-[s01]")
-      let $this   := concat("/versions/", $tstamp, $uri, ".xml")
       return
-        (xdmp:document-insert($this, $updessay, (), ($tcoll, $extrac)),
+        (versions:store($updessay, concat($uri, ".xml")),
          xdmp:node-replace($doc/db:essay/db:info, $updessay/db:info),
          <html xmlns="http://www.w3.org/1999/xhtml">
            <head>

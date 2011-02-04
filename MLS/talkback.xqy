@@ -3,6 +3,9 @@ xquery version "1.0-ml";
 import module namespace nwn="http://norman.walsh.name/ns/modules/utils"
        at "nwn.xqy";
 
+import module namespace versions="http://norman.walsh.name/ns/modules/versions"
+       at "/versions/versions.xqy";
+
 declare namespace html="http://www.w3.org/1999/xhtml";
 
 declare default function namespace "http://www.w3.org/2005/xpath-functions";
@@ -399,18 +402,13 @@ declare function local:errorPage() as element(html:html) {
 };
 
 declare function local:postComment() as element(html:html) {
-  let $uri    := concat("/comments", $page, ".xml")
-
   let $count  := count(cts:uri-match(concat("/production/comments", $page, ".*")))
                   + count(cts:uri-match(concat("/staging/comments", $page, ".*")))
                   + count(cts:uri-match(concat("/rejected/comments", $page, ".*")))
   let $num    := format-number($count+1, "0000")
 
-  let $Z      := xs:dayTimeDuration("PT0H")
-  let $nowz   := adjust-dateTime-to-timezone(current-dateTime(), $Z)
-  let $tstamp := format-dateTime($nowz, "[Y0001]-[M01]-[D01]/[H01]-[m01]-[s01]")
-  let $this   := concat("/versions/comments/", $tstamp, $page, ".", $num, ".xml")
-  let $stage  := concat("/staging/comments", $page, ".", $num, ".xml")
+  let $uri    := concat("/comments", $page, ".", $num, ".xml")
+  let $stage  := concat("/staging", $uri)
 
   let $now    := adjust-dateTime-to-timezone(current-dateTime(), xs:dayTimeDuration("PT0H"))
   let $nowstr := format-dateTime($now, "[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]Z")
@@ -441,14 +439,13 @@ declare function local:postComment() as element(html:html) {
        </entry>
 
   let $extrac := "http://norman.walsh.name/ns/collections/comment"
-  let $tcoll  := "http://norman.walsh.name/ns/collections/versions"
   let $coll   := "http://norman.walsh.name/ns/collections/staging"
 
   let $rperm  := xdmp:permission("weblog-reader", "read")
   let $uperm  := xdmp:permission("weblog-editor", "update")
 
   return
-    (xdmp:document-insert($this, $entry, ($rperm, $uperm), ($tcoll, $extrac)),
+    (versions:store($entry, $uri),
      xdmp:document-insert($stage, $entry, ($rperm, $uperm), ($coll, $extrac)),
      if (empty($cookie))
      then ()

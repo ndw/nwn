@@ -3,6 +3,9 @@ xquery version "1.0-ml";
 import module namespace nwn="http://norman.walsh.name/ns/modules/utils"
        at "nwn.xqy";
 
+import module namespace versions="http://norman.walsh.name/ns/modules/versions"
+       at "/versions/versions.xqy";
+
 declare namespace c="http://www.w3.org/ns/xproc-step";
 declare namespace db="http://docbook.org/ns/docbook";
 declare namespace dc="http://purl.org/dc/elements/1.1/";
@@ -186,10 +189,6 @@ declare function local:invalid($doc as element(db:essay)) as xs:string? {
       ()
 };
 
-let $Z      := xs:dayTimeDuration("PT0H")
-let $nowz   := adjust-dateTime-to-timezone(current-dateTime(), $Z)
-let $tstamp := format-dateTime($nowz, "[Y0001]-[M01]-[D01]/[H01]-[m01]-[s01]")
-
 let $bibid  := $body/db:essay/db:info/db:biblioid
                      [@class='uri'and starts-with(.,'http://norman.walsh.name/')][1]
 let $pub    := true() or starts-with($posturi,"/pub/")
@@ -199,10 +198,8 @@ let $uri    := if (not(empty($bibid)) and $pub)
                else
                  $posturi
 
-let $this   := concat("/versions/", $tstamp, $uri)
 let $stage  := concat("/staging", $uri)
 
-let $tcoll  := "http://norman.walsh.name/ns/collections/versions"
 let $coll   := "http://norman.walsh.name/ns/collections/staging"
 
 let $essay   as xs:boolean := $format = "xml" and ($body/db:essay)
@@ -220,7 +217,7 @@ let $extrac := (if ($essay)
                 if ($comment)
                 then
                   ("http://norman.walsh.name/ns/collections/comment",
-                   if (ends-with($this, ".rej"))
+                   if (ends-with($uri, ".rej"))
                    then "http://norman.walsh.name/ns/collections/comment/rejected"
                    else "http://norman.walsh.name/ns/collections/comment/accepted")
                 else ())
@@ -238,13 +235,13 @@ let $perms := (xdmp:permission("weblog-reader", "read"),
 return
   if ($wfxml and empty($notvalid))
   then
-    (xdmp:document-insert($this, $doc, (), ($tcoll, $extrac)),
+    (versions:store($doc, $uri),
      xdmp:document-insert($stage, $doc, ($perms), ($coll, $extrac)),
      <success>
        <uri>{$stage}</uri>
        <type>{$type}</type>
        <format>{$format}</format>
-       <this>{$this}</this>
+       <this>{$uri}</this>
      </success>)
   else
     (xdmp:set-response-code(400, concat("Invalid essay: ", $notvalid)),
@@ -252,6 +249,6 @@ return
        <uri>{$stage}</uri>
        <type>{$type}</type>
        <format>{$format}</format>
-       <this>{$this}</this>
+       <this>{$uri}</this>
        <message>{$notvalid}</message>
      </fail>)
