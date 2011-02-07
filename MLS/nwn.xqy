@@ -24,7 +24,7 @@ declare option xdmp:mapping "false";
 declare variable $MONTHS := ("January","February","March","April","May","June",
                              "July","August","September","October","November","December");
 
-declare variable $MESSAGE := "";
+declare variable $MESSAGE := string(doc("/etc/motd"));
 
 declare variable $ecoll := "http://norman.walsh.name/ns/collections/essay";
 declare variable $scoll := "http://norman.walsh.name/ns/collections/staging";
@@ -526,7 +526,6 @@ declare function nwn:css-links() {
 };
 
 declare function nwn:message() as element(html:div)? {
-  (: FIXME: This should be in the database so the modules don't have to be changed! :)
   if ($MESSAGE = "")
   then ()
   else
