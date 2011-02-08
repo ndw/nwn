@@ -931,6 +931,29 @@
 
 <!-- ====================================================================== -->
 
+<xsl:template match="db:qandaset">
+  <ol>
+    <xsl:apply-templates/>
+  </ol>
+</xsl:template>
+
+<xsl:template match="db:qandaentry">
+  <li>
+    <xsl:apply-templates/>
+  </li>
+</xsl:template>
+
+<xsl:template match="db:question|db:answer">
+  <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="db:question/db:para[1]">
+  <b><xsl:apply-templates/></b>
+</xsl:template>
+
+<!-- ====================================================================== -->
+
+
 <xsl:template name="dbt:image-properties" as="xs:integer*">
   <xsl:param name="image" required="yes"/>
 
