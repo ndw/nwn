@@ -474,6 +474,10 @@
   <xsl:copy/>
 </xsl:template>
 
+<xsl:template match="processing-instruction('br')">
+  <br />
+</xsl:template>
+
 <xsl:template match="processing-instruction('twitter-pre-nav')|processing-instruction('twitter-post-nav')">
   <xsl:copy/>
 </xsl:template>
