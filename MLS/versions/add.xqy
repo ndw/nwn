@@ -4,7 +4,7 @@ declare default function namespace "http://www.w3.org/2005/xpath-functions";
 
 declare option xdmp:mapping "false";
 
-declare variable $node as element() external;
+declare variable $node as node() external;
 declare variable $uri as xs:string external;
 
 declare variable $perms := (xdmp:permission("weblog-reader", "read"),

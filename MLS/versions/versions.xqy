@@ -7,7 +7,7 @@ declare default function namespace "http://www.w3.org/2005/xpath-functions";
 declare option xdmp:mapping "false";
 
 declare function versions:store(
-  $node as element(),
+  $node as node(),
   $baseuri as xs:string)
 as empty-sequence()
 {
