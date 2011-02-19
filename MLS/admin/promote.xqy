@@ -29,7 +29,8 @@ declare function local:patch($doc as document-node()) as document-node()? {
     then
       document { nwn:patch-metadata($doc/db:essay) }
     else
-      ()
+      (if ($subjok) then () else (xdmp:log("Invalid subject"), xdmp:log($doc/db:essay/db:info/dc:subject)),
+       if ($coverok) then () else (xdmp:log("Invalid coverage"), xdmp:log($doc/db:essay/db:info/dc:coverage)))
 };
 
 declare function local:valid-subjects($subjects as element(dc:subject)*) as xs:boolean {
