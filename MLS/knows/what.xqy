@@ -68,7 +68,7 @@ declare function local:html($rdf as element(rdf:Description)?) as element(html:h
           { if ($rdf/foaf:homepage)
             then
               (<dt>Homepage</dt>,
-               <dl>
+               <dd>
                  <ul>
                    { for $page in $rdf/foaf:homepage
                      return
@@ -77,7 +77,7 @@ declare function local:html($rdf as element(rdf:Description)?) as element(html:h
                        </li>
                    }
                  </ul>
-               </dl>)
+               </dd>)
             else
               ()
           }
@@ -85,7 +85,7 @@ declare function local:html($rdf as element(rdf:Description)?) as element(html:h
           { if ($rdf/t:wikipedia)
             then
               (<dt>Wikipedia</dt>,
-               <dl>
+               <dd>
                  <ul>
                    <li>
                      <a href="http://en.wikipedia.org/wiki/{$rdf/t:wikipedia}">
@@ -93,7 +93,7 @@ declare function local:html($rdf as element(rdf:Description)?) as element(html:h
                      </a>
                    </li>
                  </ul>
-               </dl>)
+               </dd>)
             else
               ()
           }
@@ -101,7 +101,7 @@ declare function local:html($rdf as element(rdf:Description)?) as element(html:h
           { if ($rdf/t:specification)
             then
               (<dt>Specification</dt>,
-               <dl>
+               <dd>
                  <ul>
                    { for $spec in $rdf/t:specification
                      return
@@ -110,7 +110,7 @@ declare function local:html($rdf as element(rdf:Description)?) as element(html:h
                        </li>
                    }
                  </ul>
-               </dl>)
+               </dd>)
             else
               ()
           }
@@ -118,7 +118,7 @@ declare function local:html($rdf as element(rdf:Description)?) as element(html:h
           { if ($rdf/foaf:depiction)
             then
               (<dt>Depictions</dt>,
-               <dl>
+               <dd>
                  <ul>
                    { for $dep in $rdf/foaf:depiction
                      return
@@ -127,7 +127,7 @@ declare function local:html($rdf as element(rdf:Description)?) as element(html:h
                        </li>
                    }
                  </ul>
-               </dl>)
+               </dd>)
             else
               ()
           }
