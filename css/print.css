@@ -78,6 +78,10 @@ body h1 {
   content: " ";
 }
 
+#routemap {
+  display: none;
+}
+
 #addcomment {
   display: none;
 }

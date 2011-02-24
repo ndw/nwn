@@ -133,7 +133,7 @@
 		  |it:itinerary/it:leg[@class='train'][it:arrive and it:depart]"/>
 
     <xsl:if test="$mappoints">
-      <div>
+      <div id="routemap">
         <p class="bigtitle">Map:</p>
         <div class="artwork" id="flightmap" style="width: 640px; height: 480px;">
         </div>
