@@ -39,6 +39,9 @@ declare function local:rdf($rdf as element(rdf:Description)?) as element(rdf:RDF
 };
 
 declare function local:html($rdf as element(rdf:Description)?) as element(html:html) {
+  let $addr := $rdf/v:unlabeledAdr | $rdf/v:workAdr | $rdf/v:homeAdr
+  let $page := $rdf/foaf:homepage | $rdf/foaf:page
+  return
   <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
       <title>{string($rdf/c:associatedName)}</title>
@@ -107,13 +110,13 @@ $(document).ready(function() {{
             </ul>
           </dd>
 
-          { if ($rdf/v:unlabeledAdr/v:country-name)
+          { if ($addr/v:country-name)
             then
               (<dt>Country</dt>,
                <dd>
                  <ul>
                    <li>
-                     {string($rdf/v:unlabeledAdr/v:country-name)}
+                     {string(($addr/v:country-name)[1])}
                      {if ($rdf/c:ciaFactbook)
                       then
                         (" ",
@@ -130,19 +133,27 @@ $(document).ready(function() {{
                ()
           }
 
-          { if ($rdf/v:unlabeledAdr/v:street-address)
+          { if ($addr/v:street-address)
             then
               (<dt>Address</dt>,
                <dd>
                  <ul>
-                   <li>
-                     {string($rdf/v:unlabeledAdr/v:street-address)}
-                     <br/>
-                     {string($rdf/v:unlabeledAdr/v:locality)},
-                     {string($rdf/v:unlabeledAdr/v:region)}
-                     { " " }
-                     {string($rdf/v:unlabeledAdr/v:postal-code)}
-                   </li>
+                   { for $a in $addr[v:street-address]
+                     return
+                       <li>
+                         {string($a/v:street-address)}
+                         <br/>
+                         {string($a/v:locality)}
+                         { if ($a/v:region) then ", " else "" }
+                         {string($a/v:region)}
+                         { " " }
+                         {string($a/v:postal-code)}
+                         { if ($a/v:country-name and $a/v:country-name != "US")
+                           then (<br/>, string($a/v:country-name))
+                           else ()
+                         }
+                       </li>
+                   }
                  </ul>
                </dd>)
              else
@@ -170,12 +181,12 @@ $(document).ready(function() {{
                ()
           }
 
-          { if ($rdf/foaf:page)
+          { if ($page)
             then
               (<dt>See also</dt>,
                <dd>
                  <ul>
-                   { for $home in $rdf/foaf:page
+                   { for $home in $page
                      let $uri := string($home/@rdf:resource)
                      let $title
                        := if (contains($uri, 'getty.edu'))
