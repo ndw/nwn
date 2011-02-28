@@ -238,6 +238,10 @@ $(document).ready(function() {{
 };
 
 declare function local:index() as element(html:html) {
+  let $places := /rdf:Description[rdf:type/@rdf:resource
+                                  ="http://nwalsh.com/rdf/contacts#Place"]
+  let $countries := distinct-values($places//v:country-name)
+  return
   <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
       <title>Where</title>
@@ -253,15 +257,37 @@ declare function local:index() as element(html:html) {
         <p>I've assigned URIs to the places listed below.</p>
 
         <dl>
-          { for $rdf in /rdf:Description[rdf:type/@rdf:resource
-                                         ="http://nwalsh.com/rdf/contacts#Place"]
-            order by string($rdf/c:associatedName)
+          <dt>No country (I suspect that these should really be "whats" not "wheres")</dt>
+          <dd>
+            <dl>
+              { for $rdf in $places[not(.//v:country-name)]
+                order by string($rdf/c:associatedName)
+                return
+                  <dt id="{substring-after($rdf/@rdf:about, 'knows/where/')}">
+                    <a href="/knows/where/{substring-after($rdf/@rdf:about, 'knows/where/')}">
+                      { string($rdf/c:associatedName) }
+                    </a>
+                  </dt>
+              }
+            </dl>
+          </dd>
+          { for $country in $countries
+            order by $country
             return
-              <dt id="{substring-after($rdf/@rdf:about, 'knows/where/')}">
-                <a href="/knows/where/{substring-after($rdf/@rdf:about, 'knows/where/')}">
-                  { string($rdf/c:associatedName) }
-                </a>
-              </dt>
+              (<dt>{$country}</dt>,
+               <dd>
+                 <dl>
+                   { for $rdf in $places[.//v:country-name = $country]
+                     order by string($rdf/c:associatedName)
+                     return
+                       <dt id="{substring-after($rdf/@rdf:about, 'knows/where/')}">
+                         <a href="/knows/where/{substring-after($rdf/@rdf:about, 'knows/where/')}">
+                           { string($rdf/c:associatedName) }
+                         </a>
+                       </dt>
+                   }
+                 </dl>
+               </dd>)
           }
         </dl>
       </div>
