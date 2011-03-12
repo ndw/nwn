@@ -926,6 +926,9 @@
 
 <xsl:template match="db:itemizedlist[@role='tweets']/db:listitem/db:para">
   <div class="tweet {@role}">
+    <xsl:if test="@xml:id">
+      <xsl:attribute name="id" select="@xml:id"/>
+    </xsl:if>
     <xsl:if test="contains(@role, 'favorite')">
       <div class="favmark"><img src="/graphics/favorite.gif" alt="FAV"/></div>
     </xsl:if>
