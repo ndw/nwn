@@ -11,6 +11,7 @@ div.tweet {
   padding-right: 0.25em;
   padding-left: 0.25em;
   color: #777777;
+  min-height: 50px;
 }
 
 div.tweet a {
