@@ -966,9 +966,13 @@
 
   <xsl:variable name="uri" select="nwn:docuri($image)"/>
   <xsl:variable name="width"
-                select="xdmp:document-get-properties($uri, xs:QName('etc:width'))[1]"/>
+                select="if (empty($uri))
+                        then (xdmp:log(concat('Failed to find image at ', $image)), 500)
+                        else xdmp:document-get-properties($uri, xs:QName('etc:width'))[1]"/>
   <xsl:variable name="height"
-                select="xdmp:document-get-properties($uri, xs:QName('etc:height'))[1]"/>
+                select="if (empty($uri))
+                        then 250
+                        else xdmp:document-get-properties($uri, xs:QName('etc:height'))[1]"/>
 
   <xsl:sequence select="($height,$width)"/>
 </xsl:template>
