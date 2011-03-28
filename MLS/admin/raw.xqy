@@ -6,4 +6,4 @@ return
   then
     doc($uri)
   else
-    error(xs:QName("error:NOURI"), "There's no document with that uri.")
+    error(xs:QName("error:NOURI"), concat("There's no document with that uri: ", $uri))
