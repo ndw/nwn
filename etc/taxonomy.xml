@@ -131,13 +131,16 @@
             <skos:prefLabel>Mark Logic User Conference</skos:prefLabel>
          </MLUC>
          <XMLPrague anchor="xmlprague" ttag:tag="xmlprague">
-            <XMLPrague07 anchor="xmlprague07" ttag:tag="xmlprague">
+            <skos:prefLabel>XML Prague</skos:prefLabel>
+            <XMLPrague07 anchor="xmlprague07" ttag:tag="xmlprague2007">
                <skos:prefLabel>XML Prague 2007</skos:prefLabel>
             </XMLPrague07>
-            <XMLPrague2010 anchor="xmlprague2010" ttag:tag="xmlprague">
+            <XMLPrague2010 anchor="xmlprague2010" ttag:tag="xmlprague2010">
                <skos:prefLabel>XML Prague 2010</skos:prefLabel>
             </XMLPrague2010>
-            <skos:prefLabel>XML Prague</skos:prefLabel>
+            <XMLPrague2011 anchor="xmlprague2011" ttag:tag="xmlprague2011">
+               <skos:prefLabel>XML Prague 2011</skos:prefLabel>
+            </XMLPrague2011>
          </XMLPrague>
          <XMLSummerSchool anchor="xmlsummerschool" ttag:tag="xmlSummerSchool">
             <XMLSummerSchool2009 anchor="xmlsummerschool2009" ttag:tag="xmlss09">
