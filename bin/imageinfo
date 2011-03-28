@@ -12,10 +12,16 @@ die $usage if ! getopts('h:');
 
 my $image = shift;
 my $info = undef;
-my $host = $opt_h ? $opt_h : "localhost:7123";
+my $host = $opt_h ? $opt_h : "localhost:8401";
+
+$host =~ s/^https?:\/\///;
+
+my $uri = "http://$host/admin/raw$image";
+
+print STDERR "$uri\n";
 
 my $ua = new LWP::UserAgent;
-my $req = new HTTP::Request("GET" => "http://$host/admin/raw$image");
+my $req = new HTTP::Request("GET" => $uri);
 my $resp = $ua->request($req);
 my $data = $resp->content();
 $info = image_info(\$data);
