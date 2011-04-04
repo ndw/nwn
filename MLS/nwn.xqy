@@ -402,7 +402,7 @@ declare function nwn:extract-subjects($essay as element(db:essay)) as element(ml
         return
           if ($person/db:surname)
           then
-            concat(normalize-space($person/db:surname), " ", 
+            concat(normalize-space($person/db:surname), ", ",
                    normalize-space(($person/db:givenname,$person/db:firstname)[1]))
           else
             normalize-space($person),
