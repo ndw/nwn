@@ -439,7 +439,9 @@ $(document).ready(function() {{
                </div>)
           }
 
-          { let $props := $essay/db:info/mldb:subject
+          { if (nwn:admin()) (: FIXME: :)
+            then
+            let $props := $essay/db:info/mldb:subject
             return
               <div class="subjects">
                  <h3>Subjects:</h3>
@@ -457,6 +459,8 @@ $(document).ready(function() {{
                    }
                  </dl>
                </div>
+             else
+               ()
           }
 
           { if (nwn:admin())
