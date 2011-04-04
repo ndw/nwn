@@ -11,7 +11,7 @@
 
 function addpLinks() {
     $("p[id]").each(function(){
-        $(this).append("<a class='plink' href='#" + $(this).attr("id") + "'> ¶</a>");
+        $(this).append("<a class='plink' href='#" + $(this).attr("id") + "'>&#160;¶</a>");
     });
 }
 
