@@ -424,7 +424,7 @@ $(document).ready(function() {{
                <div class="topics">
                  <h3>Topics:</h3>
                  <dl>
-                   { let $tax   := doc("/production/etc/taxonomy.xml")
+                   { let $tax := doc("/production/etc/taxonomy.xml")
                      let $all
                        := for $prop in $props
                           let $spot := $tax//*[local-name(.) = string($prop)]
@@ -437,6 +437,26 @@ $(document).ready(function() {{
                    }
                  </dl>
                </div>)
+          }
+
+          { let $props := $essay/db:info/mldb:subject
+            return
+              <div class="subjects">
+                 <h3>Subjects:</h3>
+                 <dl>
+                   { for $prop in $props
+                     let $str := string($prop)
+                     let $ch := upper-case(substring($str, 1, 1))
+                     let $letter := if ($ch <= "Z" and $ch >= "A")
+                                    then $ch
+                                    else "Symbols"
+                     let $id := translate(escape-uri($str,true()), '%', '_')
+                     order by $str
+                     return
+                       <dt><a href="/subjects/{$letter}#{$id}">{$str}</a></dt>
+                   }
+                 </dl>
+               </div>
           }
 
           { if (nwn:admin())
