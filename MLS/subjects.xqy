@@ -24,11 +24,11 @@ declare function local:subjbody($letter as xs:string) as document-node() {
       <dl xmlns="http://www.w3.org/1999/xhtml">
         {
           for $t in $terms
-          let $q := cts:element-value-query(xs:QName("mldb:subject"), string($t))
+          let $q := cts:element-value-query(xs:QName("mldb:subject"), string($t), ("exact"))
           let $r := cts:and-query(($q, cts:collection-query($nwn:pcoll)))
           let $d := cts:search(collection($nwn:ecoll), $r)
           return
-            (<dt>{$t}</dt>,
+            (<dt id="{translate(escape-uri($t,true()), '%', '_')}">{string($t)}</dt>,
              <dd>
                <ul>
                  { for $e in $d
