@@ -422,7 +422,22 @@
     </td>
   </tr>
 
-  <xsl:apply-templates select="it:location"/>
+  <xsl:apply-templates select="it:location|it:place"/>
+</xsl:template>
+
+<xsl:template match="it:place">
+  <tr>
+    <td colspan="3">&#160;</td>
+    <td>
+      <xsl:value-of select="it:name"/>
+      <br/>
+      <xsl:value-of select="it:address"/>
+      <xsl:for-each select="it:phone">
+        <br/>
+        <xsl:value-of select="."/>
+      </xsl:for-each>
+    </td>
+  </tr>
 </xsl:template>
 
 <xsl:template match="it:location">
@@ -457,100 +472,46 @@
 		select="format-date(xs:date($endDate),
                                     '[D01]&#160;[MNn,*-3]')"/>
 
-  <xsl:choose>
-    <xsl:when test="$hcal != 0 and @type = 'all-day'">
-      <abbr class="dtstart" title="{it:startDate}">
-	<xsl:copy-of select="$displayStart"/>
-      </abbr>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:copy-of select="$displayStart"/>
-    </xsl:otherwise>
-  </xsl:choose>
-
-  <xsl:if test="$startDate != $endDate">
-    <xsl:text>–</xsl:text>
+  <span class="daterange" style="white-space: nowrap;">
     <xsl:choose>
       <xsl:when test="$hcal != 0 and @type = 'all-day'">
-	<abbr class="dtend" title="{it:endDate}">
-	  <xsl:copy-of select="$displayEnd"/>
-	</abbr>
+        <abbr class="dtstart" title="{it:startDate}">
+          <xsl:copy-of select="$displayStart"/>
+        </abbr>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:copy-of select="$displayEnd"/>
+        <xsl:copy-of select="$displayStart"/>
       </xsl:otherwise>
     </xsl:choose>
-  </xsl:if>
-</xsl:template>
 
-<xsl:template name="it:XXX-time">
-  <xsl:param name="hcal" select="0"/>
-
-  <xsl:variable name="sofs" as="xs:dayTimeDuration"
-                select="if (it:startOffset)
-                        then xs:dayTimeDuration(string(it:startOffset))
-                        else xs:dayTimeDuration('PT0H')"/>
-
-  <xsl:variable name="eofs" as="xs:dayTimeDuration"
-                select="if (it:endOffset)
-                        then xs:dayTimeDuration(string(it:endOffset))
-                        else xs:dayTimeDuration('PT0H')"/>
-
-  <xsl:choose>
-    <xsl:when test="$hcal != 0">
-      <abbr class="dtstart" title="{it:startDate}">
-	<xsl:value-of select="format-dateTime(xs:dateTime(it:startDate) - $sofs,
-	                                      '[h01]:[m01][Pn,*-1]')"/>
-      </abbr>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:value-of select="format-dateTime(xs:dateTime(it:startDate) - $sofs,
-	                                    '[h01]:[m01][Pn,*-1]')"/>
-    </xsl:otherwise>
-  </xsl:choose>
-
-  <xsl:if test="it:startTZ">
-    <abbr class="tz">
-      <xsl:text>&#160;</xsl:text>
-      <xsl:value-of select="it:startTZ"/>
-    </abbr>
-  </xsl:if>
-
-  <xsl:text>–</xsl:text>
-
-  <xsl:choose>
-    <xsl:when test="$hcal != 0">
-      <abbr class="dtend" title="{it:endDate}">
-	<xsl:value-of select="format-dateTime(xs:dateTime(it:endDate) - $eofs,
-			                      '[h01]:[m01][Pn,*-1]')"/>
-      </abbr>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:value-of select="format-dateTime(xs:dateTime(it:endDate) - $eofs,
-			                    '[h01]:[m01][Pn,*-1]')"/>
-    </xsl:otherwise>
-  </xsl:choose>
-
-  <xsl:if test="it:endTZ">
-    <abbr class="tz">
-      <xsl:text>&#160;</xsl:text>
-      <xsl:value-of select="it:endTZ"/>
-    </abbr>
-  </xsl:if>
+    <xsl:if test="$startDate != $endDate">
+      <xsl:text>–</xsl:text>
+      <xsl:choose>
+        <xsl:when test="$hcal != 0 and @type = 'all-day'">
+          <abbr class="dtend" title="{it:endDate}">
+            <xsl:copy-of select="$displayEnd"/>
+          </abbr>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:copy-of select="$displayEnd"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
+  </span>
 </xsl:template>
 
 <xsl:template name="it:time">
   <xsl:param name="hcal" select="0"/>
 
-  <xsl:apply-templates select="it:startDate">
-    <xsl:with-param name="hcal" select="$hcal"/>
-  </xsl:apply-templates>
-
-  <xsl:text>–</xsl:text>
-
-  <xsl:apply-templates select="it:endDate">
-    <xsl:with-param name="hcal" select="$hcal"/>
-  </xsl:apply-templates>
+  <span class="timerange" style="white-space: nowrap;">
+    <xsl:apply-templates select="it:startDate">
+      <xsl:with-param name="hcal" select="$hcal"/>
+    </xsl:apply-templates>
+    <xsl:text>–</xsl:text>
+    <xsl:apply-templates select="it:endDate">
+      <xsl:with-param name="hcal" select="$hcal"/>
+    </xsl:apply-templates>
+  </span>
 </xsl:template>
 
 <xsl:template match="it:startDate">
