@@ -29,7 +29,7 @@ declare function local:show($photo as element(flickr:photo)) {
   let $thumb := concat("http://farm", $photo/@farm, ".static.flickr.com/", $photo/@server, "/",
                        $photo/@id, "_", $photo/@secret, "_s.jpg")
   let $title := replace(string($photo/flickr:title), """", "\\""")
-  let $url   := concat("http://www.flickr.com/photos/", $photo/flickr:owner/@username, "/", $id, "/")
+  let $url   := concat("http://www.flickr.com/photos/", $photo/flickr:owner/@nsid, "/", $id, "/")
   return
     <json latlong="{$lat},{$long}">
       { concat("""date"": """, $date, """, ""id"": """, $id, """, ""lat"": ", $lat, ", ""lon"": ", $long,
