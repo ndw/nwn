@@ -70,16 +70,22 @@ declare variable $rwopts
          <pattern>^/local(/[^?]+)(\?(.*))?$</pattern>
          <replace>/local.xqy?uri=$1&amp;$3</replace>
        </map>
+
+       <map method="GET">
+         <pattern>^/etc/(knows.*)$</pattern>
+         <replace>/redirect.xqy?uri=http://norman.walsh.name/$1</replace>
+       </map>
+
        <map>
-         <pattern>^/knows/who/((.*)\.html)?(\?(.*))?$</pattern>
+         <pattern>^/knows/who/((.+)\.html)(\?(.*))?$</pattern>
          <replace>/knows/who.xqy?who=$2&amp;type=html&amp;$4</replace>
        </map>
        <map>
-         <pattern>^/knows/who/((.*)\.rdf)?(\?(.*))?$</pattern>
+         <pattern>^/knows/who/((.+)\.rdf)(\?(.*))?$</pattern>
          <replace>/knows/who.xqy?who=$2&amp;type=rdf&amp;$4</replace>
        </map>
        <map>
-         <pattern>^/knows/who/(.*)?(\?(.*))?$</pattern>
+         <pattern>^/knows/who/(.+)(\?(.*))?$</pattern>
          <replace>/knows/who.xqy?who=$1&amp;$3</replace>
        </map>
        <map>
@@ -87,15 +93,15 @@ declare variable $rwopts
          <replace>/knows/who.xqy$1</replace>
        </map>
        <map>
-         <pattern>^/knows/where/((.*)\.html)?(\?(.*))?$</pattern>
+         <pattern>^/knows/where/((.+)\.html)(\?(.*))?$</pattern>
          <replace>/knows/where.xqy?where=$2&amp;type=html&amp;$4</replace>
        </map>
        <map>
-         <pattern>^/knows/where/((.*)\.rdf)?(\?(.*))?$</pattern>
+         <pattern>^/knows/where/((.+)\.rdf)(\?(.*))?$</pattern>
          <replace>/knows/where.xqy?where=$2&amp;type=rdf&amp;$4</replace>
        </map>
        <map>
-         <pattern>^/knows/where/(.*)?(\?(.*))?$</pattern>
+         <pattern>^/knows/where/(.+)(\?(.*))?$</pattern>
          <replace>/knows/where.xqy?where=$1&amp;$3</replace>
        </map>
        <map>
@@ -103,19 +109,19 @@ declare variable $rwopts
          <replace>/knows/where.xqy?$1</replace>
        </map>
        <map>
-         <pattern>^/knows/what/((.*)\.html)?(\?(.*))?$</pattern>
+         <pattern>^/knows/what/((.+)\.html)(\?(.*))?$</pattern>
          <replace>/knows/what.xqy?what=$2&amp;type=html&amp;$4</replace>
        </map>
        <map>
-         <pattern>^/knows/what/((.*)\.rdf)?(\?(.*))?$</pattern>
+         <pattern>^/knows/what/((.+)\.rdf)(\?(.*))?$</pattern>
          <replace>/knows/what.xqy?what=$2&amp;type=rdf&amp;$4</replace>
        </map>
        <map>
-         <pattern>^/knows/what/(.*)?(\?(.*))?$</pattern>
+         <pattern>^/knows/what/(.+)(\?(.*))?$</pattern>
          <replace>/knows/what.xqy?what=$1&amp;$3</replace>
        </map>
        <map>
-         <pattern>^/knows/what(\?(.*))?$</pattern>
+         <pattern>^/knows/what/?(\?(.*))?$</pattern>
          <replace>/knows/what.xqy?$1</replace>
        </map>
        <map>
@@ -269,6 +275,6 @@ return
      audit:http(xdmp:get-request-method(), $uri, 404),
      $uri)
   else
-    ( (:xdmp:log(concat("URI Rewrote: ", $uri, " => ", $result)), :)
+    ( (:xdmp:log(concat("URI Rewrote: ", $uri, " => ", $result)),:)
      audit:http(xdmp:get-request-method(), $uri, 200),
      $result)
