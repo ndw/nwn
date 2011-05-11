@@ -221,7 +221,9 @@
   <p class="bigtitle">Lodging:</p>
 
   <table border="0" summary="Lodging" class="lodging">
-    <xsl:apply-templates/>
+    <xsl:apply-templates>
+      <xsl:sort select="it:startDate" order="ascending"/>
+    </xsl:apply-templates>
   </table>
 </xsl:template>
 
