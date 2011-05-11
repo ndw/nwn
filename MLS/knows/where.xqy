@@ -238,8 +238,10 @@ $(document).ready(function() {{
 };
 
 declare function local:index() as element(html:html) {
+  (: FIXME: this is not the right way to check for production URIs :)
   let $places := /rdf:Description[rdf:type/@rdf:resource
-                                  ="http://nwalsh.com/rdf/contacts#Place"]
+                                  ="http://nwalsh.com/rdf/contacts#Place"
+                                  and starts-with(xdmp:node-uri(.), '/production/')]
   let $countries := distinct-values($places//v:country-name)
   return
   <html xmlns="http://www.w3.org/1999/xhtml">
