@@ -316,14 +316,18 @@ $(document).ready(function() {{
                              let $rdf := /rdf:Description[@rdf:about=$place
                                          and (starts-with(xdmp:node-uri(.), "/production/"))]
                              return
-                               <a href="{substring-after($place,'.name')}">
-                                 { if ($rdf/c:associatedTitle)
-                                   then
-                                     string($rdf/c:associatedTitle)
-                                   else
-                                     string($rdf/c:associatedName)
-                                 }
-                               </a>
+                               <span xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#">
+                                 <span property="geo:lat" content="{$rdf/geo:lat}"/>
+                                 <span property="geo:long" content="{$rdf/geo:long}"/>
+                                 <a href="{substring-after($place,'.name')}">
+                                   { if ($rdf/c:associatedTitle)
+                                     then
+                                       string($rdf/c:associatedTitle)
+                                     else
+                                       string($rdf/c:associatedName)
+                                   }
+                                 </a>
+                               </span>
             return
               if ($coverage)
               then
