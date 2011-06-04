@@ -261,6 +261,7 @@
                <skos:prefLabel>Passau, Germany</skos:prefLabel>
            </Passau>
          </Germany>
+         <Gibraltar ttag:tag="uk-gibraltar"/>
          <Hungary icon="hungary" ttag:tag="hungary">
            <Budapest icon="budapest" ttag:tag="hu-budapest">
                <skos:altLabel>Budapest</skos:altLabel>
@@ -299,6 +300,40 @@
                <skos:prefLabel>Edinburgh, Scotland</skos:prefLabel>
             </Edinburgh>
          </Scotland>
+         <Spain icon="spain" ttag:tag="spain">
+           <Sevilla icon="sevilla" ttag:tag="es-sevilla">
+               <skos:altLabel>Sevilla</skos:altLabel>
+               <skos:prefLabel>Sevilla, Spain</skos:prefLabel>
+           </Sevilla>
+           <Peñarroyo-Pueblonuevo icon="pueblonuevo" ttag:tag="es-pueblonuevo">
+               <skos:altLabel>Peñarroyo-Pueblonuevo</skos:altLabel>
+               <skos:prefLabel>Peñarroyo-Pueblonuevo, Spain</skos:prefLabel>
+           </Peñarroyo-Pueblonuevo>
+           <Cordoba icon="cordoba" ttag:tag="es-cordoba">
+               <skos:altLabel>Cordoba</skos:altLabel>
+               <skos:prefLabel>Cordoba, Spain</skos:prefLabel>
+           </Cordoba>
+           <Granada icon="granada" ttag:tag="es-granada">
+               <skos:altLabel>Granada</skos:altLabel>
+               <skos:prefLabel>Granada, Spain</skos:prefLabel>
+           </Granada>
+           <Ronda icon="ronda" ttag:tag="es-ronda">
+               <skos:altLabel>Ronda</skos:altLabel>
+               <skos:prefLabel>Ronda, Spain</skos:prefLabel>
+           </Ronda>
+           <Mijas icon="mijas" ttag:tag="es-mijas">
+               <skos:altLabel>Mijas</skos:altLabel>
+               <skos:prefLabel>Mijas, Spain</skos:prefLabel>
+           </Mijas>
+           <Nerja icon="nerja" ttag:tag="es-nerja">
+               <skos:altLabel>Nerja</skos:altLabel>
+               <skos:prefLabel>Nerja, Spain</skos:prefLabel>
+           </Nerja>
+           <Marbella icon="marbella" ttag:tag="es-marbella">
+               <skos:altLabel>Marbella</skos:altLabel>
+               <skos:prefLabel>Marbella, Spain</skos:prefLabel>
+           </Marbella>
+         </Spain>
          <Slovakia icon="slovakia" ttag:tag="slovakia">
            <Bratislava icon="bratislava" ttag:tag="sk-bratislava">
                <skos:altLabel>Bratislava</skos:altLabel>
@@ -421,6 +456,7 @@
             <iPhone anchor="iphone" ttag:tag="iphone"/>
             <Android anchor="android" ttag:tag="android"/>
             <GalaxyTab anchor="galaxytab" ttag:tag="galaxytab"/>
+            <NikonD7000 anchor="nikond7000" ttag:tag="nikond7000"/>
          </Gadgets>
          <Greasemonkey ttag:tag="greasemonkey">
             <rdfs:seeAlso rdf:resource="http://en.wikipedia.org/wiki/Greasemonkey"/>
