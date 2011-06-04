@@ -1243,6 +1243,7 @@ declare function flickr:photos.geo.removeLocation(
 };
 
 declare function flickr:photos.geo.setLocation(
+    $photo_id as xs:string,
     $lat as xs:string,
     $lon as xs:string,
     $accuracy as xs:integer?)
@@ -1250,6 +1251,7 @@ declare function flickr:photos.geo.setLocation(
   let $method := <method xmlns="http://www.flickr.com/services/api/"
                          auth="true"
                          name="flickr.photos.geo.setLocation">
+                   <arg name="photo_id">{$photo_id}</arg>
                    <arg name="lat">{$lat}</arg>
                    <arg name="lon">{$lon}</arg>
                    { if (empty($accuracy))
