@@ -316,7 +316,8 @@ $(document).ready(function() {{
                              let $rdf := /rdf:Description[@rdf:about=$place
                                          and (starts-with(xdmp:node-uri(.), "/production/"))]
                              return
-                               <span xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#">
+                               <span xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+                                     typeof="geo:Point">
                                  <span property="geo:lat" content="{$rdf/geo:lat}"/>
                                  <span property="geo:long" content="{$rdf/geo:long}"/>
                                  <a href="{substring-after($place,'.name')}">
