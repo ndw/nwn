@@ -620,7 +620,9 @@ declare function nwn:same-date($d1 as xs:dateTime, $d2 as xs:dateTime) as xs:boo
 declare function nwn:footer() as element(html:div) {
   <div id="footer" xmlns="http://www.w3.org/1999/xhtml">
     <div class="rights">
-      <p>Copyright &#169; 1998–{year-from-dateTime(nwn:most-recent-update())} Norman Walsh.
+      <p>Copyright &#169; 1998–{year-from-dateTime(nwn:most-recent-update())}
+      {" "}
+      <a rel="author" href="/2003/05/14/who">Norman Walsh</a>.
       { comment { "Creative Commons License" } }
       This work is licensed under a <a rel="license"
       href="http://creativecommons.org/licenses/by-nc/2.0/">Creative Commons License</a>.
@@ -633,7 +635,9 @@ declare function nwn:footer() as element(html:div) {
 declare function nwn:footer($essay as element(db:essay)) as element(html:div) {
   <div id="footer" xmlns="http://www.w3.org/1999/xhtml">
     <div class="rights">
-      <p>Copyright &#169; 1998–{year-from-dateTime(nwn:most-recent-update())} Norman Walsh.
+      <p>Copyright &#169; 1998–{year-from-dateTime(nwn:most-recent-update())}
+      {" "}
+      <a rel="author" href="/2003/05/14/who">Norman Walsh</a>.
       { comment { "Creative Commons License" } }
       This work is licensed under a <a rel="license"
       href="http://creativecommons.org/licenses/by-nc/2.0/">Creative Commons License</a>.
