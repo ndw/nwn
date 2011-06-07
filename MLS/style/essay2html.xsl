@@ -707,16 +707,26 @@
 			then iri-to-uri(resolve-uri(@xlink:href,base-uri(.)))
 			else ''"/>
 
-  <xsl:choose>
-    <xsl:when test="starts-with($href,$host)">
-      <xsl:call-template name="db:link">
-	<xsl:with-param name="href" select="$href"/>
-      </xsl:call-template>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:call-template name="db:link"/>
-    </xsl:otherwise>
-  </xsl:choose>
+  <xsl:variable name="link" as="element(html:a)">
+    <xsl:choose>
+      <xsl:when test="starts-with($href,$host)">
+        <xsl:call-template name="db:link">
+          <xsl:with-param name="href" select="$href"/>
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="db:link"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+
+  <a>
+    <xsl:for-each select="@html:*">
+      <xsl:attribute name="{local-name(.)}" select="."/>
+    </xsl:for-each>
+    <xsl:copy-of select="$link/@*"/>
+    <xsl:sequence select="$link/node()"/>
+  </a>
 </xsl:template>
 
 <xsl:template match="db:productname">
