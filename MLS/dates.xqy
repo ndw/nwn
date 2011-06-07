@@ -25,7 +25,7 @@ declare function local:get-essays($year as xs:int) as element(db:essay)* {
          <constraint name="dt">
            <range type="xs:dateTime" facet="false">
              <element ns="http://norman.walsh.name/ns/metadata" name="pubdate"/>
-             <bucket ge="{$year}-01-01T00:00:00Z" lt="{current-dateTime()}"
+             <bucket ge="{$year}-01-01T00:00:00Z" lt="{$year+1}-01-01T00:00:00Z"
                      name="range">range</bucket>
            </range>
          </constraint>
