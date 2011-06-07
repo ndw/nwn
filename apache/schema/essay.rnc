@@ -9,13 +9,10 @@
 
 namespace gal = "http://norman.walsh.name/rdf/gallery#"
 namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
-#namespace cvs = "http://nwalsh.com/rdf/cvs#"
-#namespace db = "http://nwalsh.com/xmlns/docbook-grammar-structure"
 namespace dc = "http://purl.org/dc/elements/1.1/"
 namespace dcterms = "http://purl.org/dc/terms/"
 namespace geo = "http://www.w3.org/2003/01/geo/wgs84_pos#"
 namespace doap = "http://usefulinc.com/ns/doap/#"
-#namespace doc = "http://nwalsh.com/xmlns/documentation"
 namespace inherit = inherit
 namespace local = ""
 namespace rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -27,9 +24,16 @@ namespace db = "http://docbook.org/ns/docbook"
 namespace it = "http://nwalsh.com/rdf/itinerary#"
 namespace foaf = "http://xmlns.com/foaf/0.1/"
 
+db._any.html.attr = attribute html:* { text }
+
 include "docbook.rnc" {
    start = db.essay
    db.tag = element db:tag { db.tag.attlist, (db._text|db.markup.inlines)* }
+
+   db.common.attributes =
+      db.xml.id.attribute?
+    & db.common.base.attributes
+    & db._any.html.attr*
 }
 
 db.info.elements |=

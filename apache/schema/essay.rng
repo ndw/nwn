@@ -9,12 +9,12 @@
   dc:rights Copyright &#169; 2003, 2004, 2005 Norman Walsh. All rights reserved.
   dc:description DocBook NG based grammar for norman.walsh.name essays
 -->
-<!--
-  namespace cvs = "http://nwalsh.com/rdf/cvs#"
-  namespace db = "http://nwalsh.com/xmlns/docbook-grammar-structure"
--->
-<!-- namespace doc = "http://nwalsh.com/xmlns/documentation" -->
-<grammar xmlns:html="http://www.w3.org/1999/xhtml" xmlns:doap="http://usefulinc.com/ns/doap/#" xmlns:gal="http://norman.walsh.name/rdf/gallery#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:db="http://docbook.org/ns/docbook" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:it="http://nwalsh.com/rdf/itinerary#" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:s="http://www.ascc.net/xml/schematron" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+<grammar xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:db="http://docbook.org/ns/docbook" xmlns:it="http://nwalsh.com/rdf/itinerary#" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:s="http://www.ascc.net/xml/schematron" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:gal="http://norman.walsh.name/rdf/gallery#" xmlns:doap="http://usefulinc.com/ns/doap/#" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="db._any.html.attr">
+    <attribute>
+      <nsName ns="http://www.w3.org/1999/xhtml"/>
+    </attribute>
+  </define>
   <include href="docbook.rng">
     <start>
       <ref name="db.essay"/>
@@ -29,6 +29,17 @@
           </choice>
         </zeroOrMore>
       </element>
+    </define>
+    <define name="db.common.attributes">
+      <interleave>
+        <optional>
+          <ref name="db.xml.id.attribute"/>
+        </optional>
+        <ref name="db.common.base.attributes"/>
+        <zeroOrMore>
+          <ref name="db._any.html.attr"/>
+        </zeroOrMore>
+      </interleave>
     </define>
   </include>
   <define name="db.info.elements" combine="choice">
