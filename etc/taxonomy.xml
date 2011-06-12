@@ -141,6 +141,9 @@
             <XMLPrague2011 anchor="xmlprague2011" ttag:tag="xmlprague2011">
                <skos:prefLabel>XML Prague 2011</skos:prefLabel>
             </XMLPrague2011>
+            <XMLPrague2012 anchor="xmlprague2012" ttag:tag="xmlprague2012">
+               <skos:prefLabel>XML Prague 2012</skos:prefLabel>
+            </XMLPrague2012>
          </XMLPrague>
          <XMLSummerSchool anchor="xmlsummerschool" ttag:tag="xmlSummerSchool">
             <XMLSummerSchool2009 anchor="xmlsummerschool2009" ttag:tag="xmlss09">
