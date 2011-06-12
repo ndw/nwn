@@ -702,9 +702,12 @@
 <!-- ====================================================================== -->
 
 <xsl:template match="db:link">
+  <!-- wtf!? -->
+  <xsl:variable name="base" select="resolve-uri(base-uri(.), 'http://norman.walsh.name/')"/>
+
   <xsl:variable name="href"
 		select="if (@xlink:href)
-			then iri-to-uri(resolve-uri(@xlink:href,base-uri(.)))
+			then iri-to-uri(resolve-uri(@xlink:href,$base))
 			else ''"/>
 
   <xsl:variable name="link" as="element(html:a)">
