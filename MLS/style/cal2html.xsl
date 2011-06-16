@@ -109,7 +109,7 @@
   </xsl:message>
   -->
 
-  <xsl:variable name="ranges">
+  <xsl:variable name="ranges" as="xs:string*">
     <xsl:for-each select="$pis">
       <xsl:variable name="hmonth" select="dbf:pi(., 'month')"/>
       <xsl:variable name="highlight" select="dbf:pi(., 'highlight')"/>
