@@ -449,6 +449,7 @@
          <Firefox ttag:tag="firefox"/>
          <Gadgets ttag:tag="gadgets">
             <GoogleVoice anchor="googlevoice" ttag:tag="googlevoice"/>
+            <GoogleMusic anchor="googlemusic" ttag:tag="googlemusic"/>
             <Laptop ttag:tag="laptop">
                <ThinkPad ttag:tag="thinkpad"/>
             </Laptop>
