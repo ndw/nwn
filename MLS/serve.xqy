@@ -16,16 +16,16 @@ declare function local:walk($nodes as node()*) as node()* {
     typeswitch ($x)
       case element(db:title)
         return
-          if ($x/../../self::db:essay and not($x/../db:biblioid[@class="uri"]))
+          if ($x/parent::db:info/parent::db:essay and not($x/../db:biblioid[@class="uri"]))
           then
             (element { node-name($x) }
-                    { $x/@*, local:walk($x/node()) },
+                     { $x/namespace::*, $x/@*, local:walk($x/node()) },
              element { QName("http://docbook.org/ns/docbook", "biblioid") }
                      { attribute { QName("", "class") } { "uri" },
                        concat("http://norman.walsh.name", nwn:httpuri(xdmp:node-uri($x))) })
           else
             element { node-name($x) }
-                    { $x/@*, local:walk($x/node()) }
+                    { $x/namespace::*, $x/@*, local:walk($x/node()) }
       case element()
         return
           if ($x/self::mldb:*)
@@ -33,7 +33,7 @@ declare function local:walk($nodes as node()*) as node()* {
             ()
           else
             element { node-name($x) }
-                    { $x/@*, local:walk($x/node()) }
+                    { $x/namespace::*, $x/@*, local:walk($x/node()) }
       default
         return $x
 };
