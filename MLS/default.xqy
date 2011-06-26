@@ -199,7 +199,7 @@ return
       then
         <div class="admin" id="admin">
           <span>Welcome admin | </span>
-          <a href="/admin/promote">promote</a>
+          <a href="/admin/promote">promote {count(collection($nwn:scoll))}</a>
         </div>
       else
         ()
