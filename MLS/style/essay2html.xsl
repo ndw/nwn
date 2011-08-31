@@ -74,6 +74,8 @@
 <xsl:param name="annotation.graphic.close" select="'/graphics/annot-close.png'"/>
 <xsl:param name="offline" select="0"/>
 
+<xsl:param name="pygmenter-uri" select="'http://localhost:8200/cgi-bin/pygmenter'"/>
+
 <xsl:param name="linenumbering" as="element()*">
 <ln path="literallayout" everyNth="0"/>
 <ln path="programlisting" everyNth="0"/>
