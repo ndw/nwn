@@ -552,6 +552,8 @@ declare function nwn:css-links() {
    <link xmlns="http://www.w3.org/1999/xhtml"
          rel="stylesheet" type="text/css" href="/css/base.css" />,
    <link xmlns="http://www.w3.org/1999/xhtml"
+         rel="stylesheet" type="text/css" href="/css/pygments.css" />,
+   <link xmlns="http://www.w3.org/1999/xhtml"
          rel="stylesheet" media="screen and (max-device-width: 800px)" type="text/css"
          href="/css/mobile.css" />,
    <link xmlns="http://www.w3.org/1999/xhtml"
