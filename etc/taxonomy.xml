@@ -98,6 +98,9 @@
             <Balisage2010 anchor="balisage2010" ttag:tag="balisageConference10">
                <skos:prefLabel>Balisage 2010</skos:prefLabel>
             </Balisage2010>
+            <Balisage2011 anchor="balisage2011" ttag:tag="balisageConference11">
+               <skos:prefLabel>Balisage 2011</skos:prefLabel>
+            </Balisage2011>
             <skos:prefLabel>Balisage Conference</skos:prefLabel>
          </Balisage>
          <Extreme ttag:tag="extrememarkup">
