@@ -1,0 +1,43 @@
+#!/usr/local/bin/python
+
+import sys, os, re, string;
+
+from pygments import highlight
+from pygments.lexers import (get_lexer_by_name, get_lexer_for_mimetype)
+from pygments.lexers import guess_lexer
+from pygments.formatters import (HtmlFormatter, get_formatter_by_name)
+
+print "Content-Type: application/xml"
+print ""
+
+query = os.environ["QUERY_STRING"]
+code = ""
+
+for line in sys.stdin:
+    code = code + line
+
+language = re.search("language=([^?&]+)", os.environ["QUERY_STRING"])
+if language is None:
+    language = ""
+else:
+    language = language.group(1)
+
+formatter = re.search("formatter=([^?&]+)", os.environ["QUERY_STRING"])
+if formatter is None:
+    formatter = "html"
+else:
+    formatter = formatter.group(1)
+
+if language == "":
+    lexer = guess_lexer(code)
+else:
+    lexer = get_lexer_by_name(language)
+
+formatter = get_formatter_by_name(formatter)
+
+result = highlight(code, lexer, formatter)
+
+# Put it in the right namespace
+result = "<div xmlns='http://www.w3.org/1999/xhtml'>" + result + "</div>"
+
+print result
