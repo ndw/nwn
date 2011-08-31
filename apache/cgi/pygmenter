@@ -6,6 +6,7 @@ from pygments import highlight
 from pygments.lexers import (get_lexer_by_name, get_lexer_for_mimetype)
 from pygments.lexers import guess_lexer
 from pygments.formatters import (HtmlFormatter, get_formatter_by_name)
+from pygments.util import ClassNotFound
 
 print "Content-Type: application/xml"
 print ""
@@ -14,7 +15,7 @@ query = os.environ["QUERY_STRING"]
 code = ""
 
 for line in sys.stdin:
-    code = code + line
+    code = code + line.decode("utf8")
 
 language = re.search("language=([^?&]+)", os.environ["QUERY_STRING"])
 if language is None:
@@ -22,22 +23,31 @@ if language is None:
 else:
     language = language.group(1)
 
-formatter = re.search("formatter=([^?&]+)", os.environ["QUERY_STRING"])
-if formatter is None:
-    formatter = "html"
+formatname = re.search("formatter=([^?&]+)", os.environ["QUERY_STRING"])
+if formatname is None:
+    formatname = "html"
 else:
-    formatter = formatter.group(1)
+    formatname = formatname.group(1)
 
 if language == "":
     lexer = guess_lexer(code)
 else:
-    lexer = get_lexer_by_name(language)
+    try:
+        lexer = get_lexer_by_name(language)
+    except ClassNotFound:
+        lexer = ""
 
-formatter = get_formatter_by_name(formatter)
+formatter = get_formatter_by_name(formatname)
 
-result = highlight(code, lexer, formatter)
+try:
+    result = highlight(code, lexer, formatter)
+except AttributeError:
+    sys.stderr.write("Failed to highlight code: lexer=" + lexer + " formatter=" + formatname + "\n")
+    sys.stderr.write(code.encode("ascii","xmlcharrefreplace") + "\n")
+    code = code.replace("&", "&amp;").replace("<", "&lt;").replace(">","&gt;")
+    result = "<pre>" + code + "</pre>"
 
 # Put it in the right namespace
 result = "<div xmlns='http://www.w3.org/1999/xhtml'>" + result + "</div>"
 
-print result
+print result.encode("ascii","xmlcharrefreplace")
