@@ -18,6 +18,7 @@ function upToDateCallback(data) {
     if (lmtime === data.lm) {
         // Ok, still up-to-date
     } else {
+        $("body").stopTime();
         window.location.href = window.location.href;
     }
 }
