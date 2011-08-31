@@ -159,6 +159,8 @@
 </xsl:template>
 
 <xsl:template match="it:leg">
+  <xsl:variable name="forecast" select="nwn:forecast(it:arrive)"/>
+
   <tr class="vevent">
     <td valign="top">
       <xsl:call-template name="it:date">
@@ -183,6 +185,7 @@
       <span class="summary">
 	<xsl:value-of select="it:description"/>
       </span>
+      <xsl:sequence select="$forecast"/>
     </td>
   </tr>
 </xsl:template>

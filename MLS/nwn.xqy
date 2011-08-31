@@ -341,19 +341,16 @@ declare function nwn:flight-map($trip as element(itin:trip)) as element(html:scr
   let $legs   := $trip//itin:leg[(@class='flight' or @class='train')
                                  and itin:arrive and itin:depart]
   let $points := distinct-values(for $p in ($legs/itin:arrive, $legs/itin:depart)
-                                 return substring-after($p,"#"))
+                                 return substring-after($p, "#"))
   let $script :=
     <lines xmlns="http://www.w3.org/1999/xhtml">
       <line>var mapDiv = document.getElementById('flightmap');</line>
       <line>function Plot() {{</line>
       { for $point in $points
         let $var := translate($point, ".", "")
-        let $uri := concat("http://norman.walsh.name/knows/where/", $point)
-        let $pq  := cts:element-attribute-value-query(xs:QName("rdf:Description"),
-                                                      xs:QName("rdf:about"), $uri)
-        let $place := cts:search(collection($nwn:pcoll), $pq)[1]/rdf:Description
+        let $place := nwn:rdf-for-place($point)
         let $trace := if (empty($place))
-                      then xdmp:log(concat("No RDF for ", $uri))
+                      then xdmp:log(concat("No RDF for ", $point))
                       else ()
         return
           <line>{"    "}{$var} = new Airport({string($place/geo:lat)}, {string($place/geo:long)}, "{$point}", {if ($place/foaf:homepage) then concat("""", $place/foaf:homepage[1]/@rdf:resource, """") else """"""});</line>
@@ -376,6 +373,49 @@ declare function nwn:flight-map($trip as element(itin:trip)) as element(html:scr
     <script xmlns="http://www.w3.org/1999/xhtml" type="text/javascript">
       { string-join($script/line, "&#10;") }
     </script>
+};
+
+declare function nwn:forecast($loc as element()?) as element()?
+{
+  (: http://api.wunderground.com/auto/wui/geo/ForecastXML/index.xml?query=41.9,-72.7 :)
+  (: http://wiki.wunderground.com/index.php/API_-_XML :)
+  if (empty($loc))
+  then ()
+  else
+    let $place := nwn:rdf-for-place($loc)
+    let $prevplace := nwn:rdf-for-place($loc/preceding::itin:arrive[1])
+    let $dist := if ($place/geo:lat and $place/geo:long
+                     and $prevplace/geo:lat and $prevplace/geo:long)
+                 then cts:distance(cts:point($place/geo:lat, $place/geo:long),
+                                   cts:point($prevplace/geo:lat, $prevplace/geo:long))
+                 else ()
+    let $date := substring-before($loc/../itin:endDate, 'T')
+    return
+      if (empty($place) or empty($place/geo:lat) or empty($place/geo:long)
+          or (exists($dist) and $dist < 50))
+      then
+        ()
+      else
+      <span class="forecast">
+        {$place/geo:lat}
+        {" "}
+        {$place/geo:long}
+        {" "}
+        {string($date)}
+      </span>
+};
+
+declare function nwn:rdf-for-place($place as xs:string?) as element(rdf:Description)?
+{
+  let $point := if (contains($place, "#")) then substring-after($place,"#") else $place
+  let $uri := concat("http://norman.walsh.name/knows/where/", $point)
+  let $pq  := cts:element-attribute-value-query(xs:QName("rdf:Description"),
+                                                xs:QName("rdf:about"), $uri)
+  let $trace := if (empty($place))
+                then xdmp:log(concat("No RDF for ", $uri))
+                else ()
+  return
+    cts:search(collection($nwn:pcoll), $pq)[1]/rdf:Description
 };
 
 declare function nwn:extract-topics($essay as element(db:essay)) as element(mldb:topic)* {
