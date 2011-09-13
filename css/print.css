@@ -96,6 +96,10 @@ table.yearcalendar,
   display: none;
 }
 
+div.itingrp {
+    page-break-inside: avoid;
+}
+
 p a.plink {
   display: none;
 }
