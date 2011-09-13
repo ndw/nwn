@@ -133,7 +133,7 @@
 		  |it:itinerary/it:leg[@class='train'][it:arrive and it:depart]"/>
 
     <xsl:if test="$mappoints">
-      <div id="routemap">
+      <div id="routemap" class="itingrp">
         <p class="bigtitle">Map:</p>
         <div class="artwork" id="flightmap" style="width: 640px; height: 480px;">
         </div>
@@ -151,11 +151,12 @@
 </xsl:function>
 
 <xsl:template match="it:itinerary">
-  <p class="bigtitle">Itinerary:</p>
-
-  <table border="0" summary="Itinerary" class="itinerary">
-    <xsl:apply-templates/>
-  </table>
+  <div class="itingrp">
+    <p class="bigtitle">Itinerary:</p>
+    <table border="0" summary="Itinerary" class="itinerary">
+      <xsl:apply-templates/>
+    </table>
+  </div>
 </xsl:template>
 
 <xsl:template match="it:leg">
@@ -191,13 +192,14 @@
 </xsl:template>
 
 <xsl:template match="it:seealso">
-  <p class="bigtitle">See also:</p>
-
-  <dl>
-    <xsl:apply-templates select="it:see[@ref]">
-      <xsl:sort data-type="text" select="."/>
-    </xsl:apply-templates>
-  </dl>
+  <div class="itingrp">
+    <p class="bigtitle">See also:</p>
+    <dl>
+      <xsl:apply-templates select="it:see[@ref]">
+        <xsl:sort data-type="text" select="."/>
+      </xsl:apply-templates>
+    </dl>
+  </div>
 </xsl:template>
 
 <xsl:template match="it:see">
@@ -221,13 +223,14 @@
 </xsl:template>
 
 <xsl:template match="it:lodging">
-  <p class="bigtitle">Lodging:</p>
-
-  <table border="0" summary="Lodging" class="lodging">
-    <xsl:apply-templates>
-      <xsl:sort select="it:startDate" order="ascending"/>
-    </xsl:apply-templates>
-  </table>
+  <div class="itingrp">
+    <p class="bigtitle">Lodging:</p>
+    <table border="0" summary="Lodging" class="lodging">
+      <xsl:apply-templates>
+        <xsl:sort select="it:startDate" order="ascending"/>
+      </xsl:apply-templates>
+    </table>
+  </div>
 </xsl:template>
 
 <xsl:template match="it:stay">
@@ -266,11 +269,12 @@
 </xsl:template>
 
 <xsl:template match="it:rentalcars">
-  <p class="bigtitle">Rental:</p>
-
-  <table border="0" summary="Rental cars" class="rentalcars">
-    <xsl:apply-templates/>
-  </table>
+  <div class="itingrp">
+    <p class="bigtitle">Rental:</p>
+    <table border="0" summary="Rental cars" class="rentalcars">
+      <xsl:apply-templates/>
+    </table>
+  </div>
 </xsl:template>
 
 <xsl:template match="it:car">
@@ -304,10 +308,12 @@
 </xsl:template>
 
 <xsl:template match="it:appointments">
-  <p class="bigtitle">Appointments:</p>
-  <table border="0" summary="Appointments" class="appointments">
-    <xsl:apply-templates/>
-  </table>
+  <div class="itingrp">
+    <p class="bigtitle">Appointments:</p>
+    <table border="0" summary="Appointments" class="appointments">
+      <xsl:apply-templates/>
+    </table>
+  </div>
 </xsl:template>
 
 <xsl:template match="it:appointment">
