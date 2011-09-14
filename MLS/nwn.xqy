@@ -396,7 +396,7 @@ declare function nwn:forecast($loc as element()?) as element()?
       then
         ()
       else
-      <span class="forecast">
+      <span class="forecast" xmlns="http://www.w3.org/1999/xhtml">
         {string($place/geo:lat)}
         {" "}
         {string($place/geo:long)}
