@@ -173,6 +173,8 @@ declare function local:decorate($uri as xs:string, $body as document-node()?) {
         </script>
         <script type="text/javascript" src="/js/nwn.js">
         </script>
+        <script type="text/javascript" src="/js/forecast.js">
+        </script>
 
         { if (starts-with($uri, "/staging/"))
           then
