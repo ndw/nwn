@@ -418,6 +418,15 @@ declare function nwn:rdf-for-place($place as xs:string?) as element(rdf:Descript
     cts:search(collection($nwn:pcoll), $pq)[1]/rdf:Description
 };
 
+declare function nwn:extract-relations($essay as element(db:essay)) as element()* {
+  (for $rel in $essay/db:info/db:bibliorelation[@class='uri' and @type='replaces']
+   return
+     <mldb:replaces>{string($rel)}</mldb:replaces>,
+   for $rel in $essay/db:info/db:bibliorelation[@class='uri' and @type='isreplacedby']
+   return
+     <mldb:isreplacedby>{string($rel)}</mldb:isreplacedby>)
+};
+
 declare function nwn:extract-topics($essay as element(db:essay)) as element(mldb:topic)* {
   let $tax := doc("/production/etc/taxonomy.xml")
   return
@@ -520,6 +529,7 @@ declare function nwn:patch-metadata($essay as element(db:essay)) as element(db:e
          <mldb:updated>
            { $lmdate }
          </mldb:updated>
+         { nwn:extract-relations($essay) }
          { nwn:extract-topics($essay) }
          { nwn:extract-subjects($essay) }
          { nwn:extract-geo($essay) }
@@ -623,6 +633,7 @@ as element(html:div)
           </div>
     }
     <h1>{$title}</h1>
+
     {nwn:message()}
 
     <div id="dateline">
@@ -650,6 +661,24 @@ as element(html:div)
              </span>)
       }
     </div>
+
+    {
+      let $quri := if (contains($uri,'//norman.walsh.name'))
+                   then $uri else concat("http://norman.walsh.name", $uri)
+      let $q    := cts:element-value-query(xs:QName("mldb:replaces"), $quri)
+      let $repl := cts:search(/db:essay, cts:and-query((cts:collection-query($nwn:pcoll), $q)))
+      where exists($repl)
+      return
+        <div id="superseded">This essay has been superseded by
+          { for $essay at $index in $repl
+            let $title := string($essay/db:info/db:title)
+            return
+              (if ($index > 1) then ", " else "",
+               <cite><a href="{nwn:httpuri(xdmp:node-uri($essay))}">{$title}</a></cite>)
+          }
+          { "." }
+        </div>
+    }
   </div>
 };
 
