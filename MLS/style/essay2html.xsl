@@ -70,6 +70,7 @@
 
 <xsl:output method="xml" encoding="utf-8" indent="no"/>
 
+<xsl:param name="pygments-default" select="1"/>
 <xsl:param name="annotation.graphic.open" select="'/graphics/annot-open.png'"/>
 <xsl:param name="annotation.graphic.close" select="'/graphics/annot-close.png'"/>
 <xsl:param name="offline" select="0"/>
