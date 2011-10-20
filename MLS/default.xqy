@@ -35,6 +35,41 @@ declare function local:random-image($values as xs:string+) as xs:string+ {
       local:random-image($values)
 };
 
+declare function local:snapshot()
+{ let $random := local:random-image()
+  let $num    := $random[1]
+  let $uri    := $random[2]
+  let $thumb  := concat(substring-before($uri, ".jpg"), "_m.jpg")
+  let $id     := replace($thumb, "^.*/([a-z0-9]+)_.*$", "$1")
+
+  let $eavq   := cts:element-attribute-value-query(
+                     xs:QName("flickr:photo"), QName("","id"), $id)
+  let $photo  := cts:search(collection($nwn:pcoll), $eavq)[1]/flickr:photo
+
+  let $essay  := cts:search(collection($nwn:ecoll),
+                     cts:and-not-query(
+                         cts:element-attribute-value-query(
+                             xs:QName("db:imagedata"), QName("","fileref"), $uri),
+                         cts:collection-query($nwn:vcoll)))[1]
+  return
+    if (empty($essay))
+    then
+      xdmp:log(concat("Failed to find essay for ", $num, ": ", $uri))
+    else
+      <div class="snapshot">
+        <h3>Random image #{$num}:</h3>
+        <a href="{nwn:httpuri(xdmp:node-uri($essay))}">
+          <img src="{$thumb}" alt="Random photo" border="0" width="200"/>
+        </a>
+        { if ($photo)
+          then
+            <div class="imagetitle">{string($photo/flickr:title)}</div>
+          else
+            ()
+        }
+      </div>
+};
+
 declare function local:homepage() as document-node() {
   let $essays := nwn:get-essays(current-dateTime(), "descending", 30)
   return
@@ -228,38 +263,18 @@ return
         </form>
       </div>
 
-      { let $random := local:random-image()
-        let $num    := $random[1]
-        let $uri    := $random[2]
-        let $thumb  := concat(substring-before($uri, ".jpg"), "_m.jpg")
-        let $id     := replace($thumb, "^.*/([a-z0-9]+)_.*$", "$1")
-
-        let $eavq   := cts:element-attribute-value-query(
-                           xs:QName("flickr:photo"), QName("","id"), $id)
-        let $photo  := cts:search(collection($nwn:pcoll), $eavq)[1]/flickr:photo
-
-        let $essay  := cts:search(collection($nwn:ecoll),
-                                  cts:and-not-query(
-                                    cts:element-attribute-value-query(
-                                      xs:QName("db:imagedata"), QName("","fileref"), $uri),
-                                    cts:collection-query($nwn:vcoll)))[1]
-        return
-          if (empty($essay))
-          then
-            xdmp:log(concat("Failed to find essay for ", $num, ": ", $uri))
-          else
-            <div class="snapshot">
-              <h3>Random image #{$num}:</h3>
-              <a href="{nwn:httpuri(xdmp:node-uri($essay))}">
-                <img src="{$thumb}" alt="Random photo" border="0" width="200"/>
-              </a>
-              { if ($photo)
-                then
-                  <div class="imagetitle">{string($photo/flickr:title)}</div>
-                else
-                  ()
-              }
-            </div>
+      {
+        if (xdmp:random(10) >= 5)
+        then
+          <div class="snapshot">
+            <h3>Not as random image:</h3>
+            <a href="http://www.aclu.org/">
+              <img src="/graphics/dissent.png" alt="Dissent is Patriotic" border="0" width="200"/>
+            </a>
+            <div class="imagetitle">#OWS</div>
+          </div>
+        else
+          local:snapshot()
       }
 
       <div class="navigate">
