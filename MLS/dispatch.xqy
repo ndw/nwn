@@ -600,7 +600,7 @@ declare function local:comments($essay as element(db:essay)) as element() {
               { for $uri in $uris
                 let $comment := doc($uri)/patom:entry
                 let $hash := if ($comment/patom:author/patom:email)
-                             then xdmp:md5($comment/patom:author/patom:email)
+                             then xdmp:md5(string($comment/patom:author/patom:email))
                              else ""
                 order by $uri
                 return
