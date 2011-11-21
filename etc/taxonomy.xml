@@ -565,6 +565,7 @@
             <rdfs:seeAlso rdf:resource="http://www.topicmaps.org/"/>
             <skos:prefLabel>Topic Maps</skos:prefLabel>
          </TopicMaps>
+         <Unicode ttag:tag="unicode"/>
          <VoIP ttag:tag="voip"/>
          <Windows ttag:tag="mswindows">
             <skos:altLabel>Windows</skos:altLabel>
