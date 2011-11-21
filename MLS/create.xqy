@@ -6,6 +6,8 @@ import module namespace nwn="http://norman.walsh.name/ns/modules/utils"
 declare namespace db="http://docbook.org/ns/docbook";
 declare namespace etc="http://norman.walsh.name/ns/etc";
 
+declare option xdmp:output "indent-untyped=yes";
+
 let $uri   := xdmp:get-request-field("uri")
 let $duri  := concat("/", format-dateTime(current-dateTime(), "[Y0001]/[M01]/[D01]/"),
                      replace($uri, "^.*/([^/]+)$", "$1"))
