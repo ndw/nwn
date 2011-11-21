@@ -36,6 +36,9 @@
           <ref name="db.xml.id.attribute"/>
         </optional>
         <ref name="db.common.base.attributes"/>
+        <optional>
+          <ref name="db.annotations.attribute"/>
+        </optional>
         <zeroOrMore>
           <ref name="db._any.html.attr"/>
         </zeroOrMore>

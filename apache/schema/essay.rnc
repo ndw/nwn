@@ -33,6 +33,7 @@ include "docbook.rnc" {
    db.common.attributes =
       db.xml.id.attribute?
     & db.common.base.attributes
+    & db.annotations.attribute?
     & db._any.html.attr*
 }
 
