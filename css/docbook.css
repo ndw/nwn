@@ -196,27 +196,32 @@ div.sidebar h5     { background-color: #CACACA;
 div.sidebar-content { padding: 10px;
                     }
 
-div.annotation     { border: solid #afafaf 1px;
-                     margin-left: 35px;
-                     margin-right: 70px;
-                     margin-top: 1ex;
-                     margin-bottom: 1ex;
-                   }
+div.annotation {
+    border: solid #afafaf 1px;
+    margin-left: 35px;
+    margin-right: 70px;
+    margin-top: 1ex;
+    margin-bottom: 1ex;
+}
 
 div.annotation
-div.title          { font-size: medium;
-                     font-family: sans-serif;
-                     padding-top: 4px;
-                     border-bottom: solid #afafaf 1px;
-                     }
+div.title {
+    font-size: medium;
+    font-family: sans-serif;
+    padding-top: 4px;
+    padding-left: 10px;
+    border-bottom: solid #afafaf 1px;
+}
 
-div.annotation-content { padding-left: 10px;
-                     padding-right: 10px;
-                    }
+div.annotation-content {
+    padding-left: 10px;
+    padding-right: 10px;
+}
 
-div.annotation-content > p:first-child { padding-top: 0px;
-                                 margin-top: 0px;
-                               }
+div.annotation-content > p:first-child {
+    padding-top: 0px;
+    margin-top: 0px;
+}
 
 span.package,
 span.guimenuitem,

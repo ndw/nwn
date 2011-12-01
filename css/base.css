@@ -160,6 +160,10 @@ div.map-messages {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+section {
+    margin-left: 0;
+}
+
 #content,
 .body-content {
   margin-left: 20px;
@@ -326,4 +330,8 @@ a:hover.plink {
 
 .forecast {
     display: none;
+}
+
+pre, code, kbd, samp {
+    font-size: 0.9em;
 }
