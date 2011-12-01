@@ -168,13 +168,30 @@ declare function local:decorate($uri as xs:string, $body as document-node()?) {
         <link rel="home" href="/" title="NWN" />
         <link rel="contents" title="Contents" href="/dates.html" />
         <link rel="index" title="Index" href="/subjects.html" />
+
+        <link rel="stylesheet" type="text/css" href="/css/default.css" />
+
         { nwn:css-links() }
+        <script type="text/javascript" src="/js/dbmodnizr.js">
+        </script>
         <script type="text/javascript" src="/js/jquery-1.4.2.min.js">
         </script>
         <script type="text/javascript" src="/js/nwn.js">
         </script>
         <script type="text/javascript" src="/js/forecast.js">
         </script>
+
+        { if ($essay//db:annotation)
+          then
+            (<script type="text/javascript"
+                     src="http://docbook.github.com/latest/js/AnchorPosition.js"/>,
+             <script type="text/javascript"
+                     src="http://docbook.github.com/latest/js/PopupWindow.js"/>,
+             <script type="text/javascript"
+                     src="http://docbook.github.com/latest/js/annotation.js"/>)
+          else
+            ()
+        }
 
         { if (starts-with($uri, "/staging/"))
           then
@@ -306,7 +323,7 @@ $(document).ready(function() {{
               </div>
         }
 
-        { local:walk($body/html:div) }
+        { local:walk($body/*) }
 
         { if (xdmp:document-get-collections(xdmp:node-uri($essay)) = $nwn:icoll)
           then ()
@@ -491,7 +508,7 @@ $(document).ready(function() {{
 
 (: ============================================================ :)
 
-declare function local:walk($body as element(html:div)) as element(html:div) {
+declare function local:walk($body as element()) as element() {
   local:dispatch($body)
 };
 
@@ -536,7 +553,7 @@ declare function local:include($pi as processing-instruction()) as element()? {
         xdmp:log(concat("Unexpected include: ", $pi))
 };
 
-declare function local:sonnet() as element(html:div) {
+declare function local:sonnet() as element() {
   let $sonnets := doc("/etc/sonnets.xml")
   let $today   := current-date()
   let $start   := xs:date("2004-09-11")

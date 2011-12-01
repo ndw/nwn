@@ -161,7 +161,9 @@
 </xsl:template>
 
 <xsl:template match="db:essay">
-  <div id="content">
+  <article>
+    <xsl:sequence select="dbf:html-attributes(.,'content')"/>
+
     <div class="abstract">
       <xsl:if test="db:info/db:abstract">
         <xsl:apply-templates select="db:info/db:abstract/db:para"/>
@@ -171,7 +173,7 @@
     <xsl:apply-templates/>
 
     <xsl:call-template name="tmpl:process-footnotes"/>
-  </div>
+  </article>
 </xsl:template>
 
 <xsl:template match="db:info"/>
@@ -485,13 +487,6 @@
   <xsl:copy/>
 </xsl:template>
 
-<xsl:template match="processing-instruction('bloglines-blogroll')">
-  <xsl:variable name="id" select="dbf:pi(.,'id')"/>
-  <xsl:variable name="folder" select="dbf:pi(.,'folder')"/>
-  <script language="javascript" type="text/javascript"
-	  src="http://rpc.bloglines.com/blogroll?id={$id}&amp;folder={$folder}"/>
-</xsl:template>
-
 <xsl:template match="processing-instruction('x-html')">
   <xsl:variable name="uri" select="dbf:pi(.,'uri')"/>
   <xsl:variable name="html" select="document($uri,.)"/>
@@ -529,15 +524,13 @@
   <!-- Sections that start with an initial para are run-in -->
   <xsl:choose>
     <xsl:when test="$firstelem/self::db:para and not(contains(@role,'no-runin'))">
-      <div class="section">
-	<xsl:apply-templates select="*[not(self::db:info) and not(self::db:title)]"/>
-      </div>
+      <section>
+        <xsl:sequence select="dbf:html-attributes(.,dbf:node-id(.))"/>
+        <xsl:apply-templates select="*[not(self::db:info) and not(self::db:title)]"/>
+      </section>
     </xsl:when>
     <xsl:otherwise>
-      <!-- FIXME: when the apply-imports bug is fixed ...
       <xsl:apply-imports/>
-      -->
-      <xsl:call-template name="db:section"/>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
