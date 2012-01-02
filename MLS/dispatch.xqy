@@ -204,12 +204,14 @@ declare function local:decorate($uri as xs:string, $body as document-node()?) {
           else
             ()
         }
+
         { if (contains($uri, "/itinerary"))
           then
             <link rel="stylesheet" type="text/css" href="/css/itin.css" />
           else
             ()
         }
+
         { if ($essay//db:itemizedlist[@role="tweets"])
           then
             (<link rel="stylesheet" type="text/css" href="/css/shortform.css" />,
@@ -218,6 +220,7 @@ declare function local:decorate($uri as xs:string, $body as document-node()?) {
           else
             ()
         }
+
         { $essay/db:info/html:* }
 
         { if ($gmap)
