@@ -224,7 +224,8 @@ return
               <img alt="" src="{$base}&amp;chl={$text}"/>
             </div>
         }
-        <h1>Norman<span class="punct">.</span>Walsh<span class="punct">.name</span></h1>
+        <h1>Norman<span class="punct">.</span>Walsh<span class="punct">.name</span>
+          <a style="width:360px;height:15px;vertical-align:middle;text-align:center;background-color:#000;position:absolute;z-index:5555;top:38px;left:5px;background-image:url(http://americancensorship.org/images/stop-censorship-small.png);background-position:center center;background-repeat:no-repeat;" href="http://americancensorship.org"></a></h1>
         {nwn:message()}
         <div id="dateline">
           {format-dateTime(nwn:most-recent-update(), "[D01] [MNn,*-3] [Y0001]")}
