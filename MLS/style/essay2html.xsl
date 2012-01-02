@@ -496,6 +496,7 @@
 <xsl:template match="processing-instruction('shortform-stats')">
   <xsl:variable name="conv" select="count(//db:bridgehead)"/>
   <xsl:variable name="mine" select="count(//db:para[@role='mine'])"/>
+  <xsl:variable name="favs" select="count(//db:para[@role='favorite'])"/>
   <span class='stats'>
     <xsl:text>This week, </xsl:text>
     <xsl:value-of select="$mine"/>
@@ -506,6 +507,13 @@
     <xsl:text> conversation</xsl:text>
     <xsl:if test="$conv != 1">s</xsl:if>
     <xsl:text>.</xsl:text>
+    <xsl:if test="$favs &gt; 0">
+      <xsl:text> (With </xsl:text>
+      <xsl:value-of select="$favs"/>
+      <xsl:text> favorite</xsl:text>
+      <xsl:if test="$favs != 1">s</xsl:if>
+      <xsl:text>.)</xsl:text>
+    </xsl:if>
   </span>
 </xsl:template>
 
