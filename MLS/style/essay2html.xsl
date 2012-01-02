@@ -483,8 +483,30 @@
   <br />
 </xsl:template>
 
-<xsl:template match="processing-instruction('twitter-pre-nav')|processing-instruction('twitter-post-nav')">
+<xsl:template match="processing-instruction('flightmap')">
+  <div id="flightmap" class="artwork" style="{.}">
+  </div>
+</xsl:template>
+
+<xsl:template match="processing-instruction('twitter-pre-nav')
+                     |processing-instruction('twitter-post-nav')">
   <xsl:copy/>
+</xsl:template>
+
+<xsl:template match="processing-instruction('shortform-stats')">
+  <xsl:variable name="conv" select="count(//db:bridgehead)"/>
+  <xsl:variable name="mine" select="count(//db:para[@role='mine'])"/>
+  <span class='stats'>
+    <xsl:text>This week, </xsl:text>
+    <xsl:value-of select="$mine"/>
+    <xsl:text> message</xsl:text>
+    <xsl:if test="$mine != 1">s</xsl:if>
+    <xsl:text> in </xsl:text>
+    <xsl:value-of select="$conv"/>
+    <xsl:text> conversation</xsl:text>
+    <xsl:if test="$conv != 1">s</xsl:if>
+    <xsl:text>.</xsl:text>
+  </span>
 </xsl:template>
 
 <xsl:template match="processing-instruction('x-html')">
