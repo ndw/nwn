@@ -505,6 +505,8 @@ $(document).ready(function() {{
           }
         </div>
         { nwn:footer($essay) }
+        <script type="text/javascript" src="/local/js/stopsopa2.js">
+        </script>
       </body>
     </html>
 };

@@ -380,6 +380,8 @@ return
     </div>
     { local:icons() }
     { nwn:footer() }
+    <script type="text/javascript" src="/local/js/stopsopa2.js">
+    </script>
     </body>
   </html>
 
