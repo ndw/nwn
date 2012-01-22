@@ -975,6 +975,43 @@
   </div>
 </xsl:template>
 
+<xsl:template match="db:sidebar[@role='googleplus']">
+  <h4 class="bridgehead">
+    <xsl:value-of select="db:title"/>
+  </h4>
+
+  <div class="tweetlist">
+    <div class="tweet mine">
+      <xsl:apply-templates select="node() except db:title"/>
+    </div>
+  </div>
+</xsl:template>
+
+<xsl:template match="db:sidebar[@role='googleplus']/db:para">
+  <div class="{@role}">
+    <xsl:apply-templates/>
+  </div>
+</xsl:template>
+
+<xsl:template match="db:sidebar[@role='googleplus']/db:para[@role='annotation']">
+  <div class="gpannot">
+    <em>
+      <xsl:apply-templates/>
+    </em>
+  </div>
+</xsl:template>
+
+<xsl:template match="db:sidebar[@role='googleplus']/db:para[@role='location']">
+  <div class="{@role}">
+    <xsl:text>Location: </xsl:text>
+    <xsl:apply-templates/>
+  </div>
+</xsl:template>
+
+<xsl:template match="processing-instruction('br')">
+  <br/>
+</xsl:template>
+
 <!-- ====================================================================== -->
 
 <xsl:template match="db:qandaset">

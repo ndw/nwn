@@ -212,7 +212,8 @@ declare function local:decorate($uri as xs:string, $body as document-node()?) {
             ()
         }
 
-        { if ($essay//db:itemizedlist[@role="tweets"])
+        { if ($essay//db:itemizedlist[@role="tweets"]
+              or $essay//db:sidebar[@role="googleplus"])
           then
             (<link rel="stylesheet" type="text/css" href="/css/shortform.css" />,
              <script type="text/javascript" src="/js/twitter.js">
@@ -505,8 +506,10 @@ $(document).ready(function() {{
           }
         </div>
         { nwn:footer($essay) }
+(:
         <script type="text/javascript" src="/local/js/stopsopa2.js">
         </script>
+:)
       </body>
     </html>
 };
