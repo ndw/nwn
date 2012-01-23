@@ -587,8 +587,17 @@ declare function local:twitter-nav($pi as processing-instruction()) {
   let $date     := xs:date(string($pi))
   let $pdate    := $date - xs:dayTimeDuration("P1D")
   let $ndate    := $date + xs:dayTimeDuration("P13D")
-  let $plinkuri := format-date($pdate, "/[Y0001]/[M01]/[D01]/shortform")
-  let $nlinkuri := format-date($ndate, "/[Y0001]/[M01]/[D01]/shortform")
+  let $plinkurix := format-date($pdate, "/[Y0001]/[M01]/[D01]/shortform")
+  let $nlinkurix := format-date($ndate, "/[Y0001]/[M01]/[D01]/shortform")
+
+  (: Hack. I fucked up and published another essay at 01/22/shortform :)
+  let $plinkuri := if ($plinkurix = "/2012/01/22/shortform")
+                   then "/2012/01/22/shortform-t"
+                   else $plinkurix
+  let $nlinkuri := if ($nlinkurix = "/2012/01/22/shortform")
+                   then "/2012/01/22/shortform-t"
+                   else $nlinkurix
+
   let $pdocuri  := nwn:docuri($plinkuri)
   let $ndocuri  := nwn:docuri($nlinkuri)
   return
@@ -599,9 +608,13 @@ declare function local:twitter-nav($pi as processing-instruction()) {
       <div xmlns="http://www.w3.org/1999/xhtml">
         <p>
           { "See also: " }
-          { if (empty($pdocuri)) then "" else <a href="{$plinkuri}">the previous week's review</a> }
+          { if (empty($pdocuri))
+            then ""
+            else <a href="{$plinkuri}">the previous week's review</a> }
           { if (not(empty($pdocuri)) and not(empty($ndocuri))) then " or " else "" }
-          { if (empty($ndocuri)) then "" else <a href="{$nlinkuri}">the next week's review</a> }
+          { if (empty($ndocuri))
+            then ""
+            else <a href="{$nlinkuri}">the next week's review</a> }
           { "." }
         </p>
       </div>
