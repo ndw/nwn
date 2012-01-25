@@ -151,7 +151,7 @@
 </xsl:function>
 
 <xsl:template match="it:itinerary">
-  <div class="itingrp">
+  <div id="grpitinerary" class="itingrp">
     <p class="bigtitle">Itinerary:</p>
     <table border="0" summary="Itinerary" class="itinerary">
       <xsl:apply-templates/>
@@ -192,7 +192,7 @@
 </xsl:template>
 
 <xsl:template match="it:seealso">
-  <div class="itingrp">
+  <div id="grpseealso" class="itingrp">
     <p class="bigtitle">See also:</p>
     <dl>
       <xsl:apply-templates select="it:see[@ref]">
@@ -223,7 +223,7 @@
 </xsl:template>
 
 <xsl:template match="it:lodging">
-  <div class="itingrp">
+  <div id="grplodging" class="itingrp">
     <p class="bigtitle">Lodging:</p>
     <table border="0" summary="Lodging" class="lodging">
       <xsl:apply-templates>
@@ -269,7 +269,7 @@
 </xsl:template>
 
 <xsl:template match="it:rentalcars">
-  <div class="itingrp">
+  <div id="grprentalcar" class="itingrp">
     <p class="bigtitle">Rental:</p>
     <table border="0" summary="Rental cars" class="rentalcars">
       <xsl:apply-templates/>
@@ -308,7 +308,7 @@
 </xsl:template>
 
 <xsl:template match="it:appointments">
-  <div class="itingrp">
+  <div id="grpappt" class="itingrp">
     <p class="bigtitle">Appointments:</p>
     <table border="0" summary="Appointments" class="appointments">
       <xsl:apply-templates/>
