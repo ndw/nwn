@@ -1008,10 +1008,6 @@
   </div>
 </xsl:template>
 
-<xsl:template match="processing-instruction('br')">
-  <br/>
-</xsl:template>
-
 <!-- ====================================================================== -->
 
 <xsl:template match="db:qandaset">
