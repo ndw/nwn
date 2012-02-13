@@ -6,6 +6,12 @@ body h1 {
   margin-right: 1.5in;
 }
 
+#nwn-logo {
+  position: absolute;
+  top: 4px;
+  right: 130px;
+}
+
 #qrcode {
   display: block;
   position: absolute;

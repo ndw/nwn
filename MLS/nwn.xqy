@@ -617,6 +617,7 @@ as element(html:div)
   <div id="banner" xmlns="http://www.w3.org/1999/xhtml">
     <div id="hnav">
       <div class="title">
+        <img itemprop="image" src="/graphics/nwn-logo.png" id="nwn-logo"/>
         <a href="/">Norman<span class="punct">.</span>Walsh<span class="punct">.name</span></a>
       </div>
     </div>
