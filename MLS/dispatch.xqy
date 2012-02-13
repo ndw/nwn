@@ -256,7 +256,7 @@ $(document).ready(function() {{
             ()
         }
       </head>
-      <body>
+      <body itemscope="itemscope" itemtype="http://schema.org/Blog">
         { if (starts-with($uri, "/staging/"))
           then attribute { QName("", "class") } { "staging" }
           else ()

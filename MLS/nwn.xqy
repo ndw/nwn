@@ -632,7 +632,7 @@ as element(html:div)
             <img alt="" src="{$base}&amp;chl={$text}"/>
           </div>
     }
-    <h1>{$title}</h1>
+    <h1 itemprop="name">{$title}</h1>
 
     {nwn:message()}
 

@@ -164,7 +164,7 @@
   <article>
     <xsl:sequence select="dbf:html-attributes(.,'content')"/>
 
-    <div class="abstract">
+    <div class="abstract" itemprop="description">
       <xsl:if test="db:info/db:abstract">
         <xsl:apply-templates select="db:info/db:abstract/db:para"/>
       </xsl:if>
