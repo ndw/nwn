@@ -331,6 +331,33 @@
   </xsl:choose>
 </xsl:template>
 
+<xsl:template match="db:figure[@role='photo']">
+  <xsl:variable name="width" select="db:mediaobject/db:imageobject/db:imagedata/@width"/>
+  <xsl:variable name="uri" select="db:mediaobject/db:imageobject/db:imagedata/@fileref"/>
+  <xsl:variable name="link"
+                select="replace(replace($uri, '/small/', '/'), '.jpg', '')"/>
+
+  <div class="artwork">
+    <div class="local-photo">
+      <div class="photo">
+        <xsl:if test="$width">
+          <!-- +6 for border and padding -->
+          <xsl:attribute name="style"
+                         select="concat('width: ', $width+6, 'px;')"/>
+        </xsl:if>
+        <a href="{$link}">
+          <img border="0" alt="[Photo]" src="{$uri}"/>
+        </a>
+      </div>
+      <div class="link">
+        <h3>
+          <xsl:apply-templates select="db:title/node()"/>
+        </h3>
+      </div>
+    </div>
+  </div>
+</xsl:template>
+
 <xsl:template match="db:mediaobject[@role='flickr']" priority="100">
   <xsl:variable name="uri" select="db:imageobject/@xlink:href"/>
   <xsl:variable name="jpg" select="db:imageobject/db:imagedata/@fileref"/>
