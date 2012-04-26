@@ -26,7 +26,7 @@ close (F);
 
 print "Content-type: text/plain\n\n";
 
-my $lib = "/MarkLogic/nwn/apache/lib";
+my $lib = "/Volumes/Data/MarkLogic/nwn/apache/lib";
 my @cp = ();
 opendir (DIR, $lib);
 while (my $name = readdir(DIR)) {
@@ -39,7 +39,7 @@ closedir (DIR);
 my $cp = join(":", @cp);
 
 my @results = ();
-open (F, "java -cp $cp com.xmlcalabash.drivers.Main -isource=$temp /MarkLogic/nwn/apache/xpl/validate-essay.xpl 2>$err |");
+open (F, "java -cp $cp com.xmlcalabash.drivers.Main -isource=$temp /Volumes/Data/MarkLogic/nwn/apache/xpl/validate-essay.xpl 2>$err |");
 while (<F>) {
     print STDERR $_;
     push (@results, $_);
