@@ -60,6 +60,12 @@
          <MakeStuff>
             <skos:prefLabel>Making stuff</skos:prefLabel>
          </MakeStuff>
+         <Exercise>
+           <skos:preflabel>Exercise</skos:preflabel>
+           <BikeRiding>
+             <skos:prefLabel>Bike riding</skos:prefLabel>
+           </BikeRiding>
+         </Exercise>
       </Activities>
       <Animals icon="animals">
          <Birds ttag:tag="birds"/>
@@ -362,6 +368,13 @@
                </Scottsdale>
                <skos:prefLabel>Arizona, US</skos:prefLabel>
             </Arizona>
+            <Texas ttag:tag="us-texas">
+               <skos:altLabel>Texas</skos:altLabel>
+               <skos:prefLabel>Texas, US</skos:prefLabel>
+               <Austin>
+                  <skos:altLabel>Austin, TX, US</skos:altLabel>
+               </Austin>
+            </Texas>
             <California anchor="california" ttag:tag="us-california">
                <skos:altLabel>California</skos:altLabel>
                <LosAngeles icon="la" ttag:tag="nwn-losangeles">
