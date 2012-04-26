@@ -739,12 +739,13 @@ declare function nwn:format-essay($uri as xs:string) as document-node()? {
     then
       if (xs:dateTime($cacheddt) > xs:dateTime($sourcedt))
       then
-        let $ref := xdmp:get-request-header("Referer")
-        let $ip  := if (xdmp:get-request-header("X-Real-IP", ()))
-                    then xdmp:get-request-header("X-Real-IP")
-                    else xdmp:get-request-client-address()
-        let $trace := xdmp:log(concat("Cached ", $uri, " for ", $ip,
-                                      if (empty($ref)) then "" else concat(": ", $ref)))
+        let $ref   := xdmp:get-request-header("Referer")
+        let $agent := xdmp:get-request-header("User-Agent", "")
+        let $msg   := concat("Cached ", $uri,
+                             if (empty($ref)) then "" else concat(" for ", $ref),
+                             if (empty($agent)) then "" else concat(" (", $agent, ")"))
+        let $trace := if (contains($agent, "Googlebot")) then ()
+                      else xdmp:log($msg)
         return
           doc($cached)
       else
