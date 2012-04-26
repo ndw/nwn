@@ -28,6 +28,7 @@ function plotTracks(mparam, divid) {
     mapdata = mparam;
 
     var latlng = new google.maps.LatLng(mapdata.centerlat, mapdata.centerlng);
+    var bounds = new google.maps.LatLngBounds(latlng, latlng);
     var mapopts = {
         zoom: mapdata.zoom,
         center: latlng,
@@ -46,6 +47,8 @@ function plotTracks(mparam, divid) {
         var points = new Array();
         for (var ppos = 0; ppos < track.length; ppos++) {
             var pt = track[ppos];
+            latlng = new google.maps.LatLng(pt.lat,pt.lng);
+            bounds.extend(latlng);
             points.push(trkPt(map,pt.lat,pt.lng,pt.ele,pt.time,pt.dist,pt.velocity,pt.count));
         }
 
@@ -63,6 +66,8 @@ function plotTracks(mparam, divid) {
         var line = new google.maps.Polyline(lopts);
         line.setMap(map);
     }
+
+    map.fitBounds(bounds);
 
     if (mapdata.showImageMarks) {
         lastUpdate.setDate(lastUpdate.getDate() - 1); // Make sure we do the first update
