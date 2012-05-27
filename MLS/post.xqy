@@ -249,8 +249,8 @@ let $perms := (xdmp:permission("weblog-reader", "read"),
 return
   if ($wfxml and empty($notvalid))
   then
-    ( (: versions:store($doc, $uri),
-     xdmp:document-insert($stage, $doc, ($perms), ($coll, $extrac)), :)
+    (versions:store($doc, $uri),
+     xdmp:document-insert($stage, $doc, ($perms), ($coll, $extrac)),
      <success>
        <uri>{$stage}</uri>
        <type>{$type}</type>
