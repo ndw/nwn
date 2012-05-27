@@ -161,6 +161,19 @@ declare function local:invalid($doc as element(db:essay)) as xs:string? {
   let $xmlok   := not(empty($xml/c:success))
   let $titleok := not(string($doc/db:info/db:title) eq "???")
   let $absok   := not(string($doc/db:info/db:abstract) eq "???")
+
+  let $bibid   := $body/db:essay/db:info/db:biblioid
+                        [@class='uri'and starts-with(.,'http://norman.walsh.name/')][1]
+  let $uri     := if (empty($bibid))
+                  then
+                    $posturi
+                  else
+                    concat(substring-after($bibid, 'norman.walsh.name'), ".xml")
+  let $uri     := concat("/production", $uri)
+
+  let $dateok  := not(doc-available($uri))
+                  or ($body/db:essay/db:info/db:pubdate != $apocalypse)
+
   let $volok   := empty($doc/db:info/db:volumenum)
                   or $doc/db:info/db:volumenum castable as xs:positiveInteger
   let $issok   := empty($doc/db:info/db:issuenum)
@@ -172,7 +185,7 @@ declare function local:invalid($doc as element(db:essay)) as xs:string? {
                     then $id else ()
   let $paraok  := not($doc//db:para[not(@xml:id) and not(ancestor::db:info)]) and empty($dupid)
   let $mldbok  := empty($doc/db:info/mldb:*)
-  let $valid   := $xmlok and $titleok and $absok and $volok and $issok and $paraok
+  let $valid   := $xmlok and $titleok and $absok and $volok and $issok and $paraok and $dateok
   let $message := if (not($xmlok)) then "Not an XML-valid essay"
                   else if (not($titleok)) then "Title is not valid"
                   else if (not($absok)) then "Abstract is not valid"
@@ -180,6 +193,7 @@ declare function local:invalid($doc as element(db:essay)) as xs:string? {
                   else if (not($issok)) then "Issue number is not valid"
                   else if (not($paraok)) then "There's a para without an xml:id or a dup xml:id"
                   else if (not($mldbok)) then "db:info contains mldb:*"
+                  else if (not($dateok)) then "db:pubdate is still $apocolypse"
                   else ""
   return
     if (not($valid))
@@ -235,8 +249,8 @@ let $perms := (xdmp:permission("weblog-reader", "read"),
 return
   if ($wfxml and empty($notvalid))
   then
-    (versions:store($doc, $uri),
-     xdmp:document-insert($stage, $doc, ($perms), ($coll, $extrac)),
+    ( (: versions:store($doc, $uri),
+     xdmp:document-insert($stage, $doc, ($perms), ($coll, $extrac)), :)
      <success>
        <uri>{$stage}</uri>
        <type>{$type}</type>
