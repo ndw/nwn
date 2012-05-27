@@ -79,7 +79,7 @@
 
 <xsl:param name="linenumbering" as="element()*">
 <ln path="literallayout" everyNth="0"/>
-<ln path="programlisting" everyNth="0"/>
+<ln path="programlisting" everyNth="1"/>
 <ln path="programlistingco" everyNth="0"/>
 <ln path="screen" everyNth="0"/>
 <ln path="synopsis" everyNth="0"/>
