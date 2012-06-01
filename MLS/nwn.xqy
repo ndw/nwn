@@ -24,7 +24,7 @@ declare option xdmp:mapping "false";
 declare variable $MONTHS := ("January","February","March","April","May","June",
                              "July","August","September","October","November","December");
 
-declare variable $MESSAGE := string(doc("/etc/motd"));
+declare variable $MESSAGE := doc("/etc/motd")/msg/node();
 
 declare variable $ecoll := "http://norman.walsh.name/ns/collections/essay";
 declare variable $scoll := "http://norman.walsh.name/ns/collections/staging";
@@ -578,7 +578,7 @@ declare function nwn:css-links() {
 };
 
 declare function nwn:message() as element(html:div)? {
-  if ($MESSAGE = "")
+  if (empty($MESSAGE))
   then ()
   else
     <div xmlns="http://www.w3.org/1999/xhtml" id="globalmsg">{$MESSAGE}</div>
