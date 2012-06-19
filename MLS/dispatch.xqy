@@ -329,7 +329,8 @@ $(document).ready(function() {{
 
         { local:walk($body/*) }
 
-        { if (xdmp:document-get-collections(xdmp:node-uri($essay)) = $nwn:icoll)
+        { if (xdmp:document-get-collections(xdmp:node-uri($essay)) = $nwn:icoll
+              or contains(xdmp:node-uri($essay), "/2012/06/19/weird"))
           then ()
           else local:comments($essay)
         }
