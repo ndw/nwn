@@ -733,8 +733,8 @@
 
     <xsl:variable name="status" select="$info/db:bibliomisc[@role='status']"/>
 
-    <xsl:if test="$status and 
-                  (not(ancestor::itemizedlist[@role='history'])
+    <xsl:if test="$status and
+                  (not(ancestor::db:itemizedlist[@role='history'])
 		   or $status != 'Booked')">
       <xsl:text>(</xsl:text>
       <xsl:value-of select="$info/db:bibliomisc[@role='status']"/>
