@@ -10,7 +10,7 @@ declare default function namespace "http://www.w3.org/2005/xpath-functions";
 
 declare option xdmp:mapping "false";
 
-declare variable $error:errors as element(error:error)* external;
+declare variable $error:errors as node()* external;
 declare variable $code := xdmp:get-response-code()[1];
 declare variable $uri := xdmp:get-request-url();
 declare variable $verb := xdmp:get-request-method();
