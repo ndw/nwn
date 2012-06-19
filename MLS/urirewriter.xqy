@@ -72,6 +72,11 @@ declare variable $rwopts
        </map>
 
        <map method="GET">
+         <pattern>^/foaf$</pattern>
+         <replace>/redirect.xqy?uri=http://norman.walsh.name/foaf.rdf</replace>
+       </map>
+
+       <map method="GET">
          <pattern>^/etc/(knows.*)$</pattern>
          <replace>/redirect.xqy?uri=http://norman.walsh.name/$1</replace>
        </map>
