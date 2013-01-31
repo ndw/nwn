@@ -30,6 +30,8 @@ declare variable $search-options
          </search:state>
        </search:operator>
        <page-length>25</page-length>
+       <transform-results apply="snippet" ns="http://norman.walsh.name/ns/modules/snippet"
+                          at="/modules/snippet.xqy"/>
      </options>;
 
 declare variable $s := xdmp:get-request-field("s");
