@@ -6,6 +6,9 @@ import module namespace nwn="http://norman.walsh.name/ns/modules/utils"
 import module namespace cache="http://norman.walsh.name/ns/modules/cache"
        at "cache.xqy";
 
+import module namespace adsense="http://norman.walsh.name/ns/modules/adsense"
+       at "modules/adsense.xqy";
+
 declare namespace db="http://docbook.org/ns/docbook";
 declare namespace etc="http://norman.walsh.name/ns/etc";
 declare namespace mldb="http://norman.walsh.name/ns/metadata";
@@ -255,6 +258,7 @@ return
         <a href="/subscribe">subscribe</a> to one or more of several feeds.
         </p>
       </div>
+      { adsense:ads() }
       { $homebody }
 
       <p>Consult <a href="/dates">the archives</a> for older essays…</p>
