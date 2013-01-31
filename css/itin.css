@@ -38,3 +38,10 @@ abbr.tz {
   font-size: small;
   padding-top: 2px;
 }
+
+/* ============================================================ */
+/* Itinerary overview pages */
+
+.notgoing {
+    text-decoration: line-through;
+}

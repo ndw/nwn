@@ -642,7 +642,11 @@
   <xsl:variable name="start" select="$trip/@startDate"/>
   <xsl:variable name="end" select="$trip/@endDate"/>
 
-  <span class="vevent">
+  <xsl:variable name="status" select="$info/db:bibliomisc[@role='status']"/>
+  <xsl:variable name="sclass" select="if ($status = 'Not going' or $status = 'Cancelled')
+                                      then ' notgoing' else ''"/>
+
+  <span class="vevent{$sclass}">
     <xsl:choose>
       <xsl:when test="substring($start,1,7) = substring($end,1,7)">
 	<abbr class="dtstart" title="{substring($start,1,10)}">
@@ -731,11 +735,9 @@
       </xsl:if>
     </xsl:for-each>
 
-    <xsl:variable name="status" select="$info/db:bibliomisc[@role='status']"/>
-
     <xsl:if test="$status and
                   (not(ancestor::db:itemizedlist[@role='history'])
-		   or $status != 'Booked')">
+		   or ($status != 'Booked' and $status != 'Completed'))">
       <xsl:text>(</xsl:text>
       <xsl:value-of select="$info/db:bibliomisc[@role='status']"/>
       <xsl:text>.)</xsl:text>
