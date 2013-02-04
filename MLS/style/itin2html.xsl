@@ -42,6 +42,8 @@
   <dc:description>Handle itineraries.</dc:description>
 </rdf:Description>
 
+<xsl:variable name="GMT" select="xs:dayTimeDuration('PT0H')"/>
+
 <!-- ====================================================================== -->
 <!-- calendars -->
 
@@ -195,6 +197,9 @@
   <div id="grpseealso" class="itingrp">
     <p class="bigtitle">See also:</p>
     <dl>
+      <dt>
+        <a href="overview">Other itineraries</a>
+      </dt>
       <xsl:apply-templates select="it:see[@ref]">
         <xsl:sort data-type="text" select="."/>
       </xsl:apply-templates>
@@ -530,18 +535,26 @@
 
   <xsl:variable name="sofs" as="xs:dayTimeDuration"
                 select="if (../it:startOffset)
-                        then xs:dayTimeDuration(string(../it:startOffset))
-                        else xs:dayTimeDuration('PT0H')"/>
+                        then $GMT - xs:dayTimeDuration(string(../it:startOffset))
+                        else timezone-from-dateTime(xs:dateTime(.))"/>
+
+<!--
+  <xsl:message>
+    <xsl:value-of select="concat(., ' :: ', $sofs)"/>
+  </xsl:message>
+-->
 
   <xsl:choose>
     <xsl:when test="$hcal != 0">
       <abbr class="dtstart" title="{.}">
-	<xsl:value-of select="format-dateTime(xs:dateTime(.) - $sofs,
+	<xsl:value-of select="format-dateTime(adjust-dateTime-to-timezone(
+                                                xs:dateTime(.), $sofs),
 	                                      '[h01]:[m01][Pn,*-1]')"/>
       </abbr>
     </xsl:when>
     <xsl:otherwise>
-      <xsl:value-of select="format-dateTime(xs:dateTime(.) - $sofs,
+      <xsl:value-of select="format-dateTime(adjust-dateTime-to-timezone(
+                                                xs:dateTime(.), $sofs),
 	                                    '[h01]:[m01][Pn,*-1]')"/>
     </xsl:otherwise>
   </xsl:choose>
@@ -559,18 +572,20 @@
 
   <xsl:variable name="eofs" as="xs:dayTimeDuration"
                 select="if (../it:endOffset)
-                        then xs:dayTimeDuration(string(../it:endOffset))
-                        else xs:dayTimeDuration('PT0H')"/>
+                        then $GMT - xs:dayTimeDuration(string(../it:endOffset))
+                        else timezone-from-dateTime(xs:dateTime(.))"/>
 
   <xsl:choose>
     <xsl:when test="$hcal != 0">
       <abbr class="dtend" title="{.}">
-	<xsl:value-of select="format-dateTime(xs:dateTime(.) - $eofs,
+	<xsl:value-of select="format-dateTime(adjust-dateTime-to-timezone(
+                                                xs:dateTime(.), $eofs),
 			                      '[h01]:[m01][Pn,*-1]')"/>
       </abbr>
     </xsl:when>
     <xsl:otherwise>
-      <xsl:value-of select="format-dateTime(xs:dateTime(.) - $eofs,
+      <xsl:value-of select="format-dateTime(adjust-dateTime-to-timezone(
+                                                xs:dateTime(.), $eofs),
 			                    '[h01]:[m01][Pn,*-1]')"/>
     </xsl:otherwise>
   </xsl:choose>
