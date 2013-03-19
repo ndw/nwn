@@ -533,10 +533,15 @@
 <xsl:template match="it:startDate">
   <xsl:param name="hcal" select="0"/>
 
-  <xsl:variable name="sofs" as="xs:dayTimeDuration"
+  <xsl:variable name="sofsx"
                 select="if (../it:startOffset)
                         then $GMT - xs:dayTimeDuration(string(../it:startOffset))
                         else timezone-from-dateTime(xs:dateTime(.))"/>
+
+  <xsl:variable name="sofs" as="xs:dayTimeDuration"
+                select="if (empty($sofsx))
+                        then $GMT
+                        else $sofsx"/>
 
 <!--
   <xsl:message>
@@ -570,10 +575,15 @@
 <xsl:template match="it:endDate">
   <xsl:param name="hcal" select="0"/>
 
-  <xsl:variable name="eofs" as="xs:dayTimeDuration"
+  <xsl:variable name="eofsx"
                 select="if (../it:endOffset)
                         then $GMT - xs:dayTimeDuration(string(../it:endOffset))
                         else timezone-from-dateTime(xs:dateTime(.))"/>
+
+  <xsl:variable name="eofs" as="xs:dayTimeDuration"
+                select="if (empty($eofsx))
+                        then $GMT
+                        else $eofsx"/>
 
   <xsl:choose>
     <xsl:when test="$hcal != 0">
