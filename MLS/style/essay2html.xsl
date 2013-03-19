@@ -689,7 +689,10 @@
 <xsl:template match="db:para[@xlink:actuate='onLoad']" priority="100">
   <div class="artwork" id="{@xml:id}" style="width: 540px; height: 540px;"/>
   <div class="map-messages" id="{@xml:id}_messages"></div>
-  <script type="text/javascript" src="{nwn:httpuri(resolve-uri(@xlink:href, base-uri(.)))}"></script>
+  <xsl:variable name="pathlie" select="concat('file://', base-uri(.))"/>
+  <xsl:variable name="reslie" select="resolve-uri(@xlink:href, $pathlie)"/>
+  <xsl:variable name="path" select="substring-after($reslie, 'file:')"/>
+  <script type="text/javascript" src="{nwn:httpuri($path)}"></script>
 </xsl:template>
 
 <xsl:template match="db:para[@revisionflag='deleted']">

@@ -12,12 +12,14 @@
 
 <xsl:import href="/DocBook/base/html/docbook.xsl"/>
 
-<xsl:param name="l10n.locale.dir" select="'/production/etc/locales/'"/>
+<xsl:param name="l10n.locale.dir" select="'file://production/etc/locales/'"/>
 
 <xsl:function name="f:load-locale" as="element(l:l10n)">
   <xsl:param name="lang" as="xs:string"/>
   <xsl:variable name="locale-file"
-                select="resolve-uri(concat($lang,'.xml'), $l10n.locale.dir)"/>
+                select="substring-after(resolve-uri(concat($lang,'.xml'), $l10n.locale.dir),
+                                        'file:/')"/>
+
   <xsl:variable name="l10n" select="doc($locale-file)/l:l10n"/>
   <xsl:sequence select="(if (empty($l10n))
                          then xdmp:log(concat('Failed to load localization: ', $locale-file))
