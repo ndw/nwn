@@ -157,6 +157,50 @@
     <p class="bigtitle">Itinerary:</p>
     <table border="0" summary="Itinerary" class="itinerary">
       <xsl:apply-templates/>
+
+      <xsl:if test="it:leg/it:duration or it:leg/it:distance">
+        <tr>
+          <td>&#160;</td>
+          <td>&#160;</td>
+          <td>&#160;</td>
+          <td>&#160;</td>
+          <td align="right">
+            <xsl:text>&#160;</xsl:text>
+            <xsl:if test="it:leg/it:duration">
+              <xsl:variable name="durs" as="xs:dayTimeDuration*">
+                <xsl:for-each select="it:leg/it:duration">
+                  <xsl:value-of select="xs:dayTimeDuration(.)"/>
+                </xsl:for-each>
+              </xsl:variable>
+              <xsl:variable name="dur" select="sum($durs)"/>
+              <xsl:variable name="d" select="days-from-duration($dur)"/>
+              <xsl:variable name="h" select="hours-from-duration($dur)"/>
+              <xsl:variable name="m" select="minutes-from-duration($dur)"/>
+
+              <xsl:if test="$d &gt; 0">
+                <xsl:value-of select="$d"/>
+                <xsl:text>d</xsl:text>
+              </xsl:if>
+
+              <xsl:value-of select="$h"/>
+              <xsl:text>h</xsl:text>
+              <xsl:if test="$m &lt; 10">0</xsl:if>
+              <xsl:value-of select="$m"/>
+              <xsl:text>m</xsl:text>
+            </xsl:if>
+          </td>
+          <td>&#160;</td>
+          <td>
+            <xsl:if test="it:leg/it:distance">
+              <xsl:text>(≈</xsl:text>
+              <xsl:value-of select="sum(it:leg/it:distance)"/>
+              <xsl:value-of select="(it:leg/it:distance)[1]/@units"/>
+              <xsl:text>)</xsl:text>
+              <xsl:text>&#160;</xsl:text>
+            </xsl:if>
+          </td>
+        </tr>
+      </xsl:if>
     </table>
   </div>
 </xsl:template>
@@ -181,6 +225,11 @@
 	<xsl:with-param name="hcal" select="1"/>
       </xsl:apply-templates>
     </td>
+
+    <td align="right">
+      <xsl:apply-templates select="it:duration"/>
+    </td>
+
     <td valign="top">
       <xsl:call-template name="it:icon"/>
     </td>
@@ -188,9 +237,29 @@
       <span class="summary">
 	<xsl:value-of select="it:description"/>
       </span>
+      <xsl:apply-templates select="it:distance"/>
       <xsl:sequence select="$forecast"/>
     </td>
   </tr>
+</xsl:template>
+
+<xsl:template match="it:duration">
+  <xsl:variable name="dur" select="xs:duration(.)"/>
+  <xsl:variable name="h" select="hours-from-duration($dur)"/>
+  <xsl:variable name="m" select="minutes-from-duration($dur)"/>
+
+  <xsl:value-of select="$h"/>
+  <xsl:text>h</xsl:text>
+  <xsl:if test="$m &lt; 10">0</xsl:if>
+  <xsl:value-of select="$m"/>
+  <xsl:text>m</xsl:text>
+</xsl:template>
+
+<xsl:template match="it:distance">
+  <xsl:text> (≈</xsl:text>
+  <xsl:value-of select="."/>
+  <xsl:value-of select="@units"/>
+  <xsl:text>) </xsl:text>
 </xsl:template>
 
 <xsl:template match="it:seealso">
@@ -656,8 +725,11 @@
 <xsl:template match="processing-instruction('trip-summary')">
   <xsl:variable name="tripname" select="dbf:pi(.,'trip')"/>
 
-  <xsl:variable name="fileuri"
-                select="nwn:docuri(concat(resolve-uri($tripname, base-uri()), '.xml'))"/>
+  <xsl:variable name="fakebase" select="concat('file:', base-uri())"/>
+  <xsl:variable name="fakeresolved" select="resolve-uri($tripname, $fakebase)"/>
+  <xsl:variable name="resolved" select="substring-after($fakeresolved, 'file:')"/>
+
+  <xsl:variable name="fileuri" select="concat(nwn:docuri($resolved), '.xml')"/>
 
   <xsl:variable name="tripdoc" select="document($fileuri)"/>
 
@@ -704,7 +776,11 @@
       </xsl:otherwise>
     </xsl:choose>
 
-    <a class="url" href="{nwn:httpuri(resolve-uri($tripname, base-uri()))}">
+    <xsl:variable name="fakebase" select="concat('file:', base-uri())"/>
+    <xsl:variable name="fakeresolved" select="resolve-uri($tripname, $fakebase)"/>
+    <xsl:variable name="resolved" select="substring-after($fakeresolved, 'file:')"/>
+
+    <a class="url" href="{nwn:httpuri($resolved)}">
       <span class="summary">
 	<xsl:choose>
 	  <xsl:when test="contains($info/db:title, ',')">
