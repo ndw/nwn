@@ -818,3 +818,18 @@ declare function nwn:get-photo($photoid as xs:string) as element()? {
   return
     $doc/*
 };
+
+declare function nwn:resolve-uri(
+  $reluri as xs:string,
+  $baseuri as xs:string
+) as xs:string
+{
+  if (starts-with($baseuri, "/"))
+  then
+    let $hack := concat("http://example.com", $baseuri)
+    let $res  := resolve-uri($reluri, $hack)
+    return
+      substring-after($res, "http://example.com")
+  else
+    resolve-uri($reluri, $baseuri)
+};

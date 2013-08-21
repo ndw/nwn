@@ -79,7 +79,7 @@
 
 <xsl:param name="linenumbering" as="element()*">
 <ln path="literallayout" everyNth="0"/>
-<ln path="programlisting" everyNth="1"/>
+<ln path="programlisting" everyNth="1" padchar=" " width="3"/>
 <ln path="programlistingco" everyNth="0"/>
 <ln path="screen" everyNth="0"/>
 <ln path="synopsis" everyNth="0"/>
@@ -187,7 +187,7 @@
         <xsl:value-of select="unparsed-entity-uri(@entityref)"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="resolve-uri(@fileref,.)"/>
+        <xsl:value-of select="nwn:resolve-uri(@fileref,.)"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
@@ -203,7 +203,7 @@
     </xsl:choose>
   </xsl:variable>
 
-  <xsl:variable name="readFrom" select="nwn:docuri(resolve-uri($filename, base-uri()))"/>
+  <xsl:variable name="readFrom" select="nwn:docuri(nwn:resolve-uri($filename, base-uri()))"/>
 
   <xsl:value-of select="if ($encoding = '')
 			then unparsed-text($readFrom)
@@ -264,7 +264,7 @@
   <xsl:param name="path" select="''"/>
   <xsl:param name="caption" select="true()"/>
 
-  <xsl:variable name="uri" select="resolve-uri($rsrc, base-uri(.))"/>
+  <xsl:variable name="uri" select="nwn:resolve-uri($rsrc, base-uri(.))"/>
   <xsl:variable name="rdfuri"
                 select="substring-after(substring-after($uri, '/'), '/')"/>
   <xsl:variable name="image" select="$images.xml/etc:image[etc:rdfuri = $rdfuri]"/>
@@ -310,7 +310,7 @@
 </xsl:template>
 
 <xsl:template match="gal:photo">
-  <xsl:variable name="uri" select="resolve-uri(@rdf:resource, base-uri(.))"/>
+  <xsl:variable name="uri" select="nwn:resolve-uri(@rdf:resource, base-uri(.))"/>
   <xsl:variable name="rdfuri"
                 select="substring-after(substring-after($uri, '/'), '/')"/>
   <xsl:variable name="image" select="$images.xml/etc:image[etc:rdfuri = $rdfuri]"/>
@@ -689,9 +689,7 @@
 <xsl:template match="db:para[@xlink:actuate='onLoad']" priority="100">
   <div class="artwork" id="{@xml:id}" style="width: 540px; height: 540px;"/>
   <div class="map-messages" id="{@xml:id}_messages"></div>
-  <xsl:variable name="pathlie" select="concat('file://', base-uri(.))"/>
-  <xsl:variable name="reslie" select="resolve-uri(@xlink:href, $pathlie)"/>
-  <xsl:variable name="path" select="substring-after($reslie, 'file:')"/>
+  <xsl:variable name="path" select="nwn:resolve-uri(@xlink:href, base-uri(.))"/>
   <script type="text/javascript" src="{nwn:httpuri($path)}"></script>
 </xsl:template>
 
