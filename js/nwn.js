@@ -18,6 +18,8 @@ function addpLink(elem, id) {
         //console.log("add link: ", last)
         //console.log("TEXT [", last.text(), "] ", last.text().length)
         var trimmed = last.text().replace(/\s+$/, "")
+        trimmed = trimmed.replace(/&/g, "&amp;")
+        trimmed = trimmed.replace(/</g, "&lt;")
         //console.log("TRIM [", trimmed, "] ", trimmed.length)
         last.replaceWith(trimmed)
         $(elem).append("<a class='plink' href='#" + id + "'>&#160;¶</a>");
