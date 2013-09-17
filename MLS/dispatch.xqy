@@ -537,6 +537,8 @@ declare function local:dispatch($x as node()) as node()* {
       return ()
     case processing-instruction('twitter-post-nav')
       return local:twitter-nav($x)
+    case processing-instruction('gplusstats')
+      return local:gplusstats($x)
     default return $x
 };
 
@@ -619,6 +621,13 @@ declare function local:twitter-nav($pi as processing-instruction()) {
           { "." }
         </p>
       </div>
+};
+
+declare function local:gplusstats($pi as processing-instruction()) {
+  let $uri := "http://localhost:8021/commentary.xqy?id=" || string($pi)
+  let $res := xdmp:http-get($uri)
+  return
+    $res[2]/*
 };
 
 (: ============================================================ :)

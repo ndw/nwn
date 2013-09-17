@@ -212,9 +212,14 @@ let $uri    := if (not(empty($bibid)) and $pub)
                else
                  $posturi
 
-let $stage  := concat("/staging", $uri)
+let $prod   := xdmp:get-request-field("approve") = "true"
+let $stage  := if ($prod)
+               then concat("/production", $uri)
+               else concat("/staging", $uri)
 
-let $coll   := "http://norman.walsh.name/ns/collections/staging"
+let $coll   := if ($prod)
+               then "http://norman.walsh.name/ns/collections/production"
+               else "http://norman.walsh.name/ns/collections/staging"
 
 let $essay   as xs:boolean := $format = "xml" and ($body/db:essay)
 let $comment as xs:boolean := $format = "xml" and $body/patom:entry

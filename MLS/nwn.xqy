@@ -515,7 +515,7 @@ declare function nwn:patch-metadata($essay as element(db:essay)) as element(db:e
              then
                concat($essay/db:info/db:volumenum,",",$essay/db:info/db:issuenum)
              else
-               string($essay/db:info/db:biblioid[not(@class='uri')])
+               string($essay/db:info/db:biblioid[not(@class)])
            }
          </mldb:id>
          { if ($pubdt castable as xs:dateTime)
