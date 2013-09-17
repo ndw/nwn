@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Everything xml:lang="en" feed="everything"
+            ht="everything"
             xmlns="http://norman.walsh.name/ns/taxonomy"
             xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
             xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -7,614 +8,671 @@
             xmlns:skos="http://www.w3.org/2004/02/skos/core#">
 
 <!-- used for managing resources -->
-<Sticky/>
-<Omit/>
+<Sticky ht="sticky"/>
+<Omit ht="omit"/>
 
-      <Activities>
-         <CarRepair ttag:tag="carrepair">
+      <Activities ht="activities">
+         <CarRepair ttag:tag="carrepair" ht="carrepair">
             <skos:prefLabel>Car Repair</skos:prefLabel>
          </CarRepair>
-         <HomeReno ttag:tag="homereno">
-            <Bookcase ttag:tag="bookcase"/>
+         <HomeReno ttag:tag="homereno" ht="homereno">
+            <Bookcase ttag:tag="bookcase" ht="bookcase"/>
             <skos:prefLabel>Home Renovation</skos:prefLabel>
          </HomeReno>
-         <HomeRepair ttag:tag="homerepair">
+         <HomeRepair ttag:tag="homerepair" ht="homerepair">
             <skos:prefLabel>Home Repair</skos:prefLabel>
          </HomeRepair>
-         <Interests>
-            <Geocaching feed="geocaching" ttag:tag="geocaching"/>
-            <Music icon="music" ttag:tag="music"/>
-            <Photography feed="photography" icon="photography" ttag:tag="photographs">
-               <FilmScans ttag:tag="filmscans">
+         <Interests ht="interests">
+            <Geocaching feed="geocaching" ttag:tag="geocaching" ht="geocaching"/>
+            <Music icon="music" ttag:tag="music" ht="music"/>
+            <Photography feed="photography" icon="photography" ttag:tag="photographs"
+                         ht="photography">
+               <FilmScans ttag:tag="filmscans" ht="filmscans">
                   <skos:prefLabel>Film Scans</skos:prefLabel>
                </FilmScans>
-               <FromPlanes>
+               <FromPlanes ht="fromplanes">
                   <skos:prefLabel>Photos From Planes</skos:prefLabel>
                </FromPlanes>
-               <PhotodataOrg anchor="photodata">
+               <PhotodataOrg anchor="photodata" ht="photodataorg">
                   <skos:prefLabel>photodata.org</skos:prefLabel>
                </PhotodataOrg>
-               <Project365 anchor="project365">
+               <Project365 anchor="project365" ht="project365">
                   <rdfs:seeAlso rdf:resource="http://photojojo.com/content/tutorials/project-365-take-a-photo-a-day/"/>
                   <skos:prefLabel>Project 365</skos:prefLabel>
                </Project365>
-               <PubSigns ttag:tag="pubsigns">
+               <PubSigns ttag:tag="pubsigns" ht="pubsigns">
                   <skos:prefLabel>Pub Signs</skos:prefLabel>
                </PubSigns>
-               <SelfPortrait anchor="SelfPortraits">
+               <SelfPortrait anchor="SelfPortraits" ht="selfies">
                   <skos:prefLabel>Self Portraits</skos:prefLabel>
                </SelfPortrait>
-               <StreetArt>
+               <StreetArt ht="streetart">
                   <skos:prefLabel>Street Art</skos:prefLabel>
                </StreetArt>
             </Photography>
-            <Programming feed="programming" ttag:tag="programming"/>
-            <Travel icon="travel" ttag:tag="travel">
-              <CountingCountries ttag:tag="countingcountries">
+            <Programming feed="programming" ttag:tag="programming" ht="programming">
+              <APIs ht="api"/>
+            </Programming>
+            <Travel icon="travel" ttag:tag="travel" ht="travel">
+              <CountingCountries ttag:tag="countingcountries" ht="countingcountries">
                 <skos:prefLabel>Counting Countries</skos:prefLabel>
               </CountingCountries>
             </Travel>
-            <Typography ttag:tag="typography"/>
-            <Wine ttag:tag="wine"/>
+            <Typography ttag:tag="typography" ht="typography"/>
+            <Wine ttag:tag="wine" ht="wine"/>
          </Interests>
-         <MakeStuff>
+         <MakeStuff ht="makestuff">
             <skos:prefLabel>Making stuff</skos:prefLabel>
          </MakeStuff>
-         <Exercise>
+         <Exercise ht="exercise">
            <skos:preflabel>Exercise</skos:preflabel>
-           <BikeRiding>
+           <BikeRiding ht="bikeriding">
              <skos:prefLabel>Bike riding</skos:prefLabel>
            </BikeRiding>
          </Exercise>
       </Activities>
-      <Animals icon="animals">
-         <Birds ttag:tag="birds"/>
-         <Herps ttag:tag="herps"/>
-         <Insects ttag:tag="insects"/>
-         <Pets ttag:tag="pets"/>
-         <Rodents ttag:tag="rodents"/>
+      <Animals icon="animals" ht="animals">
+         <Birds ttag:tag="birds" ht="birds"/>
+         <Herps ttag:tag="herps" ht="herps"/>
+         <Insects ttag:tag="insects" ht="insects"/>
+         <Pets ttag:tag="pets" ht="pets"/>
+         <Rodents ttag:tag="rodents" ht="rodents"/>
       </Animals>
-      <Celebrations>
-         <Birthdays/>
-         <Holidays ttag:tag="holidays">
-            <Christmas ttag:tag="christmas"/>
-            <NewYears anchor="NewYearsDay" ttag:tag="newyearsday">
+      <Celebrations ht="celebrations">
+         <Birthdays ht="birthdays"/>
+         <Holidays ttag:tag="holidays" ht="holidays">
+            <Christmas ttag:tag="christmas" ht="christmas"/>
+            <NewYears anchor="NewYearsDay" ttag:tag="newyearsday" ht="newyearsday">
                <skos:prefLabel>New Years Day</skos:prefLabel>
             </NewYears>
          </Holidays>
       </Celebrations>
 
-      <Gastronomy>
-        <Candy/>
-        <PotentPotables anchor="potentpotables" ttag:tag="potentpotables">
+      <Gastronomy ht="gastronomy">
+        <Candy ht="candy"/>
+        <PotentPotables anchor="potentpotables" ttag:tag="potentpotables" ht="potentpotables">
           <skos:prefLabel>Potent Potables</skos:prefLabel>
         </PotentPotables>
       </Gastronomy>
 
-      <Community/>
-      <Conferences feed="conferences">
-         <Balisage anchor="balisage" ttag:tag="balisageConference">
+      <Community ht="community"/>
+      <Conferences feed="conferences" ht="conferences">
+         <Balisage anchor="balisage" ttag:tag="balisageConference" ht="balisage">
             <skos:altLabel>Balisage</skos:altLabel>
-            <Balisage2008 anchor="balisage2008" ttag:tag="balisageConference08">
+            <Balisage2008 anchor="balisage2008" ttag:tag="balisageConference08" ht="balisage2008">
                <skos:prefLabel>Balisage 2008</skos:prefLabel>
             </Balisage2008>
-            <Balisage2009 anchor="balisage2009" ttag:tag="balisageConference09">
+            <Balisage2009 anchor="balisage2009" ttag:tag="balisageConference09" ht="balisage2009">
                <skos:prefLabel>Balisage 2009</skos:prefLabel>
             </Balisage2009>
-            <Balisage2010 anchor="balisage2010" ttag:tag="balisageConference10">
+            <Balisage2010 anchor="balisage2010" ttag:tag="balisageConference10" ht="balisage2010">
                <skos:prefLabel>Balisage 2010</skos:prefLabel>
             </Balisage2010>
-            <Balisage2011 anchor="balisage2011" ttag:tag="balisageConference11">
+            <Balisage2011 anchor="balisage2011" ttag:tag="balisageConference11" ht="balisage2011">
                <skos:prefLabel>Balisage 2011</skos:prefLabel>
             </Balisage2011>
-            <Balisage2012 anchor="balisage2012" ttag:tag="balisageConference12">
+            <Balisage2012 anchor="balisage2012" ttag:tag="balisageConference12" ht="balisage2012">
                <skos:prefLabel>Balisage 2012</skos:prefLabel>
             </Balisage2012>
+            <Balisage2013 anchor="balisage2013" ttag:tag="balisageConference13" ht="balisage2013">
+               <skos:prefLabel>Balisage 2013</skos:prefLabel>
+            </Balisage2013>
+            <Balisage2014 anchor="balisage2014" ttag:tag="balisageConference14" ht="balisage2014">
+               <skos:prefLabel>Balisage 2012</skos:prefLabel>
+            </Balisage2014>
             <skos:prefLabel>Balisage Conference</skos:prefLabel>
          </Balisage>
-         <Extreme ttag:tag="extrememarkup">
+         <Extreme ttag:tag="extrememarkup" ht="extrememarkup">
             <skos:altLabel>Extreme</skos:altLabel>
-            <Extreme2003>
+            <Extreme2003 ht="extrememarkup2003">
                <skos:prefLabel>Extreme 2003</skos:prefLabel>
             </Extreme2003>
-            <Extreme2004>
+            <Extreme2004 ht="extrememarkup2004">
                <skos:prefLabel>Extreme 2004</skos:prefLabel>
             </Extreme2004>
-            <Extreme2006>
+            <Extreme2006 ht="extrememarkup2006">
                <skos:prefLabel>Extreme 2006</skos:prefLabel>
             </Extreme2006>
             <skos:prefLabel>Extreme Markup Lanuages</skos:prefLabel>
          </Extreme>
-         <JavaOne ttag:tag="javaone">
-            <JavaOne04>
+         <JavaOne ttag:tag="javaone" ht="javaone">
+            <JavaOne04 ht="javaone2004">
                <skos:prefLabel>JavaOne '04</skos:prefLabel>
             </JavaOne04>
          </JavaOne>
-         <TPAC anchor="tpac" ttag:tag="tpac">
+         <TPAC anchor="tpac" ttag:tag="tpac" ht="w3ctpac">
             <skos:altLabel>W3C TPAC</skos:altLabel>
-            <TPAC2010>
+            <TPAC2010 ht="w3ctpac10">
                <skos:prefLabel>W3C TPAC 2010</skos:prefLabel>
             </TPAC2010>
+            <TPAC2011 ht="w3ctpac11">
+               <skos:prefLabel>W3C TPAC 2011</skos:prefLabel>
+            </TPAC2011>
+            <TPAC2012 ht="w3ctpac12">
+               <skos:prefLabel>W3C TPAC 2012</skos:prefLabel>
+            </TPAC2012>
+            <TPAC2013 ht="w3ctpac13">
+               <skos:prefLabel>W3C TPAC 2013</skos:prefLabel>
+            </TPAC2013>
          </TPAC>
-         <MLUC anchor="mluc" ttag:tag="MLUC">
-            <MLUC2010 anchor="mluc10" ttag:tag="mluc10">
+         <MLUC anchor="mluc" ttag:tag="MLUC" ht="mluc">
+            <MLUC2010 anchor="mluc10" ttag:tag="mluc10" ht="mluc10">
                <skos:prefLabel>Mark Logic User Conference 2010</skos:prefLabel>
             </MLUC2010>
+            <MLUC2011 anchor="mluc11" ttag:tag="mluc11" ht="mluc11">
+               <skos:prefLabel>Mark Logic User Conference 2011</skos:prefLabel>
+            </MLUC2011>
+            <MLUC2012 anchor="mluc12" ttag:tag="mluc12" ht="mluc12">
+               <skos:prefLabel>Mark Logic User Conference 2012</skos:prefLabel>
+            </MLUC2012>
+            <MLUC2013 anchor="mluc13" ttag:tag="mluc13" ht="mluc13">
+               <skos:prefLabel>Mark Logic User Conference 2013</skos:prefLabel>
+            </MLUC2013>
             <skos:prefLabel>Mark Logic User Conference</skos:prefLabel>
          </MLUC>
-         <XMLPrague anchor="xmlprague" ttag:tag="xmlprague">
+         <XMLPrague anchor="xmlprague" ttag:tag="xmlprague" ht="xmlprague">
             <skos:prefLabel>XML Prague</skos:prefLabel>
-            <XMLPrague07 anchor="xmlprague07" ttag:tag="xmlprague2007">
+            <XMLPrague07 anchor="xmlprague07" ttag:tag="xmlprague2007" ht="xmlprague2007">
                <skos:prefLabel>XML Prague 2007</skos:prefLabel>
             </XMLPrague07>
-            <XMLPrague2010 anchor="xmlprague2010" ttag:tag="xmlprague2010">
+            <XMLPrague2010 anchor="xmlprague2010" ttag:tag="xmlprague2010" ht="xmlprague2010">
                <skos:prefLabel>XML Prague 2010</skos:prefLabel>
             </XMLPrague2010>
-            <XMLPrague2011 anchor="xmlprague2011" ttag:tag="xmlprague2011">
+            <XMLPrague2011 anchor="xmlprague2011" ttag:tag="xmlprague2011" ht="xmlprague2011">
                <skos:prefLabel>XML Prague 2011</skos:prefLabel>
             </XMLPrague2011>
-            <XMLPrague2012 anchor="xmlprague2012" ttag:tag="xmlprague2012">
+            <XMLPrague2012 anchor="xmlprague2012" ttag:tag="xmlprague2012" ht="xmlprague2012">
                <skos:prefLabel>XML Prague 2012</skos:prefLabel>
             </XMLPrague2012>
+            <XMLPrague2013 anchor="xmlprague2013" ttag:tag="xmlprague2013" ht="xmlprague2013">
+               <skos:prefLabel>XML Prague 2013</skos:prefLabel>
+            </XMLPrague2013>
          </XMLPrague>
-         <XMLSummerSchool anchor="xmlsummerschool" ttag:tag="xmlSummerSchool">
-            <XMLSummerSchool2009 anchor="xmlsummerschool2009" ttag:tag="xmlss09">
+         <XMLSummerSchool anchor="xmlsummerschool" ttag:tag="xmlSummerSchool" ht="xmlsummerschool">
+            <skos:prefLabel>XML Summer School</skos:prefLabel>
+            <XMLSummerSchool2009 anchor="xmlsummerschool2009" ttag:tag="xmlss09" ht="xmlss09">
                <skos:prefLabel>XML Summer School 2009</skos:prefLabel>
             </XMLSummerSchool2009>
-            <skos:prefLabel>XML Summer School</skos:prefLabel>
+            <XMLSummerSchool2010 anchor="xmlsummerschool2010" ttag:tag="xmlss10" ht="xmlss10">
+               <skos:prefLabel>XML Summer School 2010</skos:prefLabel>
+            </XMLSummerSchool2010>
+            <XMLSummerSchool2011 anchor="xmlsummerschool2011" ttag:tag="xmlss11" ht="xmlss11">
+               <skos:prefLabel>XML Summer School 2011</skos:prefLabel>
+            </XMLSummerSchool2011>
+            <XMLSummerSchool2012 anchor="xmlsummerschool2012" ttag:tag="xmlss12" ht="xmlss12">
+               <skos:prefLabel>XML Summer School 2012</skos:prefLabel>
+            </XMLSummerSchool2012>
+            <XMLSummerSchool2013 anchor="xmlsummerschool2013" ttag:tag="xmlss13" ht="xmlss13">
+               <skos:prefLabel>XML Summer School 2013</skos:prefLabel>
+            </XMLSummerSchool2013>
          </XMLSummerSchool>
-         <XMLUS anchor="xmlconference" ttag:tag="xmlconference">
-            <XML2003 icon="xml2003" ttag:tag="xml2003">
+         <XMLUS anchor="xmlconference" ttag:tag="xmlconference" ht="xmlconference">
+            <XML2003 icon="xml2003" ttag:tag="xml2003" ht="xml2003">
                <skos:prefLabel>XML 2003</skos:prefLabel>
             </XML2003>
-            <XML2004 icon="xml2004" ttag:tag="xml2004">
+            <XML2004 icon="xml2004" ttag:tag="xml2004" ht="xml2004">
                <skos:prefLabel>XML 2004</skos:prefLabel>
             </XML2004>
-            <XML2005 icon="xml2005" ttag:tag="xml2005">
+            <XML2005 icon="xml2005" ttag:tag="xml2005" ht="xml2005">
                <skos:prefLabel>XML 2005</skos:prefLabel>
             </XML2005>
-            <XML2006 icon="xml2006" ttag:tag="xml2006">
+            <XML2006 icon="xml2006" ttag:tag="xml2006" ht="xml2006">
                <skos:prefLabel>XML 2006</skos:prefLabel>
             </XML2006>
-            <XML2007 icon="xml2007" ttag:tag="xml2007">
+            <XML2007 icon="xml2007" ttag:tag="xml2007" ht="xml2007">
                <skos:prefLabel>XML 2007</skos:prefLabel>
             </XML2007>
-            <XML2010 icon="xml2010" ttag:tag="xml2010">
+            <XML2010 icon="xml2010" ttag:tag="xml2010" ht="xml2010">
                <skos:prefLabel>XML 2010</skos:prefLabel>
             </XML2010>
             <skos:prefLabel>XML Conference</skos:prefLabel>
          </XMLUS>
-         <XTech anchor="xtech" ttag:tag="xtech">
-            <XTech2005 anchor="xtech2005">
+         <XTech anchor="xtech" ttag:tag="xtech" ht="xtech">
+            <XTech2005 anchor="xtech2005" ht="xtech05">
                <skos:prefLabel>XTech 2005</skos:prefLabel>
             </XTech2005>
          </XTech>
       </Conferences>
-      <Connectivity icon="connectivity"/>
-      <Cosmology feed="cosmology" icon="cosmology" ttag:tag="cosmology"/>
-      <Entertainment>
-         <Art/>
-         <Books ttag:tag="books"/>
-         <Contests/>
-         <Humor/>
-         <TV ttag:tag="television">
+      <SocialNetworks ht="socialnetworks">
+        <GooglePlus ht="googleplus"/>
+        <Twitter ht="twitter"/>
+        <Facebook ht="facebook"/>
+      </SocialNetworks>
+      <Connectivity icon="connectivity" ht="connectivity"/>
+      <Cosmology feed="cosmology" icon="cosmology" ttag:tag="cosmology" ht="cosmology"/>
+      <Entertainment ht="entertainment">
+         <Art ht="art"/>
+         <Books ttag:tag="books" ht="books"/>
+         <Contests ht="contests"/>
+         <Humor ht="humor">
+           <Comics ht="comics">
+             <XKCD ht="xkcd"/>
+           </Comics>
+         </Humor>
+         <TV ttag:tag="television" ht="television">
             <skos:altLabel>TV</skos:altLabel>
             <skos:prefLabel>Television</skos:prefLabel>
          </TV>
-         <Theater/>
+         <Theater ht="theater"/>
       </Entertainment>
-      <Links/>
-      <Miscellany/>
-      <Organizations>
-         <MarkLogic ttag:tag="marklogic">
+      <Links ht="links"/>
+      <Miscellany ht="miscellany"/>
+      <Organizations ht="orgs">
+         <MarkLogic ttag:tag="marklogic" ht="marklogic">
             <rdfs:seeAlso rdf:resource="http://www.marklogic.com/"/>
             <skos:prefLabel>Mark Logic</skos:prefLabel>
-            <InformationStudio ttag:tag="informationstudio">
+            <InformationStudio ttag:tag="informationstudio" ht="informationstudio">
               <skos:prefLabel>Information Studio</skos:prefLabel>
             </InformationStudio>
          </MarkLogic>
+         <Google ht="google"/>
+         <Yahoo ht="yahoo"/>
       </Organizations>
-      <People icon="people">
-         <Celebrity icon="celebrity"/>
+      <People icon="people" ht="people">
+         <Celebrity icon="celebrity" ht="celebrities"/>
       </People>
-      <Places>
-         <AntiguaAndBarbuda ttag:tag="antiguaandbarbuda">
+      <Places ht="places">
+         <AntiguaAndBarbuda ttag:tag="antiguaandbarbuda" ht="antiguaandbarbuda">
             <skos:altLabel>Antigua</skos:altLabel>
             <skos:prefLabel>Antigua and Barbuda</skos:prefLabel>
          </AntiguaAndBarbuda>
-         <Austria icon="austria" ttag:tag="austria">
-           <Vienna icon="vienna" ttag:tag="at-vienna">
+         <Austria icon="austria" ttag:tag="austria" ht="austria">
+           <Vienna icon="vienna" ttag:tag="at-vienna" ht="vienna">
                <skos:altLabel>Vienna</skos:altLabel>
                <skos:prefLabel>Vienna, Austria</skos:prefLabel>
            </Vienna>
-           <Krems icon="krems" ttag:tag="at-krems">
+           <Krems icon="krems" ttag:tag="at-krems" ht="krems">
                <skos:altLabel>Krems</skos:altLabel>
                <skos:prefLabel>Krems, Austria</skos:prefLabel>
            </Krems>
-           <Linz icon="linz" ttag:tag="at-linz">
+           <Linz icon="linz" ttag:tag="at-linz" ht="linz">
                <skos:altLabel>Linz</skos:altLabel>
                <skos:prefLabel>Linz, Austria</skos:prefLabel>
            </Linz>
-           <Salzburg icon="salzburg" ttag:tag="at-salzburg">
+           <Salzburg icon="salzburg" ttag:tag="at-salzburg" ht="salzburg">
                <skos:altLabel>Salzburg</skos:altLabel>
                <skos:prefLabel>Salzburg, Austria</skos:prefLabel>
            </Salzburg>
          </Austria>
-         <Belgium ttag:tag="belgium"/>
-         <Canada ttag:tag="canada">
-            <CA-BC-Vancouver ttag:tag="ca-bc-vancouver">
+         <Belgium ttag:tag="belgium" ht="belgium"/>
+         <Canada ttag:tag="canada" ht="canada">
+            <CA-BC-Vancouver ttag:tag="ca-bc-vancouver" ht="vancouver">
                <skos:altLabel>Vancouver</skos:altLabel>
                <skos:prefLabel>Vancouver, BC, CA</skos:prefLabel>
             </CA-BC-Vancouver>
          </Canada>
-         <CzechRepublic ttag:tag="czechrepublic">
+         <CzechRepublic ttag:tag="czechrepublic" ht="czechrepublic">
             <skos:altLabel>CzechRepublic</skos:altLabel>
-            <Prague ttag:tag="prague"/>
+            <Prague ttag:tag="prague" ht="prague"/>
             <skos:prefLabel>Czech Republic</skos:prefLabel>
          </CzechRepublic>
-         <DominicanRepublic ttag:tag="dominicanrepublic">
+         <DominicanRepublic ttag:tag="dominicanrepublic" ht="dominicanrepublic">
             <skos:prefLabel>Dominican Republic</skos:prefLabel>
          </DominicanRepublic>
-         <Egypt ttag:tag="egypt">
+         <Egypt ttag:tag="egypt" ht="egypt">
             <skos:altLabel>Egypt</skos:altLabel>
          </Egypt>
-         <England icon="uk" ttag:tag="england">
-            <London ttag:tag="gb-london">
+         <England icon="uk" ttag:tag="england" ht="england">
+            <London ttag:tag="gb-london" ht="london">
                <skos:altLabel>London</skos:altLabel>
                <skos:prefLabel>London, England</skos:prefLabel>
             </London>
+            <Oxford ttag:tag="gb-oxford" ht="oxford">
+               <skos:altLabel>Oxford</skos:altLabel>
+               <skos:prefLabel>Oxford, England</skos:prefLabel>
+            </Oxford>
          </England>
-         <France icon="france" ttag:tag="france">
-            <Paris icon="paris" ttag:tag="fr-paris">
+         <France icon="france" ttag:tag="france" ht="france">
+            <Paris icon="paris" ttag:tag="fr-paris" ht="paris">
                <skos:altLabel>Paris</skos:altLabel>
                <skos:prefLabel>Paris, France</skos:prefLabel>
             </Paris>
          </France>
-         <Germany icon="germany" ttag:tag="germany">
-           <Passau icon="passau" ttag:tag="de-passau">
+         <Germany icon="germany" ttag:tag="germany" ht="germany">
+           <Passau icon="passau" ttag:tag="de-passau" ht="passau">
                <skos:altLabel>Passau</skos:altLabel>
                <skos:prefLabel>Passau, Germany</skos:prefLabel>
            </Passau>
          </Germany>
-         <Gibraltar ttag:tag="uk-gibraltar"/>
-         <Hungary icon="hungary" ttag:tag="hungary">
-           <Budapest icon="budapest" ttag:tag="hu-budapest">
+         <Gibraltar ttag:tag="uk-gibraltar" ht="gibraltar"/>
+         <Hungary icon="hungary" ttag:tag="hungary" ht="hungary">
+           <Budapest icon="budapest" ttag:tag="hu-budapest" ht="budapest">
                <skos:altLabel>Budapest</skos:altLabel>
                <skos:prefLabel>Budapest, Hungary</skos:prefLabel>
            </Budapest>
-           <Szentendre icon="szentendre" ttag:tag="hu-szentendre">
+           <Szentendre icon="szentendre" ttag:tag="hu-szentendre" ht="szentendre">
                <skos:altLabel>Szentendre</skos:altLabel>
                <skos:prefLabel>Szentendre, Hungary</skos:prefLabel>
            </Szentendre>
          </Hungary>
-         <Italy icon="italy" ttag:tag="italy">
-            <Rome ttag:tag="it-rome">
+         <Italy icon="italy" ttag:tag="italy" ht="italy">
+            <Rome ttag:tag="it-rome" ht="rome">
                <skos:altLabel>Rome</skos:altLabel>
                <skos:prefLabel>Rome, Italy</skos:prefLabel>
             </Rome>
          </Italy>
-         <Japan ttag:tag="japan">
-            <Kamakura ttag:tag="jp-kamakura">
+         <Japan ttag:tag="japan" ht="japan">
+            <Kamakura ttag:tag="jp-kamakura" ht="kamakura">
                <skos:altLabel>Kamakura</skos:altLabel>
                <skos:prefLabel>Kamakura, Japan</skos:prefLabel>
             </Kamakura>
-            <ShinYokohama ttag:tag="jp-shinyokahama">
+            <ShinYokohama ttag:tag="jp-shinyokahama" ht="shinyokahama">
                <skos:altLabel>Shin Yokohama</skos:altLabel>
                <skos:prefLabel>Shin Yokohama, Japan</skos:prefLabel>
             </ShinYokohama>
-            <Tokyo ttag:tag="jp-tokyo">
+            <Tokyo ttag:tag="jp-tokyo" ht="tokyo">
                <skos:altLabel>Tokyo</skos:altLabel>
                <skos:prefLabel>Tokyo, Japan</skos:prefLabel>
             </Tokyo>
          </Japan>
-         <Mexico ttag:tag="mexico"/>
-         <Netherlands ttag:tag="netherlands"/>
-         <Scotland icon="uk" ttag:tag="scotland">
-            <Edinburgh icon="uk" ttag:tag="gb-edinburgh">
+         <Mexico ttag:tag="mexico" ht="mexico"/>
+         <Netherlands ttag:tag="netherlands" ht="netherlands"/>
+         <Scotland icon="uk" ttag:tag="scotland" ht="scotland">
+            <Edinburgh icon="uk" ttag:tag="gb-edinburgh" ht="edinburgh">
                <skos:altLabel>Edinburgh</skos:altLabel>
                <skos:prefLabel>Edinburgh, Scotland</skos:prefLabel>
             </Edinburgh>
          </Scotland>
-         <Spain icon="spain" ttag:tag="spain">
-           <Sevilla icon="sevilla" ttag:tag="es-sevilla">
+         <Spain icon="spain" ttag:tag="spain" ht="spain">
+           <Sevilla icon="sevilla" ttag:tag="es-sevilla" ht="sevilla">
                <skos:altLabel>Sevilla</skos:altLabel>
                <skos:prefLabel>Sevilla, Spain</skos:prefLabel>
            </Sevilla>
-           <Peñarroyo-Pueblonuevo icon="pueblonuevo" ttag:tag="es-pueblonuevo">
+           <Peñarroyo-Pueblonuevo icon="pueblonuevo" ttag:tag="es-pueblonuevo" ht="pueblonuevo">
                <skos:altLabel>Peñarroyo-Pueblonuevo</skos:altLabel>
                <skos:prefLabel>Peñarroyo-Pueblonuevo, Spain</skos:prefLabel>
            </Peñarroyo-Pueblonuevo>
-           <Cordoba icon="cordoba" ttag:tag="es-cordoba">
+           <Cordoba icon="cordoba" ttag:tag="es-cordoba" ht="cordoba">
                <skos:altLabel>Cordoba</skos:altLabel>
                <skos:prefLabel>Cordoba, Spain</skos:prefLabel>
            </Cordoba>
-           <Granada icon="granada" ttag:tag="es-granada">
+           <Granada icon="granada" ttag:tag="es-granada" ht="granada">
                <skos:altLabel>Granada</skos:altLabel>
                <skos:prefLabel>Granada, Spain</skos:prefLabel>
            </Granada>
-           <Ronda icon="ronda" ttag:tag="es-ronda">
+           <Ronda icon="ronda" ttag:tag="es-ronda" ht="ronda">
                <skos:altLabel>Ronda</skos:altLabel>
                <skos:prefLabel>Ronda, Spain</skos:prefLabel>
            </Ronda>
-           <Mijas icon="mijas" ttag:tag="es-mijas">
+           <Mijas icon="mijas" ttag:tag="es-mijas" ht="mijas">
                <skos:altLabel>Mijas</skos:altLabel>
                <skos:prefLabel>Mijas, Spain</skos:prefLabel>
            </Mijas>
-           <Nerja icon="nerja" ttag:tag="es-nerja">
+           <Nerja icon="nerja" ttag:tag="es-nerja" ht="nerja">
                <skos:altLabel>Nerja</skos:altLabel>
                <skos:prefLabel>Nerja, Spain</skos:prefLabel>
            </Nerja>
-           <Marbella icon="marbella" ttag:tag="es-marbella">
+           <Marbella icon="marbella" ttag:tag="es-marbella" ht="marbella">
                <skos:altLabel>Marbella</skos:altLabel>
                <skos:prefLabel>Marbella, Spain</skos:prefLabel>
            </Marbella>
          </Spain>
-         <Slovakia icon="slovakia" ttag:tag="slovakia">
-           <Bratislava icon="bratislava" ttag:tag="sk-bratislava">
+         <Slovakia icon="slovakia" ttag:tag="slovakia" ht="slovakia">
+           <Bratislava icon="bratislava" ttag:tag="sk-bratislava" ht="bratislava">
                <skos:altLabel>Bratislava</skos:altLabel>
                <skos:prefLabel>Bratislava, Slovakia</skos:prefLabel>
            </Bratislava>
          </Slovakia>
-         <Switzerland ttag:tag="switzerland"/>
-         <Thailand icon="thailand" ttag:tag="thailand">
-            <Bangkok icon="bangkok" ttag:tag="th-bangkok">
+         <Switzerland ttag:tag="switzerland" ht="switzerland"/>
+         <Thailand icon="thailand" ttag:tag="thailand" ht="thailand">
+            <Bangkok icon="bangkok" ttag:tag="th-bangkok" ht="bangkok">
                <skos:altLabel>Bangkok</skos:altLabel>
                <skos:prefLabel>Bangkok, Thailand</skos:prefLabel>
             </Bangkok>
          </Thailand>
-         <UnitedStates icon="usa" ttag:tag="unitedstates">
+         <UnitedStates icon="usa" ttag:tag="unitedstates" ht="unitedstates">
             <skos:altLabel>United States</skos:altLabel>
-            <Arizona ttag:tag="us-arizona">
+            <Arizona ttag:tag="us-arizona" ht="arizona">
                <skos:altLabel>Arizona</skos:altLabel>
-               <Scottsdale>
+               <Scottsdale ht="scottsdale">
                   <skos:altLabel>Scottsdale, AZ, US</skos:altLabel>
                </Scottsdale>
                <skos:prefLabel>Arizona, US</skos:prefLabel>
             </Arizona>
-            <Texas ttag:tag="us-texas">
+            <Texas ttag:tag="us-texas" ht="texas">
                <skos:altLabel>Texas</skos:altLabel>
                <skos:prefLabel>Texas, US</skos:prefLabel>
-               <Austin>
+               <Austin ht="austin">
                   <skos:altLabel>Austin, TX, US</skos:altLabel>
                </Austin>
             </Texas>
-            <California anchor="california" ttag:tag="us-california">
+            <California anchor="california" ttag:tag="us-california" ht="california">
                <skos:altLabel>California</skos:altLabel>
-               <LosAngeles icon="la" ttag:tag="nwn-losangeles">
+               <LosAngeles icon="la" ttag:tag="nwn-losangeles" ht="losangeles">
                   <skos:altLabel>Los Angeles</skos:altLabel>
                   <skos:prefLabel>Los Angeles, CA, US</skos:prefLabel>
                </LosAngeles>
-               <SanFrancisco icon="sanfrancisco" ttag:tag="us-ca-sanfrancisco">
+               <SanFrancisco icon="sanfrancisco" ttag:tag="us-ca-sanfrancisco" ht="sanfrancisco">
                   <skos:altLabel>San Francisco</skos:altLabel>
                   <skos:prefLabel>San Francisco, CA, US</skos:prefLabel>
                </SanFrancisco>
                <skos:prefLabel>California, US</skos:prefLabel>
             </California>
-            <Massachusetts ttag:tag="us-massachusetts">
+            <Massachusetts ttag:tag="us-massachusetts" ht="massachusetts">
                <skos:altLabel>Massachusetts</skos:altLabel>
-               <Amherst ttag:tag="us-ma-amherst">
+               <Amherst ttag:tag="us-ma-amherst" ht="amherst">
                   <skos:altLabel>Amherst</skos:altLabel>
                   <skos:prefLabel>Amherst, MA, US</skos:prefLabel>
                </Amherst>
-               <Belchertown ttag:tag="us-ma-belchertown">
+               <Belchertown ttag:tag="us-ma-belchertown" ht="belchertown">
                   <skos:altLabel>Belchertown</skos:altLabel>
                   <skos:prefLabel>Belchertown, MA, US</skos:prefLabel>
                </Belchertown>
                <skos:prefLabel>Massachusetts, US</skos:prefLabel>
             </Massachusetts>
-            <Nevada ttag:tag="us-nevada">
+            <Nevada ttag:tag="us-nevada" ht="nevada">
                <skos:altLabel>Nevada</skos:altLabel>
-               <LasVegas ttag:tag="nwn-lasvegas">
+               <LasVegas ttag:tag="nwn-lasvegas" ht="lasvegas">
                   <skos:altLabel>Las Vegas, NV, US</skos:altLabel>
                   <skos:prefLabel>Las Vegas</skos:prefLabel>
                </LasVegas>
                <skos:prefLabel>Nevada, US</skos:prefLabel>
             </Nevada>
-            <NewYork icon="newyork" ttag:tag="us-new-york">
+            <NewYork icon="newyork" ttag:tag="us-new-york" ht="newyork">
                <skos:altLabel>New York</skos:altLabel>
-               <NewYorkCity icon="newyorkcity" ttag:tag="us-ny-new-york">
+               <NewYorkCity icon="newyorkcity" ttag:tag="us-ny-new-york" ht="newyorkny">
                   <skos:altLabel>New York City</skos:altLabel>
                   <skos:prefLabel>New York, NY, US</skos:prefLabel>
                </NewYorkCity>
                <skos:prefLabel>New York, US</skos:prefLabel>
             </NewYork>
-            <Pennsylvania ttag:tag="us-pennsylvania">
+            <Pennsylvania ttag:tag="us-pennsylvania" ht="pennsylvania">
                <skos:altLabel>Pennsylvania</skos:altLabel>
-               <Philadelphia ttag:tag="us-pa-philadelphia">
+               <Philadelphia ttag:tag="us-pa-philadelphia" ht="philadelphia">
                   <skos:altLabel>Philadelphia</skos:altLabel>
                   <skos:prefLabel>Philadelphia, PA, US</skos:prefLabel>
                </Philadelphia>
                <skos:prefLabel>Pennsylvania, US</skos:prefLabel>
             </Pennsylvania>
-            <US-Hawaii icon="hawaii" ttag:tag="us-hawaii">
+            <US-Hawaii icon="hawaii" ttag:tag="us-hawaii" ht="hawaii">
                <skos:altLabel>Hawaii</skos:altLabel>
                <skos:prefLabel>Hawaii, US</skos:prefLabel>
             </US-Hawaii>
-            <USVI-StJohn anchor="StJohn" ttag:tag="usvi-stjohn">
+            <USVI-StJohn anchor="StJohn" ttag:tag="usvi-stjohn" ht="usvi-stjohn">
                <skos:altLabel>St John</skos:altLabel>
                <skos:prefLabel>St John, USVI</skos:prefLabel>
             </USVI-StJohn>
-            <USVI-StThomas icon="stthomas" anchor="StThomas" ttag:tag="usvi-stthomas">
+            <USVI-StThomas icon="stthomas" anchor="StThomas" ttag:tag="usvi-stthomas" ht="usvi-stthomas">
                <skos:altLabel>St Thomas</skos:altLabel>
                <skos:prefLabel>St Thomas, USVI</skos:prefLabel>
             </USVI-StThomas>
             <skos:prefLabel>The United States of America</skos:prefLabel>
          </UnitedStates>
       </Places>
-      <Plants icon="violet">
-         <Flowers icon="violet" ttag:tag="flowers"/>
-         <Trees ttag:tag="trees"/>
+      <Plants icon="violet" ht="plants">
+         <Flowers icon="violet" ttag:tag="flowers" ht="flowers"/>
+         <Trees ttag:tag="trees" ht="trees"/>
       </Plants>
-      <Politics ttag:tag="politics"/>
-      <Rants/>
-      <Reviews feed="reviews" icon="review"/>
-      <SelfReference icon="selfreference">
+      <Politics ttag:tag="politics" ht="politics"/>
+      <Rants ht="rant"/>
+      <Reviews feed="reviews" icon="review" ht="review"/>
+      <SelfReference icon="selfreference" ht="selfreference">
          <skos:prefLabel>Self Reference</skos:prefLabel>
       </SelfReference>
-      <Sonnets/>
-      <Talks/>
-      <Technology feed="technology">
-         <CSS ttag:tag="css">
+      <Sonnets ht="sonnets"/>
+      <Talks ht="talks"/>
+      <Technology feed="technology" ht="technology">
+         <CSS ttag:tag="css" ht="css">
             <skos:altLabel>CSS</skos:altLabel>
             <skos:prefLabel>Cascading Style Sheets</skos:prefLabel>
          </CSS>
-         <DITA ttag:tag="dita"/>
-         <DRM ttag:tag="drm"/>
-         <DocBook feed="docbook" icon="docbook" ttag:tag="docbook"/>
-         <Electronics ttag:tag="electronics"/>
-         <Emacs feed="emacs" icon="emacs" ttag:tag="emacs"/>
-         <Email ttag:tag="email"/>
-         <Evernote ttag:tag="evernote"/>
-         <Firefox ttag:tag="firefox"/>
-         <Gadgets ttag:tag="gadgets">
-            <GoogleVoice anchor="googlevoice" ttag:tag="googlevoice"/>
-            <GoogleMusic anchor="googlemusic" ttag:tag="googlemusic"/>
-            <Laptop ttag:tag="laptop">
-               <ThinkPad ttag:tag="thinkpad"/>
+         <DITA ttag:tag="dita" ht="dita"/>
+         <DRM ttag:tag="drm" ht="drm"/>
+         <DocBook feed="docbook" icon="docbook" ttag:tag="docbook" ht="docbook"/>
+         <Electronics ttag:tag="electronics" ht="electronics"/>
+         <Emacs feed="emacs" icon="emacs" ttag:tag="emacs" ht="emacs"/>
+         <Email ttag:tag="email" ht="email"/>
+         <Evernote ttag:tag="evernote" ht="evernote"/>
+         <Firefox ttag:tag="firefox" ht="firefox"/>
+         <Gadgets ttag:tag="gadgets" ht="gadgets">
+            <GoogleVoice anchor="googlevoice" ttag:tag="googlevoice" ht="googlevoice"/>
+            <GoogleMusic anchor="googlemusic" ttag:tag="googlemusic" ht="googlemusic"/>
+            <Laptop ttag:tag="laptop" ht="laptop">
+               <ThinkPad ttag:tag="thinkpad" ht="thinkpad"/>
             </Laptop>
-            <Palm anchor="PalmPilot" ttag:tag="palm">
+            <Palm anchor="PalmPilot" ttag:tag="palm" ht="palm">
                <skos:prefLabel>Palm Pilot</skos:prefLabel>
             </Palm>
-            <Sidekick anchor="sidekick" ttag:tag="sidekick"/>
-            <iPhone anchor="iphone" ttag:tag="iphone"/>
-            <Android anchor="android" ttag:tag="android"/>
-            <GalaxyTab anchor="galaxytab" ttag:tag="galaxytab"/>
-            <NikonD7000 anchor="nikond7000" ttag:tag="nikond7000"/>
+            <Sidekick anchor="sidekick" ttag:tag="sidekick" ht="sidekick"/>
+            <iPhone anchor="iphone" ttag:tag="iphone" ht="iphone"/>
+            <Android anchor="android" ttag:tag="android" ht="android"/>
+            <GalaxyTab anchor="galaxytab" ttag:tag="galaxytab" ht="galaxytab"/>
+            <NikonD7000 anchor="nikond7000" ttag:tag="nikond7000" ht="nikond7000"/>
          </Gadgets>
-         <Greasemonkey ttag:tag="greasemonkey">
+         <Greasemonkey ttag:tag="greasemonkey" ht="greasemonkey">
             <rdfs:seeAlso rdf:resource="http://en.wikipedia.org/wiki/Greasemonkey"/>
          </Greasemonkey>
-         <HTML ttag:tag="html">
-            <HTML5 ttag:tag="html5"/>
+         <HTML ttag:tag="html" ht="html">
+            <HTML5 ttag:tag="html5" ht="html5"/>
          </HTML>
-         <IM ttag:tag="im"/>
-         <Java feed="java" ttag:tag="java">
+         <IM ttag:tag="im" ht="im"/>
+         <Java feed="java" ttag:tag="java" ht="java">
             <rdfs:seeAlso rdf:resource="http://java.sun.com/"/>
-            <GlassFish ttag:tag="glassfish">
+            <GlassFish ttag:tag="glassfish" ht="glassfish">
                <rdfs:seeAlso rdf:resource="http://glassfish.dev.java.net/"/>
             </GlassFish>
-            <NetBeans ttag:tag="netbeans">
+            <NetBeans ttag:tag="netbeans" ht="netbeans">
                <rdfs:seeAlso rdf:resource="http://www.netbeans.org/"/>
             </NetBeans>
          </Java>
-         <JavaScript/>
-         <Lightroom ttag:tag="lightroom"/>
-         <Linux icon="linux" ttag:tag="linux">
-            <Ubuntu icon="ubuntu" ttag:tag="ubuntu"/>
+         <JavaScript ht="js"/>
+         <Lightroom ttag:tag="lightroom" ht="lightroom"/>
+         <Linux icon="linux" ttag:tag="linux" ht="linux">
+            <Ubuntu icon="ubuntu" ttag:tag="ubuntu" ht="ubuntu"/>
          </Linux>
-         <OSX ttag:tag="osx">
+         <OSX ttag:tag="osx" ht="osx">
             <skos:prefLabel>OS X</skos:prefLabel>
          </OSX>
-         <RDF feed="rdf" icon="rdf" ttag:tag="rdf">
+         <RDF feed="rdf" icon="rdf" ttag:tag="rdf" ht="rdf">
             <rdfs:seeAlso rdf:resource="http://www.rdfweb.org/"/>
             <rdfs:seeAlso rdf:resource="http://www.w3.org/TR/rdf-primer/"/>
             <skos:altLabel>RDF</skos:altLabel>
             <skos:prefLabel>Resource Description Framework (RDF)</skos:prefLabel>
          </RDF>
-         <Schemas ttag:tag="xmlschema">
+         <Schemas ttag:tag="xmlschema" ht="schema">
             <skos:altLabel>Schemas</skos:altLabel>
-            <DTD ttag:tag="xmlschema-dtd">
+            <DTD ttag:tag="xmlschema-dtd" ht="dtds">
                <skos:altLabel>DTDs</skos:altLabel>
                <skos:prefLabel>XML DTDs</skos:prefLabel>
             </DTD>
-            <RDFSchema>
+            <RDFSchema ht="rdfschema">
                <skos:altLabel>RDF Schema</skos:altLabel>
                <skos:prefLabel>RDF Schema</skos:prefLabel>
             </RDFSchema>
-            <RELAXNG ttag:tag="xmlschema-rng">
+            <RELAXNG ttag:tag="xmlschema-rng" ht="relaxng">
                <skos:prefLabel>RELAX NG</skos:prefLabel>
             </RELAXNG>
-            <W3CXMLSchema anchor="XMLSchema" ttag:tag="xmlschema-xsd">
+            <W3CXMLSchema anchor="XMLSchema" ttag:tag="xmlschema-xsd" ht="xmlschema">
                <skos:altLabel>XML Schema</skos:altLabel>
                <skos:prefLabel>W3C XML Schema</skos:prefLabel>
             </W3CXMLSchema>
             <skos:prefLabel>Schema Languages</skos:prefLabel>
          </Schemas>
-         <Software>
-           <App/>
+         <Software ht="software">
+           <App ht="apps"/>
          </Software>
-         <Solaris ttag:tag="solaris"/>
-         <SourceControl anchor="sourcecodecontrol">
-            <CVS ttag:tag="cvs"/>
-            <Mercurial ttag:tag="mercurial"/>
-            <Subversion ttag:tag="subversion"/>
+         <Solaris ttag:tag="solaris" ht="solaris"/>
+         <SourceControl anchor="sourcecodecontrol" ht="sccs">
+            <CVS ttag:tag="cvs" ht="cvs"/>
+            <Mercurial ttag:tag="mercurial" ht="mercurial"/>
+            <Subversion ttag:tag="subversion" ht="subversion"/>
             <skos:prefLabel>Source Code Control</skos:prefLabel>
          </SourceControl>
-         <Spam ttag:tag="spam"/>
-         <Syndication feed="syndication">
-            <Atom feed="atom" icon="atom" ttag:tag="atom"/>
-            <RSS feed="rss" icon="rss" ttag:tag="rss"/>
+         <Spam ttag:tag="spam" ht="spam"/>
+         <Syndication feed="syndication" ht="syndication">
+            <Atom feed="atom" icon="atom" ttag:tag="atom" ht="atom"/>
+            <RSS feed="rss" icon="rss" ttag:tag="rss" ht="rss"/>
          </Syndication>
-         <TheWeb feed="theweb" icon="www" ttag:tag="www">
+         <TheWeb feed="theweb" icon="www" ttag:tag="www" ht="www">
             <skos:altLabel>The Web</skos:altLabel>
-            <Ajax anchor="ajax" ttag:tag="ajax"/>
-            <Lazyweb ttag:tag="lazyweb"/>
-            <Microblogging anchor="microblogging" ttag:tag="microblogging">
-              <Twitter>
-                <shortform ttag:tag="shortform">
+            <Ajax anchor="ajax" ttag:tag="ajax" ht="ajax"/>
+            <Lazyweb ttag:tag="lazyweb" ht="lazyweb"/>
+            <Microblogging anchor="microblogging" ttag:tag="microblogging" ht="microblogging">
+              <Twitter ht="twitter">
+                <shortform ttag:tag="shortform" ht="shortform">
                   <skos:altLabel>Short-form fragments</skos:altLabel>
                 </shortform>
               </Twitter>
             </Microblogging>
-            <OASIS feed="oasis" ttag:tag="oasis">
-               <TC anchor="OASISTC">
+            <OASIS feed="oasis" ttag:tag="oasis" ht="oasis">
+               <TC anchor="OASISTC" ht="oasistc">
                   <skos:altLabel>OASIS TC</skos:altLabel>
                   <skos:prefLabel>OASIS Technical Committee</skos:prefLabel>
                </TC>
             </OASIS>
-            <W3C feed="w3c" ttag:tag="w3c">
-               <TAG icon="tag" anchor="W3CTAG" ttag:tag="w3ctag">
+            <W3C feed="w3c" ttag:tag="w3c" ht="w3c">
+               <TAG icon="tag" anchor="W3CTAG" ttag:tag="w3ctag" ht="w3ctag">
                   <skos:altLabel>W3C TAG</skos:altLabel>
                   <skos:prefLabel>W3C Technical Architecture Group</skos:prefLabel>
                </TAG>
-               <WG anchor="W3CWG">
+               <WG anchor="W3CWG" ht="w3cwg">
                   <skos:altLabel>W3C WG</skos:altLabel>
                   <skos:prefLabel>W3C Working Group</skos:prefLabel>
                </WG>
             </W3C>
-            <WebServices feed="webservices" ttag:tag="webservices">
+            <WebServices feed="webservices" ttag:tag="webservices" ht="webservices">
                <skos:prefLabel>Web Services</skos:prefLabel>
             </WebServices>
             <skos:prefLabel>The World Wide Web</skos:prefLabel>
          </TheWeb>
-         <TopicMaps anchor="topicmaps" ttag:tag="topicmaps">
+         <TopicMaps anchor="topicmaps" ttag:tag="topicmaps" ht="topicmaps">
             <rdfs:seeAlso rdf:resource="http://www.topicmaps.org/"/>
             <skos:prefLabel>Topic Maps</skos:prefLabel>
          </TopicMaps>
-         <Unicode ttag:tag="unicode"/>
-         <VoIP ttag:tag="voip"/>
-         <Windows ttag:tag="mswindows">
+         <Unicode ttag:tag="unicode" ht="unicode"/>
+         <VoIP ttag:tag="voip" ht="voip"/>
+         <Windows ttag:tag="mswindows" ht="mswindows">
             <skos:altLabel>Windows</skos:altLabel>
             <skos:prefLabel>Microsoft Windows</skos:prefLabel>
          </Windows>
-         <XML feed="xml" icon="xml" ttag:tag="xml">
+         <XML feed="xml" icon="xml" ttag:tag="xml" ht="xml">
             <rdfs:seeAlso rdf:resource="http://www.w3.org/TR/REC-xml"/>
-            <Microformats ttag:tag="microformats"/>
-            <XMLCatalogs ttag:tag="xmlcatalogs">
+            <Microformats ttag:tag="microformats" ht="microformats"/>
+            <XMLCatalogs ttag:tag="xmlcatalogs" ht="xmlcatalogs">
                <skos:prefLabel>XML Catalogs</skos:prefLabel>
             </XMLCatalogs>
-            <XMLPipelines ttag:tag="xmlpipelines">
+            <XMLPipelines ttag:tag="xmlpipelines" ht="xmlpipelines">
                <rdfs:seeAlso rdf:resource="http://www.w3.org/XML/Processing/"/>
-               <XProc ttag:tag="xproc">
+               <XProc ttag:tag="xproc" ht="xproc">
                   <rdfs:seeAlso rdf:resource="http://xproc.org/"/>
-                  <Calabash ttag:tag="calabash">
+                  <Calabash ttag:tag="calabash" ht="calabash">
                      <rdfs:seeAlso rdf:resource="http://xmlcalabash.com/"/>
                      <skos:prefLabel>XML Calabash</skos:prefLabel>
                   </Calabash>
-                  <XProcBook ttag:tag="xprocbook">
+                  <XProcBook ttag:tag="xprocbook" ht="xprocbook">
                      <rdfs:seeAlso rdf:resource="http://xprocbook.com/"/>
                   </XProcBook>
                </XProc>
                <skos:prefLabel>XML Pipelines</skos:prefLabel>
             </XMLPipelines>
          </XML>
-         <XQuery ttag:tag="xquery">
+         <XQuery ttag:tag="xquery" ht="xquery">
             <rdfs:seeAlso rdf:resource="http://www.w3.org/TR/xquery"/>
          </XQuery>
-         <XSLT ttag:tag="xslt">
+         <XSLT ttag:tag="xslt" ht="xslt">
             <rdfs:seeAlso rdf:resource="http://www.w3.org/TR/xslt"/>
             <skos:altLabel>XSLT</skos:altLabel>
-            <XSLT2 anchor="XSLT20" ttag:tag="xslt20">
+            <XSLT2 anchor="XSLT20" ttag:tag="xslt20" ht="xslt20">
                <rdfs:seeAlso rdf:resource="http://www.w3.org/TR/xslt20/"/>
                <skos:altLabel>XSLT 2.0</skos:altLabel>
                <skos:prefLabel>XSL Transformations (XSLT) Version 2.0</skos:prefLabel>
@@ -622,10 +680,10 @@
             <skos:prefLabel>XSL Transformations (XSLT)</skos:prefLabel>
          </XSLT>
       </Technology>
-      <Things>
-         <Landscape/>
-         <Statuary ttag:tag="statuary">
-            <Gargoyle ttag:tag="gargoyles"/>
+      <Things ht="things">
+         <Landscape ht="landscape"/>
+         <Statuary ttag:tag="statuary" ht="statuary">
+            <Gargoyle ttag:tag="gargoyles" ht="gargoyles"/>
          </Statuary>
       </Things>
 </Everything>
