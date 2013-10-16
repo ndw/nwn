@@ -313,7 +313,8 @@ return
         let $q  := cts:and-not-query(
                        cts:and-query(($sq,$eq,$cq)),
                        cts:collection-query($nwn:vcoll))
-        let $r  := cts:search(collection($nwn:ecoll), $q)/db:essay
+        let $canceled := cts:search(collection($nwn:ecoll), $q)/db:essay[db:info/db:bibliomisc[@role='status'] = 'Canceled']
+        let $r  := cts:search(collection($nwn:ecoll), $q)/db:essay except $canceled
         let $q  := cts:and-not-query(
                        cts:and-query(($tsq,$teq,$cq)),
                        cts:collection-query($nwn:vcoll))
