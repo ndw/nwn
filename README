@@ -1,6 +1,14 @@
-These are the MarkLogic XQuery and ancillary files that run the
-Norman.Walsh.name weblog.
+These are the MarkLogic XQuery and ancillary files that used to run
+the Norman.Walsh.name weblog when it was a MarkLogic application.
 
 They're not really designed for public consumption. There are weird,
 hard-coded defaults and all sorts of bad practices herein. Use at your
 own risk. YMMV.
+
+11 January 2023
+
+The last commit is 2013, a decade ago. I've moved the weblog onto
+different systems. I was only reminded of this repository because
+of a CVE warning about jQuery.
+
+I'm going to remove jQuery entirely and archive this project.
